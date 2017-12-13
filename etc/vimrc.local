@@ -1,0 +1,51 @@
+set guifont=Andale\ Mono\ 13
+"set guifont=Pica\ 10\ Pitch\ 13
+"set guifont=Prestige\ 12\ Pitch\ 13
+"set guifont=Courier\ New\ 13
+set guifont=Monospace\ 821\ 13
+"set guifont=Script\ 12\ Pitch\ 13
+"set guifont=Luxi\ Mono\ 13
+"set guifont=Lucidatypewriter\ 13
+"set guifont=Bitstream\ Vera\ Sans\ Mono\ 12
+set guifont=Bitstream\ Vera\ Sans\ Mono\ 11
+
+set nocompatible
+colorscheme elflord
+syntax on
+set background=dark
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+" Uncomment the following to have Vim load indentation rules according to the
+" detected filetype. Per default Debian Vim only load filetype specific
+" plugins.
+if has("autocmd")
+  filetype indent on
+endif
+
+set showcmd		" Show (partial) command in status line.
+set showmatch		" Show matching brackets.
+set smartcase		" Do smart case matching
+set incsearch		" Incremental search
+set ww=b,s,<,>,[,]
+set sta
+set visualbell
+set mousemodel=popup_setpos
+
+highlight SpellErrors ctermfg=Red guifg=Red cterm=underline gui=underline term=reverse
+let spell_language_list = "americanxlg,american,americanmed+,english"
+let spell_insert_mode = 1
+let spell_executable = "ispell"
+let spell_auto_type = ""
+"let spell_auto_type = "tex,mail,text,html,sgml,otl,cvs,none"
+
+set modeline
+set modelines=7
+
+" vim: syntax==vim
+

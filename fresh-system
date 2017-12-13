@@ -1,0 +1,10 @@
+#! /bin/sh
+
+( 
+  cd ~
+  yum install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils 
+  grep -E '^source ~/.stemmet/zshrc' ~/.zshrc || echo 'source ~/.stemmet/zshrc' >>~/.zshrc
+  install -v --mode=700  -d ~/.ssh
+  which zsh
+)
+
