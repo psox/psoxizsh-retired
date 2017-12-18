@@ -1,13 +1,15 @@
-set guifont=Andale\ Mono\ 13
+"set guifont=Andale\ Mono\ 13
 "set guifont=Pica\ 10\ Pitch\ 13
 "set guifont=Prestige\ 12\ Pitch\ 13
 "set guifont=Courier\ New\ 13
-set guifont=Monospace\ 821\ 13
+"set guifont=Monospace\ 821\ 13
 "set guifont=Script\ 12\ Pitch\ 13
 "set guifont=Luxi\ Mono\ 13
 "set guifont=Lucidatypewriter\ 13
 "set guifont=Bitstream\ Vera\ Sans\ Mono\ 12
-set guifont=Bitstream\ Vera\ Sans\ Mono\ 11
+"set guifont=Bitstream\ Vera\ Sans\ Mono\ 11
+set guifont=Fira\ Code\ Retina\ 11
+
 
 set nocompatible
 colorscheme elflord
