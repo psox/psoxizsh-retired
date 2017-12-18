@@ -7,4 +7,8 @@ git clone --recurse-submodules --recursive --config http.sslVerify=false https:/
 ~/.psoxizsh/fresh-system
 ```
 
+## Configure Vim
 
+```viml
+:PlugInstall
+```
