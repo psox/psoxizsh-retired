@@ -3,7 +3,7 @@ exec "set rtp=$VIMHOME," . &rtp
 
 set encoding=utf-8
 
-call plug#begin()
+call plug#begin('~/.psoxizsh/vim/plugged')
   Plug 'junegunn/vim-easy-align'	
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'

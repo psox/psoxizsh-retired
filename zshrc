@@ -89,17 +89,17 @@ plugins=(
   python
   pip
   sudo
-  redhat
   $( which tmux 2>&1 >/dev/null && echo tmux )
   $( which rpmbuild 2>&1 >/dev/null && echo rpmbuild )
   $( which rpm 2>&1 >/dev/null && echo rpm )
   $( which yum 2>&1 >/dev/null && echo yum )
   $( which kubeadm 2>&1 >/dev/null && echo kubeadm )
-	$( [[ -e /etc/arch-release ]] && echo archlinux )
-	$( [[ -e /etc/centos-release ]] && echo fedora )
-	$( [[ -e /etc/redhat-release ]] && echo fedora )
-	$( [[ -e /etc/ubuntu-release ]] && echo ubuntu )
-	$( [[ -e /etc/suse-release ]] && echo suse )
+  $( [[ -e /etc/arch-release ]] && echo archlinux )
+  $( [[ -e /etc/centos-release ]] && echo fedora )
+  $( [[ -e /etc/redhat-release ]] && echo redhat )
+  $( [[ -e /etc/ubuntu-release ]] && echo ubuntu )
+  $( [[ -e /etc/suse-release ]] && echo suse )
+  $( [[ "$(uname)" == "Darwin" ]] && echo osx )
   vim-interaction
   ssh-agent
   zsh-completions
@@ -108,7 +108,7 @@ plugins=(
   zsh-history-substring-search
 )
 
-if [[ "$OSTYPE" == "linux-gnu" ]]
+if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" ]]
 then
   export VIMINIT='source $MYVIMRC'
   export MYVIMRC=$HOME/.psoxizsh/vimrc
