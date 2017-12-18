@@ -3,7 +3,6 @@
 ## Install
 
 ```bash
-git clone https://bitbucket.org/pSox/psoxizsh.git ~/.psoxzish
-cd ~/.psoxizsh
-git submodule update --init --recurse --recursive --jobs=2
+git clone --recurse-submodules --recursive --config http.sslVerify=false https://bitbucket.org/pSox/psoxizsh.git ~/.psoxzish
+~/.psoxizsh/fresh-system
 ```
