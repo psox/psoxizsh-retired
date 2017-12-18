@@ -17,7 +17,7 @@ then
 fi
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.stemmet/oh-my-zsh
+export ZSH=~/.psoxizsh/oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -95,6 +95,11 @@ plugins=(
   $( which rpm 2>&1 >/dev/null && echo rpm )
   $( which yum 2>&1 >/dev/null && echo yum )
   $( which kubeadm 2>&1 >/dev/null && echo kubeadm )
+	$( [[ -e /etc/arch-release ]] && echo archlinux )
+	$( [[ -e /etc/centos-release ]] && echo fedora )
+	$( [[ -e /etc/redhat-release ]] && echo fedora )
+	$( [[ -e /etc/ubuntu-release ]] && echo ubuntu )
+	$( [[ -e /etc/suse-release ]] && echo suse )
   vim-interaction
   ssh-agent
   zsh-completions
@@ -105,11 +110,9 @@ plugins=(
 
 if [[ "$OSTYPE" == "linux-gnu" ]]
 then
-  grep  -q -i centos /etc/*-release 2>/dev/null && plugins=( $plugins fedora )
-  grep  -q -i archlinux /etc/*-release 2>/dev/null && plugins=( $plugins archlinux )
   export VIMINIT='source $MYVIMRC'
-  export MYVIMRC=$HOME/.stemmet/vimrc
-  export VIMHOME=$HOME/.stemmet/vim
+  export MYVIMRC=$HOME/.psoxizsh/vimrc
+  export VIMHOME=$HOME/.psoxizsh/vim
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -140,8 +143,8 @@ export EDITOR='vim'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="vim ~/.stemmet/zshrc"
-alias ohmyzsh="vim ~/.stemmet/oh-my-zsh"
+alias zshconfig="vim ~/.psoxizsh/zshrc"
+alias ohmyzsh="vim ~/.psoxizsh/oh-my-zsh"
 [[ -x /usr/bin/code ]] && alias code='/usr/bin/code --user-data-dir="$(echo ~/vscode)" '
 
 typeset -A key

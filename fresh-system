@@ -1,14 +1,13 @@
 #! /bin/sh
 
-( 
-  cd ~
-  [[ -e /etc/arch-release ]] && pacman -S zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags 
-  [[ -e /etc/centos-release ]] && yum install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
-  [[ -e /etc/redhat-release ]] && yum install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
-  [[ -e /etc/ubuntu-release ]] && apt install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
-  [[ -e /etc/suse-release ]] && zypper install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
-  grep -E '^source ~/.stemmet/zshrc' ~/.zshrc || echo 'source ~/.stemmet/zshrc' >>~/.zshrc
-  install -v --mode=700  -d ~/.ssh
-  which zsh
+(
+	cd ~
+	[[ -e /etc/arch-release ]] && pacman -S zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags
+	[[ -e /etc/centos-release ]] && yum install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
+	[[ -e /etc/redhat-release ]] && yum install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
+	[[ -e /etc/ubuntu-release ]] && apt install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
+	[[ -e /etc/suse-release ]] && zypper install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
+	grep -E '^source ~/.psoxizsh/zshrc' ~/.zshrc || echo 'source ~/.psoxizsh/zshrc' >>~/.zshrc
+	install -v --mode=700 -d ~/.ssh
+	which zsh
 )
-

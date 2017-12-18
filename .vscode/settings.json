@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "vimrc": "viml",
+        "vimrc-local": "viml",
+        "zshrc": "shellscript",
+        "fresh-system": "shellscript"
+    }
+}
