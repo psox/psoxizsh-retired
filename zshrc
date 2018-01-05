@@ -185,32 +185,6 @@ fi
 
 path+=( $GOPATH/bin ${GOROOT+${GOROOT}/bin} )
 
-function image_env 
-{ 
-  [[ ! -z "$1" ]] && local name=$1 || local name=stemma 
-  [[ ! -z "$2" ]] && local number=$2 || local number=9
-  [[ ! -z "$3" ]] && export BASE_TAR=$3
-  [[ ! -z "$4" ]] && export DISKIMAGE_TAR=$4
-  [[ ! -z "$5" ]] && export WORKING_PATH=$5
-  export FQDN="$name-$number.mpe.lab.vce.com"
-  export IP="10.239.132.$number"
-  export GATEWAY_IP="10.239.132.1"
-  export NETMASK="255.255.252.0"
-  export DNS_1="10.239.128.100"
-  export DNS_2="10.136.112.220"
-  export ROOT_PASSWORD='V1rtu@1c3!'
-  export USER_NAME='dellemc'
-  export USER_PASSWORD='Abcd123$'
-  export SCRIPT_DEBUG=0
-  [[ -z "$WORKING_PATH" ]] && export WORKING_PATH=/home/ova-build
-}
-
-function image_latest
-{
-  export BASE_TAR="http://$(hostname -f)/dl/$(cd ~http/dl/ ; ls centos*.txz | tail -n1)"
-  export DISKIMAGE_TAR="http://$(hostname -f)/dl/$(cd ~http/dl/ ; ls base-vmdk*.txz | tail -n1)"
-}
-
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent identities id_ed25519
 zstyle :omz:plugins:ssh-agent lifetime 36h
