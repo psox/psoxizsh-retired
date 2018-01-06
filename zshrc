@@ -11,6 +11,12 @@ then
   if [[ -d /cygdrive/s/develop/go ]]
   then
     export GOPATH=$(echo /cygdrive/s/develop/go)
+  elif [[ -d ~/Develop/go ]]
+  then
+    export GOPATH=$(echo ~/Develop/go)
+  elif [[ -d ~/develop/go ]]
+  then
+    export GOPATH=$(echo ~/develop/go)
   else
     export GOPATH=$(echo ~/go)
   fi
@@ -68,27 +74,27 @@ ZSH_CUSTOM=$(dirname $ZSH)/zsh-custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  zsh_reload
+  zsh-navigation-tools
+  gnu-utils
+  common-aliases
+  colored-man-pages
   $( which git 2>&1 >/dev/null && echo git )
   $( which git 2>&1 >/dev/null && echo git-prompt )
   $( which git 2>&1 >/dev/null && echo git-extra )
-  zsh_reload
-  perl
-  go
-  rsync
-  zsh-navigation-tools
+  $( which perl 2>&1 >/dev/null && echo perl )
+  $( which go 2>&1 >/dev/null && echo go )
+  $( which rsync 2>&1 >/dev/null && echo rsync )
   $( which rust 2>&1 >/dev/null && echo rust )
   $( which cargo 2>&1 >/dev/null && echo cargo )
-  jsontools
-  gnu-utils
-  encode64
+  $( which jq 2>&1 >/dev/null && echo jsontools )
+  $( which encode64 2>&1 >/dev/null && echo encode64 )
   $( which docker-compose 2>&1 >/dev/null && echo docker-compose )
   $( which docker 2>&1 >/dev/null && echo docker )
-  common-aliases
-  colored-man-pages
-  systemd
-  python
-  pip
-  sudo
+  $( which systemd 2>&1 >/dev/null && echo systemd )
+  $( which python 2>&1 >/dev/null && echo python )
+  $( which pip 2>&1 >/dev/null && echo pip )
+  $( which sudo 2>&1 >/dev/null && echo sudo )
   $( which tmux 2>&1 >/dev/null && echo tmux )
   $( which rpmbuild 2>&1 >/dev/null && echo rpmbuild )
   $( which rpm 2>&1 >/dev/null && echo rpm )
@@ -100,8 +106,8 @@ plugins=(
   $( [[ -e /etc/ubuntu-release ]] && echo ubuntu )
   $( [[ -e /etc/suse-release ]] && echo suse )
   $( [[ "$(uname)" == "Darwin" ]] && echo osx )
-  vim-interaction
-  ssh-agent
+  $( which vim 2>&1 >/dev/null && echo vim-interaction )
+  $( which ssh 2>&1 >/dev/null && echo ssh-agent )
   zsh-completions
   zsh-syntax-highlighting
   zsh-autosuggestions
