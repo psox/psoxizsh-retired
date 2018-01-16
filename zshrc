@@ -86,6 +86,7 @@ plugins=(
   $( which git 2>&1 >/dev/null && echo git )
   $( which git 2>&1 >/dev/null && echo git-prompt )
   $( which git 2>&1 >/dev/null && echo git-extra )
+  $( which git 2>&1 >/dev/null && echo git-flow )
   $( which perl 2>&1 >/dev/null && echo perl )
   $( which go 2>&1 >/dev/null && echo go )
   $( which rsync 2>&1 >/dev/null && echo rsync )
