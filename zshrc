@@ -1,6 +1,10 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities id_ed25519 ~/.ssh/.*_autoload(N)
+zstyle :omz:plugins:ssh-agent lifetime 36h
+
 # remove duplicates
 typeset -U PATH path
 
@@ -190,9 +194,5 @@ fi
 [[ ! -z "$DISPLAY" ]] && xhost +LOCAL:
 
 path+=( $GOPATH/bin ${GOROOT+${GOROOT}/bin} )
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities id_ed25519
-zstyle :omz:plugins:ssh-agent lifetime 36h
 
 # vim: sw=2 ts=8 si relativenumber number
