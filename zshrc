@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities id_ed25519 ~/.ssh/*_autoload(N)
+zstyle :omz:plugins:ssh-agent identities id_ed25519 $(cd ~/.ssh; echo *_autoload(N))
 zstyle :omz:plugins:ssh-agent lifetime 36h
 
 # remove duplicates
