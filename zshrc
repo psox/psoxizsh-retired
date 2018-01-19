@@ -124,7 +124,7 @@ plugins=(
   zsh-history-substring-search
 )
 
-if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" ]]
+if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" || "$OSTYPE" == "cygwin" ]]
 then
   export VIMINIT='source $MYVIMRC'
   export MYVIMRC=$HOME/.psoxizsh/vimrc
