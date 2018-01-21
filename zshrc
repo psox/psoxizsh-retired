@@ -11,6 +11,7 @@ zstyle :omz:plugins:ssh-agent lifetime 36h
 
 # remove duplicates
 typeset -U PATH path
+path=( /bin /sbin /usr/bin /usr/sbin $path )
 
 [[ -f /etc/profile ]] && source /etc/profile
 
