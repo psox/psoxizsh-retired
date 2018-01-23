@@ -2,7 +2,7 @@
 
 (
 	cd ~
-	[[ -e /etc/arch-release ]] && sudo -i pacman -S zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags
+	[[ -e /etc/arch-release ]] && sudo -i pacman --needed -S zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags
 	[[ -e /etc/centos-release ]] && sudo -i yum install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
 	[[ -e /etc/redhat-release ]] && sudo -i yum install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
 	[[ -e /etc/ubuntu-release ]] && sudo -i apt install -y zsh bridge-utils psmisc vim git tree rsync bc wget tmux ctags yum-utils
