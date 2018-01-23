@@ -39,7 +39,7 @@ export ZSH_CACHE_DIR=~/.cache/zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="rkj-repos"
-[[ -z ZSH_THEME ]] && ZSH_THEME="stemmet"
+[[ "$ZSH_THEME" == "" ]] && ZSH_THEME="stemmet"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
