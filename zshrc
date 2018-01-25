@@ -1,12 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 #
-[[ -z LANGUAGE ]] && export LANGUAGE=en_US.UTF-8
-[[ -z LANG ]] && export LANG=en_US.UTF-8
-[[ -z LC_ALL ]] && export LC_ALL=en_US.UTF-8
+[[ "$LANGUAGE" == "" ]] && export LANGUAGE=en_US.UTF-8
+[[ "$LANG" == "" ]] && export LANG=en_US.UTF-8
+[[ "$LC_ALL" == "" ]] && export LC_ALL=en_US.UTF-8
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities $(cd ~/.ssh; echo  id_ed25519(N) *_autoload(N))
+zstyle :omz:plugins:ssh-agent identities $( [[ -e ~/.ssh/autoload ]] && cat ~/.ssh/autoload )
 zstyle :omz:plugins:ssh-agent lifetime 36h
 
 # remove duplicates
