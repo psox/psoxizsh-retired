@@ -49,5 +49,4 @@ let spell_auto_type = ""
 set modeline
 set modelines=7
 
-" vim: syntax==vim
-
+" vim: syntax=vim
