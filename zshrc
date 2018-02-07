@@ -96,6 +96,7 @@ plugins=(
   $( which perl 2>&1 >/dev/null && echo perl )
   $( which go 2>&1 >/dev/null && echo go )
   $( which rsync 2>&1 >/dev/null && echo rsync )
+  $( which aws 2>&1 >/dev/null && echo aws )
   $( which rust 2>&1 >/dev/null && echo rust )
   $( which cargo 2>&1 >/dev/null && echo cargo )
   $( which jq 2>&1 >/dev/null && echo jsontools )
