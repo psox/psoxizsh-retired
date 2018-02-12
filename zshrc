@@ -83,48 +83,36 @@ ZSH_CUSTOM=$(dirname $ZSH)/zsh-custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  zsh_reload
-  zsh-navigation-tools
-  gnu-utils
-  common-aliases
-  colored-man-pages
-  $( which git 2>&1 >/dev/null && echo git )
-  $( which git 2>&1 >/dev/null && echo git-prompt )
-  $( which git 2>&1 >/dev/null && echo git-extra )
-  $( which git 2>&1 >/dev/null && echo git-flow-avh )
-  $( which perl 2>&1 >/dev/null && echo perl )
-  $( which go 2>&1 >/dev/null && echo go )
-  $( which rsync 2>&1 >/dev/null && echo rsync )
-  $( which aws 2>&1 >/dev/null && echo aws )
-  $( which rust 2>&1 >/dev/null && echo rust )
-  $( which cargo 2>&1 >/dev/null && echo cargo )
-  $( which jq 2>&1 >/dev/null && echo jsontools )
-  $( which encode64 2>&1 >/dev/null && echo encode64 )
-  $( which docker-compose 2>&1 >/dev/null && echo docker-compose )
-  $( which docker 2>&1 >/dev/null && echo docker )
-  $( which systemd 2>&1 >/dev/null && echo systemd )
-  $( which python 2>&1 >/dev/null && echo python )
-  $( which pip 2>&1 >/dev/null && echo pip )
-  $( which sudo 2>&1 >/dev/null && echo sudo )
-  $( which tmux 2>&1 >/dev/null && echo tmux )
-  $( which rpmbuild 2>&1 >/dev/null && echo rpmbuild )
-  $( which rpm 2>&1 >/dev/null && echo rpm )
-  $( which yum 2>&1 >/dev/null && echo yum )
-  $( which kubeadm 2>&1 >/dev/null && echo kubeadm )
-  $( [[ -e /etc/arch-release ]] && echo archlinux )
-  $( [[ -e /etc/centos-release ]] && echo fedora )
-  $( [[ -e /etc/redhat-release ]] && echo redhat )
-  $( [[ -e /etc/ubuntu-release ]] && echo ubuntu )
-  $( [[ -e /etc/suse-release ]] && echo suse )
-  $( [[ "$(uname)" == "Darwin" ]] && echo osx )
-  $( which vim 2>&1 >/dev/null && echo vim-interaction )
-  $( which ssh 2>&1 >/dev/null && echo ssh-agent )
-  zsh-completions
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  zsh-history-substring-search
-)
+plugins=( zsh_reload zsh-navigation-tools gnu-utils common-aliases colored-man-pages )
+( which git 2>/dev/null >/dev/null ) && plugins+=( git git-prompt git-extra git-flow-avh )
+( which perl 2>/dev/null >/dev/null ) && plugins+=( perl )
+( which go 2>/dev/null >/dev/null ) && plugins+=( go )
+( which rsync 2>/dev/null >/dev/null ) && plugins+=( rsync )
+( which aws 2>/dev/null >/dev/null ) && plugins+=( aws )
+( which rust 2>/dev/null >/dev/null ) && plugins+=( rust )
+( which cargo 2>/dev/null >/dev/null ) && plugins+=( cargo )
+( which jq 2>/dev/null >/dev/null ) && plugins+=( jsontools )
+( which encode64 2>/dev/null >/dev/null ) && plugins+=( encode64 )
+( which docker-compose 2>/dev/null >/dev/null ) && plugins+=( docker-compose )
+( which docker 2>/dev/null >/dev/null ) && plugins+=( docker )
+( which systemd 2>/dev/null >/dev/null ) && plugins+=( systemd )
+( which python 2>/dev/null >/dev/null ) && plugins+=( python )
+( which pip 2>/dev/null >/dev/null ) && plugins+=( pip )
+( which sudo 2>/dev/null >/dev/null ) && plugins+=( sudo )
+( which tmux 2>/dev/null >/dev/null ) && plugins+=( tmux )
+( which rpmbuild 2>/dev/null >/dev/null ) && plugins+=( rpmbuild )
+( which rpm 2>/dev/null >/dev/null ) && plugins+=( rpm )
+( which yum 2>/dev/null >/dev/null ) && plugins+=( yum )
+( which kubeadm 2>/dev/null >/dev/null ) && plugins+=( kubeadm )
+( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
+( [[ -e /etc/centos-release ]] ) && plugins+=( fedora )
+( [[ -e /etc/redhat-release ]] ) && plugins+=( redhat )
+( [[ -e /etc/ubuntu-release ]] ) && plugins+=( ubuntu )
+( [[ -e /etc/suse-release ]] ) && plugins+=( suse )
+( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( osx )
+( which vim 2>/dev/null >/dev/null ) && plugins+=( vim-interaction )
+( which ssh 2>/dev/null >/dev/null ) && plugins+=( ssh-agent )
+plugins+=( zsh-completions zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search )
 
 if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" || "$OSTYPE" == "cygwin" ]]
 then
