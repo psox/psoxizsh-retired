@@ -137,9 +137,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Dynamic Completion
 foreach cmd in kubectl kubeadm
-if [ $commands[$cmd] ]; then
-  source <($cmd completion zsh)
-fi
+  ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
+end
 
 # User configuration
 
