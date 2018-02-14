@@ -83,7 +83,14 @@ ZSH_CUSTOM=$(dirname $ZSH)/zsh-custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( zsh_reload zsh-navigation-tools gnu-utils common-aliases colored-man-pages )
+plugins=( 
+  $pre_plugins 
+  zsh_reload
+  zsh-navigation-tools 
+  gnu-utils 
+  common-aliases 
+  colored-man-pages 
+)
 ( which git 2>/dev/null >/dev/null ) && plugins+=( git git-prompt git-extra git-flow-avh )
 ( which perl 2>/dev/null >/dev/null ) && plugins+=( perl )
 ( which go 2>/dev/null >/dev/null ) && plugins+=( go )
@@ -104,6 +111,7 @@ plugins=( zsh_reload zsh-navigation-tools gnu-utils common-aliases colored-man-p
 ( which rpm 2>/dev/null >/dev/null ) && plugins+=( rpm )
 ( which yum 2>/dev/null >/dev/null ) && plugins+=( yum )
 ( which kubeadm 2>/dev/null >/dev/null ) && plugins+=( kubeadm )
+( which kubectl 2>/dev/null >/dev/null ) && plugins+=( kubectl )
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/centos-release ]] ) && plugins+=( fedora )
 ( [[ -e /etc/redhat-release ]] ) && plugins+=( redhat )
@@ -112,7 +120,13 @@ plugins=( zsh_reload zsh-navigation-tools gnu-utils common-aliases colored-man-p
 ( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( osx )
 ( which vim 2>/dev/null >/dev/null ) && plugins+=( vim-interaction )
 ( which ssh 2>/dev/null >/dev/null ) && plugins+=( ssh-agent )
-plugins+=( zsh-completions zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search )
+plugins+=( 
+  zsh-completions
+  zsh-syntax-highlighting 
+  zsh-autosuggestions 
+  zsh-history-substring-search 
+  $post_plugins
+)
 
 if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" || "$OSTYPE" == "cygwin" ]]
 then
