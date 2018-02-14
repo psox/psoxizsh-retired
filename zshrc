@@ -110,8 +110,6 @@ plugins=(
 ( which rpmbuild 2>/dev/null >/dev/null ) && plugins+=( rpmbuild )
 ( which rpm 2>/dev/null >/dev/null ) && plugins+=( rpm )
 ( which yum 2>/dev/null >/dev/null ) && plugins+=( yum )
-( which kubeadm 2>/dev/null >/dev/null ) && plugins+=( kubeadm )
-( which kubectl 2>/dev/null >/dev/null ) && plugins+=( kubectl )
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/centos-release ]] ) && plugins+=( fedora )
 ( [[ -e /etc/redhat-release ]] ) && plugins+=( redhat )
@@ -136,6 +134,12 @@ then
 fi
 
 source $ZSH/oh-my-zsh.sh
+
+# Dynamic Completion
+foreach cmd in kubectl kubeadm
+if [ $commands[$cmd] ]; then
+  source <($cmd completion zsh)
+fi
 
 # User configuration
 
