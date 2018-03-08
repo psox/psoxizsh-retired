@@ -1,4 +1,4 @@
-# If you come from bash you might have to change your $PATH.
+#o If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 #
 [[ "$LANGUAGE" == "" ]] && export LANGUAGE=en_US.UTF-8
@@ -13,7 +13,7 @@ zstyle :omz:plugins:ssh-agent lifetime 36h
 typeset -U PATH path
 path=( /bin /sbin /usr/bin /usr/sbin $path )
 
-[[ -f /etc/profile ]] && source /etc/profile
+[[ "$OS" != "Windows_NT" ]] && [[ -f /etc/profile ]] && source /etc/profile
 
 if [[ -z "$GOPATH" ]]
 then
