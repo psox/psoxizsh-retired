@@ -15,6 +15,7 @@ call plug#begin('~/.psoxizsh/vim/plugged')
   Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
   Plug 'rust-lang/rust.vim'
   Plug 'vim-scripts/taglist.vim'
+  Plug 'pearofducks/ansible-vim'
   if v:version > 704
     Plug 'Valloric/YouCompleteMe'
   endif
@@ -50,6 +51,10 @@ let g:syntastic_check_on_wq = 0
 " let g:syntastic_enable_perl_checker = 1
 let g:syntastic_enable_zsh_checker = 1
 let g:syntastic_enable_bash_checker = 1
+
+filetype plugin indent on
+autocmd FileType yaml setl indentkeys-=<:>
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 colorscheme murphy
 
