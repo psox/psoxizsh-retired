@@ -12,6 +12,7 @@ directory and make sure you have not make any changes.  If you have stash them a
     git submodule foreach git fetch --all --prune
     git submodule foreach git checkout master
     git submodule foreach git pull
+    git pull --recurse-submodules=yes
 )
 
 src
