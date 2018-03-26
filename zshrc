@@ -123,7 +123,6 @@ plugins+=(
   zsh-completions
   zsh-syntax-highlighting 
   zsh-autosuggestions 
-  zsh-history-substring-search 
   $post_plugins
 )
 
@@ -140,6 +139,7 @@ source $ZSH/oh-my-zsh.sh
 foreach cmd in kubectl kubeadm
   ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
 end
+( which rpm 2>/dev/null >/dev/null ) && source ~/.psoxizsh/zsh-custom/plugins/lxd-completion-zsh/_lxc
 
 # User configuration
 
