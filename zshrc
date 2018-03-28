@@ -87,9 +87,6 @@ ZSH_CUSTOM=$(dirname $ZSH)/zsh-custom
 plugins=( 
   $pre_plugins 
   zsh_reload
-  zsh-syntax-highlighting 
-  zsh-autosuggestions 
-  zsh-navigation-tools 
   gnu-utils 
   common-aliases 
   colored-man-pages 
@@ -123,6 +120,9 @@ plugins=(
 ( which ssh 2>/dev/null >/dev/null ) && plugins+=( ssh-agent )
 plugins+=( 
   zsh-completions
+  zsh-autosuggestions 
+  zsh-navigation-tools 
+  zsh-syntax-highlighting 
   $post_plugins
 )
 
@@ -180,8 +180,8 @@ bindkey -- "^[OD"  backward-char
 bindkey -- "^[OC"  forward-char
 bindkey -- "^[OA"  up-line-or-history
 bindkey -- "^[OB"  down-line-or-history
-#bindkey -M emacs '^P' history-substring-search-up
-#bindkey -M emacs '^N' history-substring-search-down
+#bindkey -- "^[[1;5A" history-substring-search-up
+#bindkey -- "^[[1;5B" history-substring-search-down
 
 # cutomize options
 setopt no_bang_hist
