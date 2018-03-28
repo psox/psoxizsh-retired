@@ -87,6 +87,8 @@ ZSH_CUSTOM=$(dirname $ZSH)/zsh-custom
 plugins=( 
   $pre_plugins 
   zsh_reload
+  zsh-syntax-highlighting 
+  zsh-autosuggestions 
   zsh-navigation-tools 
   gnu-utils 
   common-aliases 
@@ -121,8 +123,6 @@ plugins=(
 ( which ssh 2>/dev/null >/dev/null ) && plugins+=( ssh-agent )
 plugins+=( 
   zsh-completions
-  zsh-syntax-highlighting 
-  zsh-autosuggestions 
   $post_plugins
 )
 
@@ -139,7 +139,7 @@ source $ZSH/oh-my-zsh.sh
 foreach cmd in kubectl kubeadm
   ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
 end
-( which rpm 2>/dev/null >/dev/null ) && source ~/.psoxizsh/zsh-custom/plugins/lxd-completion-zsh/_lxc
+( which lxc 2>/dev/null >/dev/null ) && source ~/.psoxizsh/zsh-custom/lxd-completion-zsh/_lxc
 
 # User configuration
 
@@ -180,8 +180,8 @@ bindkey -- "^[OD"  backward-char
 bindkey -- "^[OC"  forward-char
 bindkey -- "^[OA"  up-line-or-history
 bindkey -- "^[OB"  down-line-or-history
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
+#bindkey -M emacs '^P' history-substring-search-up
+#bindkey -M emacs '^N' history-substring-search-down
 
 # cutomize options
 setopt no_bang_hist
