@@ -1,4 +1,4 @@
-#o If you come from bash you might have to change your $PATH.
+# If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 #
 [[ "$LANGUAGE" == "" ]] && export LANGUAGE=en_US.UTF-8
@@ -110,6 +110,7 @@ plugins=(
 ( which rpmbuild 2>/dev/null >/dev/null ) && plugins+=( rpmbuild )
 ( which rpm 2>/dev/null >/dev/null ) && plugins+=( rpm )
 ( which yum 2>/dev/null >/dev/null ) && plugins+=( yum )
+( which strfile 2>/dev/null >/dev/null ) && plugins+=( chucknorris )
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/centos-release ]] ) && plugins+=( fedora )
 ( [[ -e /etc/redhat-release ]] ) && plugins+=( redhat )
