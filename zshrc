@@ -5,6 +5,9 @@
 [[ "$LANG" == "" ]] && export LANG=en_US.UTF-8
 [[ "$LC_ALL" == "" ]] && export LC_ALL=en_US.UTF-8
 
+[[ -d /etc/psoxizsh ]] && export PSOXIZSH=/etc/psoxizsh
+[[ -d ~/.psoxizsh ]] && export PSOXIZSH=~/.psoxizsh
+
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent identities $( [[ -e ~/.ssh/autoload ]] && cat ~/.ssh/autoload )
 zstyle :omz:plugins:ssh-agent lifetime 36h
@@ -32,7 +35,7 @@ then
 fi
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.psoxizsh/oh-my-zsh
+export ZSH=$PSOXIZSH/oh-my-zsh
 export ZSH_CACHE_DIR=~/.cache/zsh
 [[ ! -d $ZSH_CACHE_DIR ]] && mkdir -p $ZSH_CACHE_DIR
 
@@ -130,17 +133,17 @@ plugins+=(
 if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" || "$OSTYPE" == "cygwin" ]]
 then
   export VIMINIT='source $MYVIMRC'
-  export MYVIMRC=$HOME/.psoxizsh/vimrc
-  export VIMHOME=$HOME/.psoxizsh/vim
+  export MYVIMRC=$PSOXIZSH/vimrc
+  export VIMHOME=$PSOXIZSH/vim
 fi
 
-source $ZSH/oh-my-zsh.sh
+[[ -d $ZSH ]] && source $ZSH/oh-my-zsh.sh
 
 # Dynamic Completion
 foreach cmd in kubectl kubeadm
   ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
 end
-( which lxc 2>/dev/null >/dev/null ) && source ~/.psoxizsh/zsh-custom/lxd-completion-zsh/_lxc
+( which lxc 2>/dev/null >/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
 
 # User configuration
 
@@ -165,8 +168,8 @@ export EDITOR='vim'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="vim ~/.psoxizsh/zshrc"
-alias ohmyzsh="vim ~/.psoxizsh/oh-my-zsh"
+alias zshconfig="vim $PSOXIZSH/zshrc"
+alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
 [[ -x /usr/bin/code ]] && alias code='/usr/bin/code --user-data-dir="$(echo ~/vscode)" '
 
 typeset -A key
