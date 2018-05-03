@@ -203,7 +203,7 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-finish
 fi
 
-[[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias sudo -iupacman /usr/bin/yay
+[[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
 [[ -x /usr/bin/yaourt ]] && alias ypac='sudo -iupacman /usr/bin/yaourt '
 [[ -d /opt/Komodo-IDE-10/bin ]] && path+=( /opt/Komodo-IDE-10/bin )
 [[ -d /cygdrive/c/qemu/ ]] && path+=( /cygdrive/c/qemu/ )
