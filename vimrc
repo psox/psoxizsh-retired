@@ -52,6 +52,10 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_zsh_checker = 1
 let g:syntastic_enable_bash_checker = 1
 
+" rust lang
+let g:ycm_rust_src_path = '~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc'
+
+" Other
 filetype plugin indent on
 autocmd FileType yaml setl indentkeys-=<:>
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
