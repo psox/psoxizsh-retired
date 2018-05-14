@@ -56,9 +56,13 @@ let g:syntastic_enable_bash_checker = 1
 let g:ycm_rust_src_path = '~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc'
 
 " Other
+set shiftwidth=2
+set tabstop=8
+set softtabstop=2
+set expandtab
 filetype plugin indent on
 autocmd FileType yaml setl indentkeys-=<:>
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType yaml setlocal ts=8 sts=2 sw=2 expandtab
 
 colorscheme murphy
 
