@@ -13,8 +13,12 @@ zstyle :omz:plugins:ssh-agent identities $( [[ -e ~/.ssh/autoload ]] && cat ~/.s
 zstyle :omz:plugins:ssh-agent lifetime 36h
 
 # remove duplicates
-typeset -U PATH path
+typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
+
+# Set funtion paths
+[[ -d /root/.local/share/zsh/functions ]] && fpath+=/root/.local/share/zsh/functions
+[[ -d /root/.config/zsh/functions ]] && fpath+=/root/.config/zsh/functions
 
 [[ "$OS" != "Windows_NT" ]] && [[ -f /etc/profile ]] && source /etc/profile
 
