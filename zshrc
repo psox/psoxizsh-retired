@@ -17,7 +17,7 @@ typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
 
 # Set funtion paths
-foreach local p in /root/.local/share/zsh/functions /root/.config/zsh/functions $extra_fpath
+foreach local p in ~/.local/share/zsh/functions ~/.config/zsh/functions $extra_fpath
   [[ -d "$p" ]] && fpath=( "$p" $fpath ) 
 end
 
