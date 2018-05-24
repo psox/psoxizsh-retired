@@ -15,6 +15,7 @@ zstyle :omz:plugins:ssh-agent lifetime 36h
 # remove duplicates
 typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
+[[ -d ~/bin ]] && path=( ~/bin $path )
 
 # Set funtion paths
 foreach local p in ~/.local/share/zsh/functions ~/.config/zsh/functions $extra_fpath
