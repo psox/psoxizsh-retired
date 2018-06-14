@@ -225,6 +225,8 @@ precmd() {
   if [[ ! -z $KUBECONFIG ]]
   then
     export KUBE_VARS=$(basename $KUBECONFIG)
+  else
+    unset KUBE_VARS
   fi
 }
 
