@@ -1,16 +1,17 @@
-#! /bin/sh
-
+#! /bin/zsh
 (
   cd ~
+  [[ ! -e ~/.zshrc ]] && touch ~/.zshrc
   install -v --mode=700 -d ~/.ssh
-  if grep -E '^source (/etc|~)/psoxizsh/zshrc' ~/.zshrc 
+  grep -E '^source (/etc/psoxizsh|~/.psoxizsh)/zshrc' ~/.zshrc 2>/dev/null >/dev/null 
+  if [[ $? -ne 0 ]]
   then
     if [[ -d ~/.psoxizsh ]]
     then
       echo 'source ~/.psoxizsh/zshrc' >>~/.zshrc
     elif [[ -d /etc/psoxizsh ]]
     then
-      echo 'source ~/.psoxizsh/zshrc' >>~/.zshrc
+      echo 'source /etc/psoxizsh/zshrc' >>~/.zshrc
     fi
   fi
 )
