@@ -1,5 +1,7 @@
 set guifont=Fira\ Code\ 11
 
+set encoding=utf-8
+
 set nocompatible
 colorscheme murphy
 syntax on
@@ -34,6 +36,15 @@ let spell_insert_mode = 1
 let spell_executable = "ispell"
 let spell_auto_type = ""
 "let spell_auto_type = "tex,mail,text,html,sgml,otl,cvs,none"
+
+" other
+set shiftwidth=2
+set tabstop=8
+set softtabstop=2
+set expandtab
+filetype plugin indent on
+autocmd FileType yaml setl indentkeys-=<:>
+autocmd FileType yaml setlocal ts=8 sts=2 sw=2 expandtab
 
 set modeline
 set modelines=7

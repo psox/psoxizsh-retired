@@ -68,5 +68,8 @@ colorscheme murphy
 
 cmap w!! w !sudo tee % > /dev/null 
 
+set modeline
+set modelines=7
+
 
 " vim: ts=8 sw=2 si
