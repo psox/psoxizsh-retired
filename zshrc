@@ -217,4 +217,11 @@ fi
 
 path+=( $GOPATH/bin ${GOROOT+${GOROOT}/bin} )
 
+# Set Time Variables
+precmd() {
+  export _DATE_=$(date -u +%Y%m%d)
+  export _TIME_=$(date -u +%H%M%S)
+  export _DTTS_="${_DATE_}T${_TIME_}Z"
+}
+
 # vim: sw=2 ts=8 si relativenumber number
