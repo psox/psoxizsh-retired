@@ -224,7 +224,7 @@ precmd() {
   export _DTTS_="${_DATE_}T${_TIME_}Z"
   if [[ ! -z $KUBECONFIG ]]
   then
-    export KUBE_VARS=$(basename $KUBECONFIG)
+    export KUBE_VARS=$(basename $KUBECONFIG)/$(kubectl config current-context)
   else
     unset KUBE_VARS
   fi
