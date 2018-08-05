@@ -133,6 +133,7 @@ plugins+=(
   zsh-autosuggestions 
   zsh-navigation-tools 
   zsh-syntax-highlighting 
+  k
   $post_plugins
 )
 

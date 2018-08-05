@@ -16,3 +16,6 @@
 [submodule "zsh-custom/lxd-completion-zsh"]
 	path = zsh-custom/lxd-completion-zsh
 	url = https://github.com/endaaman/lxd-completion-zsh.git
+[submodule "zsh-custom/plugins/k"]
+	path = zsh-custom/plugins/k
+	url = https://github.com/supercrabtree/k
