@@ -18,7 +18,16 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'pearofducks/ansible-vim'
   if v:version > 704
     Plug 'Valloric/YouCompleteMe'
+    Plug 'prabirshrestha/async.vim'
   endif
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+
 call plug#end()
 
 set number
@@ -53,7 +62,9 @@ let g:syntastic_enable_zsh_checker = 1
 let g:syntastic_enable_bash_checker = 1
 
 " rust lang
-let g:ycm_rust_src_path = '~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc'
+autocmd FileType rust let g:autofmt_autosave = 1
+autocmd FileType rust let g:deoplete#enable_at_startup = 1
+let g:ycm_rust_src_path = expand('~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc')
 
 " Other
 set shiftwidth=2
@@ -70,6 +81,5 @@ cmap w!! w !sudo tee % > /dev/null
 
 set modeline
 set modelines=7
-
 
 " vim: ts=8 sw=2 si
