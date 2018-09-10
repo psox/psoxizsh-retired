@@ -8,10 +8,6 @@
 [[ -d /etc/psoxizsh ]] && export PSOXIZSH=/etc/psoxizsh
 [[ -d ~/.psoxizsh ]] && export PSOXIZSH=~/.psoxizsh
 
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities $( [[ -e ~/.ssh/autoload ]] && cat ~/.ssh/autoload )
-zstyle :omz:plugins:ssh-agent lifetime 36h
-
 # remove duplicates
 typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
@@ -146,6 +142,10 @@ fi
 
 [[ -d $ZSH ]] && source $ZSH/oh-my-zsh.sh
 
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities $( [[ -e ~/.ssh/autoload ]] && cat ~/.ssh/autoload )
+zstyle :omz:plugins:ssh-agent lifetime 36h
+
 # Dynamic Completion
 foreach cmd in kubectl kubeadm
   ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
@@ -177,7 +177,7 @@ export EDITOR='vim'
 # Example aliases
 alias zshconfig="vim $PSOXIZSH/zshrc"
 alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
-[[ -x /usr/bin/code ]] && alias code='/usr/bin/code --user-data-dir="$(echo ~/vscode)" '
+[[ -x /usr/bin/code ]] && alias code='/usr/bin/code --user-data-dir="$(echo ~/.vscode)" '
 
 typeset -A key
 
