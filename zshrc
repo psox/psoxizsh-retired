@@ -177,7 +177,7 @@ export EDITOR='vim'
 # Example aliases
 alias zshconfig="vim $PSOXIZSH/zshrc"
 alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
-[[ -x /usr/bin/code ]] && alias code='/usr/bin/code --user-data-dir="$(echo ~/.vscode)" '
+#[[ -x /usr/bin/code ]] && alias code='/usr/bin/code --user-data-dir="$(echo ~/.vscode)" '
 
 typeset -A key
 
