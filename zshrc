@@ -231,4 +231,8 @@ precmd() {
   fi
 }
 
+foreach _OPT in AUTO_NAME_DIRS CDABLE_VARS
+  setopt $_OPT
+end
+
 # vim: sw=2 ts=8 si relativenumber number
