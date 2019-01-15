@@ -16,6 +16,7 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'rust-lang/rust.vim'
   Plug 'vim-scripts/taglist.vim'
   Plug 'pearofducks/ansible-vim'
+  Plug 'luochen1990/rainbow'
   if v:version > 704
     Plug 'Valloric/YouCompleteMe'
     Plug 'prabirshrestha/async.vim'
@@ -67,6 +68,7 @@ autocmd FileType rust let g:deoplete#enable_at_startup = 1
 let g:ycm_rust_src_path = expand('~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc')
 
 " Other
+let g:rainbow_active = 1
 set shiftwidth=2
 set tabstop=8
 set softtabstop=2
