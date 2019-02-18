@@ -19,3 +19,6 @@
 [submodule "zsh-custom/plugins/k"]
 	path = zsh-custom/plugins/k
 	url = https://github.com/supercrabtree/k
+[submodule "zsh-custom/zshnip"]
+	path = zsh-custom/zshnip
+	url = https://github.com/facetframer/zshnip.git
