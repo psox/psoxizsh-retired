@@ -118,6 +118,7 @@ plugins=(
 ( which yum 2>/dev/null >/dev/null ) && plugins+=( yum )
 ( which code 2>/dev/null >/dev/null ) && plugins+=( vscode )
 ( which strfile 2>/dev/null >/dev/null ) && plugins+=( chucknorris )
+( which kubectl 2>/dev/null >/dev/null ) && plugins+=( kubectl )
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/centos-release ]] ) && plugins+=( fedora )
 ( [[ -e /etc/redhat-release ]] ) && plugins+=( redhat )
@@ -131,7 +132,6 @@ plugins+=(
   zsh-autosuggestions 
   zsh-navigation-tools 
   zsh-syntax-highlighting 
-  k
   $post_plugins
 )
 
@@ -153,6 +153,8 @@ foreach cmd in kubectl kubeadm
   ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
 end
 ( which lxc 2>/dev/null >/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
+
+source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 
 # User configuration
 
@@ -179,7 +181,7 @@ export EDITOR='vim'
 # Example aliases
 alias zshconfig="vim $PSOXIZSH/zshrc"
 alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
-#[[ -x /usr/bin/code ]] && alias code='/usr/bin/code --user-data-dir="$(echo ~/.vscode)" '
+alias curlj="curl -H 'Content-Type: application/json' "
 
 typeset -A key
 
@@ -195,6 +197,9 @@ bindkey -- "^[OA"  up-line-or-history
 bindkey -- "^[OB"  down-line-or-history
 #bindkey -- "^[[1;5A" history-substring-search-up
 #bindkey -- "^[[1;5B" history-substring-search-down
+
+bindkey '\ej' zshnip-expand-or-edit # Alt-J
+bindkey '\ee' zshnip-edit-and-expand # Alt-E
 
 # cutomize options
 setopt no_bang_hist
