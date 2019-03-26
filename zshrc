@@ -165,7 +165,9 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-export EDITOR='vim'
+( which vi 2>/dev/null >/dev/null ) && export EDITOR='vi'
+( which vim 2>/dev/null >/dev/null ) && export EDITOR='vim'
+( which nvim 2>/dev/null >/dev/null ) && export EDITOR='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
