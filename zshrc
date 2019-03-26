@@ -96,7 +96,7 @@ plugins=(
   common-aliases 
   colored-man-pages 
 )
-( which git 2>/dev/null >/dev/null ) && plugins+=( git git-prompt git-extra git-flow-avh )
+( which git 2>/dev/null >/dev/null ) && plugins+=( git git-prompt git-extras git-flow-avh )
 ( which perl 2>/dev/null >/dev/null ) && plugins+=( perl )
 ( which go 2>/dev/null >/dev/null ) && plugins+=( go )
 ( which rsync 2>/dev/null >/dev/null ) && plugins+=( rsync )
