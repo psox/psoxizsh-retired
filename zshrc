@@ -99,6 +99,7 @@ plugins=(
 ( which git 2>/dev/null >/dev/null ) && plugins+=( git git-prompt git-extras git-flow-avh )
 ( which perl 2>/dev/null >/dev/null ) && plugins+=( perl )
 ( which go 2>/dev/null >/dev/null ) && plugins+=( go )
+( which oc 2>/dev/null >/dev/null ) && plugins+=( oc )
 ( which rsync 2>/dev/null >/dev/null ) && plugins+=( rsync )
 ( which aws 2>/dev/null >/dev/null ) && plugins+=( aws )
 ( which rust 2>/dev/null >/dev/null ) && plugins+=( rust )
