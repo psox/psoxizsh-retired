@@ -122,7 +122,7 @@ plugins=(
 ( [[ -e /etc/suse-release ]] ) && plugins+=( suse )
 ( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( osx )
 ( which vim 2>/dev/null >/dev/null ) && plugins+=( vim-interaction )
-( which ssh 2>/dev/null >/dev/null ) && plugins+=( ssh-agent )
+( which ssh 2>/dev/null >/dev/null ) && [[ -d ~/.ssh ]] && plugins+=( ssh-agent )
 plugins+=( 
   zsh-completions
   zsh-autosuggestions 
@@ -138,11 +138,19 @@ then
   export VIMHOME=$PSOXIZSH/vim
 fi
 
+
+if [[ -d ~/.ssh ]]
+then
+  zstyle :omz:plugins:ssh-agent lifetime 36h
+  if [[ -e ~/.ssh/autoload ]] 
+  then
+      zstyle :omz:plugins:ssh-agent identities $( cat ~/.ssh/autoload )
+  fi
+fi
+
 [[ -d $ZSH ]] && source $ZSH/oh-my-zsh.sh
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities $( [[ -e ~/.ssh/autoload ]] && cat ~/.ssh/autoload )
-zstyle :omz:plugins:ssh-agent lifetime 36h
 
 # Dynamic Completion
 foreach cmd in kubectl kubeadm
@@ -159,17 +167,9 @@ source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
 ( which vi 2>/dev/null >/dev/null ) && export EDITOR='vi'
 ( which vim 2>/dev/null >/dev/null ) && export EDITOR='vim'
 ( which nvim 2>/dev/null >/dev/null ) && export EDITOR='nvim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
