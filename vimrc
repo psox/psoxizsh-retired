@@ -17,6 +17,7 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'vim-scripts/taglist.vim'
   Plug 'pearofducks/ansible-vim'
   Plug 'luochen1990/rainbow'
+  Plug 'jremmen/vim-ripgrep'
   if v:version > 704
     Plug 'Valloric/YouCompleteMe'
     Plug 'prabirshrestha/async.vim'
@@ -83,6 +84,10 @@ cmap w!! w !sudo tee % > /dev/null
 
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
+
+" ripgrep settings
+let g:rg_highlight = true
+let g:rg_derive_root = true
 
 set modeline
 set modelines=7
