@@ -86,8 +86,8 @@ let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 
 " ripgrep settings
-let g:rg_highlight = true
-let g:rg_derive_root = true
+let g:rg_highlight = 'true'
+let g:rg_derive_root = 'true'
 
 set modeline
 set modelines=7
