@@ -5,6 +5,7 @@ set encoding=utf-8
 
 call plug#begin("$VIMHOME/plugged")
   Plug 'junegunn/vim-easy-align'	
+  Plug 'majutsushi/tagbar'	
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree'
@@ -88,6 +89,8 @@ let g:ycm_server_log_level = 'debug'
 " ripgrep settings
 let g:rg_highlight = 'true'
 let g:rg_derive_root = 'true'
+
+nmap <F8> :TagbarToggle<CR>
 
 set modeline
 set modelines=7
