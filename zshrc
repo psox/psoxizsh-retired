@@ -13,6 +13,9 @@ typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
 [[ -d ~/bin ]] && path=( ~/bin $path )
 
+# sdkman support
+[[ -f ~/.sdkman/bin/sdkman-init.sh ]] && source ~/.sdkman/bin/sdkman-init.sh
+
 # Set funtion paths
 foreach local p in ~/.local/share/zsh/functions ~/.config/zsh/functions $extra_fpath
   [[ -d "$p" ]] && fpath=( "$p" $fpath ) 
