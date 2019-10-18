@@ -138,7 +138,7 @@ if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" || "$OSTYPE" == "c
 then
   export VIMINIT='source $MYVIMRC'
   export MYVIMRC=$PSOXIZSH/vimrc
-  export VIMHOME=$PSOXIZSH/vim
+  export VIMHOME=~/.vim
 fi
 
 
