@@ -139,8 +139,11 @@ then
   export VIMINIT='source $MYVIMRC'
   export MYVIMRC=$PSOXIZSH/vimrc
   export VIMHOME=~/.vim
+  [[ -f $VIMHOME/autoload/plug.vim ]] || (
+    mkdir -vp $VIMHOME/autoload/
+    cp -v $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
+  )
 fi
-
 
 if [[ -d ~/.ssh ]]
 then
