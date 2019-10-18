@@ -1,5 +1,17 @@
 
+" Function to source only if file exists {
+function! SourceIfExists(file)
+  if filereadable(expand(a:file))
+    exe 'source' a:file
+  endif
+endfunction
+" }
+
+
+
 exec "set rtp=$VIMHOME," . &rtp 	
+
+call SourceIfExists("~/.config/vim/early.vimrc")
 
 set encoding=utf-8
 
@@ -19,6 +31,7 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'pearofducks/ansible-vim'
   Plug 'luochen1990/rainbow'
   Plug 'jremmen/vim-ripgrep'
+  call SourceIfExists("~/.config/vim/plug.vimrc")
   if v:version > 704
     Plug 'Valloric/YouCompleteMe'
     Plug 'prabirshrestha/async.vim'
@@ -91,6 +104,8 @@ let g:rg_highlight = 'true'
 let g:rg_derive_root = 'true'
 
 nmap <F8> :TagbarToggle<CR>
+
+call SourceIfExists("~/.config/vim/late.vimrc")
 
 set modeline
 set modelines=7
