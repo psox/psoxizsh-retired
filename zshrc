@@ -162,6 +162,8 @@ zstyle :omz:plugins:ssh-agent agent-forwarding on
 foreach cmd in kubectl kubeadm
   ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
 end
+( which lxc 2>/dev/null >/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
+#( which jaesve 2>/dev/null >/dev/null ) && source <(jaesve completions -- bash)
 
 source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 ( which lxc 2>/dev/null >/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
