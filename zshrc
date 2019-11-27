@@ -1,6 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-#
+
 [[ "$LANGUAGE" == "" ]] && export LANGUAGE=en_US.UTF-8
 [[ "$LANG" == "" ]] && export LANG=en_US.UTF-8
 [[ "$LC_ALL" == "" ]] && export LC_ALL=en_US.UTF-8
@@ -15,6 +15,14 @@ path=( /bin /sbin /usr/bin /usr/sbin $path )
 
 # sdkman support
 [[ -f ~/.sdkman/bin/sdkman-init.sh ]] && source ~/.sdkman/bin/sdkman-init.sh
+
+# jaesve support
+( which jaesve 2>/dev/null >/dev/null ) && (
+  [[ -d ~/.local/share/zsh/functions ]] || mkdir -vp ~/.local/share/zsh/functions
+  [[ $(which jaesve) -nt ~/.local/share/zsh/functions/_jaesve ]] || (
+    jaesve completions -- zsh > ~/.local/share/zsh/functions/_jaesve
+  )
+)
 
 # Set funtion paths
 foreach local p in ~/.local/share/zsh/functions ~/.config/zsh/functions $extra_fpath
@@ -139,9 +147,9 @@ then
   export VIMINIT='source $MYVIMRC'
   export MYVIMRC=$PSOXIZSH/vimrc
   export VIMHOME=~/.vim
-  [[ -f $VIMHOME/autoload/plug.vim ]] || (
+  [[ ! $PSOXIZSH/vim/autoload/plug.vim -nt $VIMHOME/autoload/plug.vim ]] || (
     mkdir -vp $VIMHOME/autoload/
-    cp -v $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
+    cp -av $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
   )
 fi
 
@@ -162,12 +170,9 @@ zstyle :omz:plugins:ssh-agent agent-forwarding on
 foreach cmd in kubectl kubeadm
   ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
 end
-( which lxc 2>/dev/null >/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
-#( which jaesve 2>/dev/null >/dev/null ) && source <(jaesve completions -- bash)
 
 source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 ( which lxc 2>/dev/null >/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
-( which jaesve 2>/dev/null >/dev/null ) && source <(jaesve completions -- bash)
 
 # User configuration
 
@@ -225,8 +230,6 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 [[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
-[[ -x /usr/bin/yaourt ]] && alias ypac='sudo -iupacman /usr/bin/yaourt '
-[[ -d /opt/Komodo-IDE-10/bin ]] && path+=( /opt/Komodo-IDE-10/bin )
 [[ -d /cygdrive/c/qemu/ ]] && path+=( /cygdrive/c/qemu/ )
 [[ ! -z "$DISPLAY" ]] && xhost +LOCAL:
 
