@@ -147,7 +147,7 @@ then
   export VIMINIT='source $MYVIMRC'
   export MYVIMRC=$PSOXIZSH/vimrc
   export VIMHOME=~/.vim
-  [[ ! $PSOXIZSH/vim/autoload/plug.vim -nt $VIMHOME/autoload/plug.vim ]] || (
+  cmp $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim 2>/dev/null || (
     mkdir -vp $VIMHOME/autoload/
     cp -av $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
   )
