@@ -8,6 +8,8 @@
 [[ -d /etc/psoxizsh ]] && export PSOXIZSH=/etc/psoxizsh
 [[ -d ~/.psoxizsh ]] && export PSOXIZSH=~/.psoxizsh
 
+[[ "$TERM" == "linux" ]] && export TERM=vte-256color
+
 # remove duplicates
 typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
