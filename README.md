@@ -22,7 +22,7 @@ src
 ## Install
 
 ```bash
-git clone --recurse-submodules --recursive --config http.sslVerify=false https://bitbucket.org/pSox/psoxizsh.git ~/.psoxizsh
+git clone --recurse-submodules --recursive --config http.sslVerify=false https://github.com/psox/psoxizsh.git ~/.psoxizsh
 ~/.psoxizsh/fresh-system
 ```
 
