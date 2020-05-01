@@ -15,6 +15,8 @@ call SourceIfExists("~/.config/vim/early.vimrc")
 
 set encoding=utf-8
 
+" (Optional) Multi-entry selection UI.
+
 call plug#begin("$VIMHOME/plugged")
   Plug 'junegunn/vim-easy-align'	
   Plug 'majutsushi/tagbar'	
@@ -31,9 +33,12 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'pearofducks/ansible-vim'
   Plug 'luochen1990/rainbow'
   Plug 'jremmen/vim-ripgrep'
+  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+  Plug 'junegunn/fzf'
+  Plug 'sheerun/vim-polyglot'
   call SourceIfExists("~/.config/vim/plug.vimrc")
   if v:version > 704
-    Plug 'Valloric/YouCompleteMe'
+  "  Plug 'Valloric/YouCompleteMe'
     Plug 'prabirshrestha/async.vim'
   endif
   if has('nvim')
@@ -107,6 +112,9 @@ nmap <F8> :TagbarToggle<CR>
 
 call SourceIfExists("~/.config/vim/late.vimrc")
 
+
+set exrc
+set secure
 set modeline
 set modelines=7
 
