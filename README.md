@@ -21,12 +21,29 @@ src
 
 ## Install
 
+### User
+
 ```bash
+
 git clone --recurse-submodules --recursive --config http.sslVerify=false https://github.com/psox/psoxizsh.git ~/.psoxizsh
+
 ~/.psoxizsh/fresh-system
+
 ```
 
-## Configure Vim
+### Root - System Wide
+
+```bash
+
+# Make sure you are root
+git clone --recurse-submodules --recursive --config http.sslVerify=false https://github.com/psox/psoxizsh.git /etc/psoxizsh
+
+# for each user that wants to use this
+/etc/psoxizsh/fresh-system
+
+```
+
+## Configure Vim or NeoVim
 
 Make sure you have vim 8 installed and after starting zsh check that the following variable are set by typing
 
