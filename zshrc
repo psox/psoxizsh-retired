@@ -185,7 +185,27 @@ export LANG=en_US.UTF-8
 
 ( which vi 2>/dev/null >/dev/null ) && export EDITOR='vi'
 ( which vim 2>/dev/null >/dev/null ) && export EDITOR='vim'
-( which nvim 2>/dev/null >/dev/null ) && export EDITOR='nvim'
+( which nvim 2>/dev/null >/dev/null ) && export EDITOR='nvim' && alias vim=$(which nvim)
+
+# Set zsh tmux config path
+if which tmux 2>/dev/null >/dev/null; then
+  for tpath in {~/.config/tmux,~/.tmux,/etc/tmux}; do
+    if [ -d "$tpath" ]; then
+      TMUX_PATH="$tpath"
+      return 0
+    fi
+  done
+
+  [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
+  export TMUX_PATH=$TMUX_PATH
+
+  [ -d "$TMUX_PATH" ] && [ -d "$TMUX_PATH/plugins" ] || mkdir -vp $TMUX_PATH && cp -r $PSOXIZSH/tmux/. $TMUX_PATH
+
+  export ZSH_TMUX_CONFIG="$TMUX_PATH/tmux.conf"
+  export TMUX_PLUGINS="$TMUX_PATH/plugins"
+
+  echo $TMUX_PATH $TMUX_PLUGINS $ZSH_TMUX_CONFIG
+fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
