@@ -49,6 +49,8 @@ then
   fi
 fi
 
+path+=( $GOPATH/bin ${GOROOT+${GOROOT}/bin} )
+
 # Path to your oh-my-zsh installation.
 export ZSH=$PSOXIZSH/oh-my-zsh
 export ZSH_CACHE_DIR=~/.cache/zsh
@@ -181,11 +183,30 @@ source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-export LANG=en_US.UTF-8
+# export LANG=en_US.UTF-8
 
 ( which vi 2>/dev/null >/dev/null ) && export EDITOR='vi'
 ( which vim 2>/dev/null >/dev/null ) && export EDITOR='vim'
 ( which nvim 2>/dev/null >/dev/null ) && export EDITOR='nvim'
+
+# Set zsh tmux config path
+if which tmux 2>/dev/null >/dev/null; then
+  for tmux_config in {~/.config/tmux,~/.tmux,/etc/tmux}; do
+    if [ -d "$tmux_config" ]; then
+      TMUX_PATH="$tmux_config"
+      break
+    fi
+  done
+
+  [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
+  export TMUX_PATH=$TMUX_PATH
+
+  [ -d "$TMUX_PATH" ] && [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp $TMUX_PATH && cp -r $PSOXIZSH/tmux/. $TMUX_PATH }
+  # If a .conf is detected override the default zsh tmux path
+  [ -f "$TMUX_PATH/tmux.conf" ] && export ZSH_TMUX_CONFIG="$TMUX_PATH/tmux.conf"
+
+  export TMUX_PLUGINS="$TMUX_PATH/plugins"
+fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -196,6 +217,8 @@ export LANG=en_US.UTF-8
 alias zshconfig="vim $PSOXIZSH/zshrc"
 alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
 alias curlj="curl -H 'Content-Type: application/json' "
+which nvim >/dev/null 2>&1 && alias vim="$(which nvim)"
+[[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
 
 typeset -A key
 
@@ -216,7 +239,7 @@ bindkey '\ej' zshnip-expand-or-edit # Alt-J
 bindkey '\ee' zshnip-edit-and-expand # Alt-E
 
 # cutomize options
-setopt no_bang_hist
+setopt no_bang_hist cdable_vars auto_name_dirs
 
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
@@ -231,11 +254,9 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-finish
 fi
 
-[[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
 [[ -d /cygdrive/c/qemu/ ]] && path+=( /cygdrive/c/qemu/ )
 [[ ! -z "$DISPLAY" ]] && xhost +LOCAL:
 
-path+=( $GOPATH/bin ${GOROOT+${GOROOT}/bin} )
 
 # Set Time Variables
 precmd() {
@@ -252,9 +273,5 @@ precmd() {
 
 # Clean up global aliases
 source <(alias -g | awk -F= '/^[A-Za-z]+/{print $1}' | xargs -I{} -n1 echo unalias "'{}'")
-
-foreach _OPT in AUTO_NAME_DIRS CDABLE_VARS
-  setopt $_OPT
-end
 
 # vim: sw=2 ts=8 si relativenumber number
