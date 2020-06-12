@@ -7,6 +7,8 @@ function! SourceIfExists(file)
 endfunction
 " }
 
+call SourceIfExists("~/.config/vim/early.vimrc")
+
 " Default colorscheme
 colorscheme murphy
 
@@ -50,12 +52,12 @@ endif
 
 exec "set rtp=$VIMHOME," . &rtp 	
 
-call SourceIfExists("~/.config/vim/early.vimrc")
 
 set encoding=utf-8
 
 " (Optional) Multi-entry selection UI.
 
+call SourceIfExists("~/.config/vim/pre-plug.vimrc")
 call plug#begin("$VIMHOME/plugged")
   Plug 'junegunn/vim-easy-align'	
   Plug 'tpope/vim-sensible'
@@ -83,7 +85,7 @@ call plug#begin("$VIMHOME/plugged")
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 call plug#end()
-
+call SourceIfExists("~/.config/vim/post-plug.vimrc")
 
 execute ':silent !mkdir -p ~/.vimbackup'
 
@@ -133,7 +135,6 @@ let g:syntastic_enable_bash_checker = 1
 " ripgrep settings
 let g:rg_highlight = 'true'
 let g:rg_derive_root = 'true'
-
 
 " Other
 let g:rainbow_active = 1
@@ -207,11 +208,11 @@ function! ToggleGutter() abort
   endif
 endfunction
 
-call SourceIfExists("~/.config/vim/late.vimrc")
-
 set exrc
 set secure
 set modeline
 set modelines=7
+
+call SourceIfExists("~/.config/vim/late.vimrc")
 
 " vim: ts=8 sw=2 si
