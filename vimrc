@@ -12,12 +12,13 @@ let rc_files = {
   \ 'pre':   '~/.config/vim/pre-plug.vimrc',
   \ 'plug':  '~/.config/vim/plug.vimrc',
   \ 'post':  '~/.config/vim/post-plug.vimrc',
-  \ 'late':  '~/.config/vim/late.vimrc'
+  \ 'late':  '~/.config/vim/late.vimrc',
+  \ 'my':    $MYVIMRC
   \ }
 
 " Edit source files
 function! EditVimRcFiles()
-  for rc_file in values(rc_files) $MYVIMRC
+  for rc_file in values(rc_files) 
     let ex_file = expand(rc_file)
     if filereadable(ex_file)
       exe 'tabedit' ex_file
@@ -27,19 +28,19 @@ endfunction
 
 call SourceIfExists(rc_files['early'])
 
-" Default colorscheme
-colorscheme murphy
-
 " Hide buffers don't close them
 set hidden
-" Airline replaces showmode
-set noshowmode
+set path+=**
 
 " File indent opts
 set shiftwidth=2
 set tabstop=8
 set softtabstop=2
 set expandtab
+set encoding=utf-8
+set listchars=trail:▂,extends:↲,precedes:↱,nbsp:▭,tab:╙─╖
+set list
+set wildmode=longest,list
 filetype plugin indent on
 
 " Set completion messages off
@@ -68,15 +69,13 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-exec "set rtp=$VIMHOME," . &rtp 	
-
-set encoding=utf-8
+exec "set rtp=$VIMHOME," . &rtp 
 
 " (Optional) Multi-entry selection UI.
 
 call SourceIfExists(rc_files['pre'])
 call plug#begin("$VIMHOME/plugged")
-  Plug 'junegunn/vim-easy-align'	
+  Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -95,6 +94,8 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'airblade/vim-gitgutter'
+  Plug 'rakr/vim-one'
+  Plug 'mox-mox/vim-localsearch'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   call SourceIfExists(rc_files['plug'])
   if has('nvim')
@@ -111,9 +112,17 @@ set directory=~/.vimbackup
 set hlsearch
 
 " Airline
-let g:airline_theme='angr'
+" Airline replaces showmode
+set noshowmode
 let g:airline#extensions#branch#format = 2
 let g:airline#extensions#branch#displayed_head_limit = 16
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='one'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
 
 " Commenting
 let g:NERDSpaceDelims = 1
@@ -135,17 +144,12 @@ augroup END
 
 " Syntastic Settings
 " Note that airline automatically configures these
-" set statusline+=%#warningmsg#
-" set statusline+=%{exists('g:loaded_syntastic_plugin')?SyntasticStatuslineFlag():''}
-" set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " Syntastic enable specific checkers
-" let g:syntastic_perl_checkers = ["perl"]
-" let g:syntastic_enable_perl_checker = 1
 let g:syntastic_enable_zsh_checker = 1
 let g:syntastic_enable_bash_checker = 1
 
@@ -213,6 +217,11 @@ nnoremap <F2> :NERDTreeToggle<CR>
 " Workaround for writing readonly files
 cnoremap w!! w !sudo tee % > /dev/null 
 
+" Key Remapping
+nnoremap <Leader>ve :edit $MYVIMRC<cr>
+nnoremap <Leader>vs :source $MYVIMRC<cr>
+nmap <leader>/ <Plug>localsearch_toggle
+
 " Toggles all gutter items
 nnoremap <silent> <leader>N :call ToggleGutter()<CR>
 
@@ -224,6 +233,9 @@ function! ToggleGutter() abort
     try | set signcolumn=number | catch | set signcolumn=yes:1 | endtry
   endif
 endfunction
+
+" Default colorscheme
+colorscheme one
 
 set exrc
 set secure

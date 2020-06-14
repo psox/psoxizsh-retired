@@ -18,6 +18,9 @@ path=( /bin /sbin /usr/bin /usr/sbin $path )
 # sdkman support
 [[ -f ~/.sdkman/bin/sdkman-init.sh ]] && source ~/.sdkman/bin/sdkman-init.sh
 
+# nvm
+[[ -f /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
+
 # jaesve support
 ( which jaesve 2>/dev/null >/dev/null ) && (
   [[ -d ~/.local/share/zsh/functions ]] || mkdir -vp ~/.local/share/zsh/functions
@@ -256,7 +259,6 @@ fi
 
 [[ -d /cygdrive/c/qemu/ ]] && path+=( /cygdrive/c/qemu/ )
 [[ ! -z "$DISPLAY" ]] && xhost +LOCAL:
-
 
 # Set Time Variables
 precmd() {
