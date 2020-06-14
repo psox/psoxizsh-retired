@@ -7,7 +7,7 @@ function! SourceIfExists(file)
 endfunction
 " }
 
-let rc_files = { 
+let g:rc_files = {
   \ 'early': '~/.config/vim/early.vimrc',
   \ 'pre':   '~/.config/vim/pre-plug.vimrc',
   \ 'plug':  '~/.config/vim/plug.vimrc',
@@ -18,15 +18,15 @@ let rc_files = {
 
 " Edit source files
 function! EditVimRcFiles()
-  for rc_file in values(rc_files) 
-    let ex_file = expand(rc_file)
-    if filereadable(ex_file)
-      exe 'tabedit' ex_file
+  for l:rc_key in keys(g:rc_files)
+    let l:ex_file = expand(g:rc_files[l:rc_key])
+    if filereadable(l:ex_file)
+      exe 'tabedit' l:ex_file
     endif
   endfor
 endfunction
 
-call SourceIfExists(rc_files['early'])
+call SourceIfExists(g:rc_files['early'])
 
 " Hide buffers don't close them
 set hidden
@@ -40,7 +40,6 @@ set expandtab
 set encoding=utf-8
 set listchars=trail:▂,extends:↲,precedes:↱,nbsp:▭,tab:╙─╖
 set list
-set wildmode=longest,list
 set ignorecase
 set infercase
 filetype plugin indent on
@@ -52,6 +51,15 @@ set shortmess+=c
 set completeopt+=preview
 set completeopt+=menuone
 set completeopt+=longest
+set wildmenu                    "wmnu:  enhanced ed command completion
+set wildignore+=*.~             "wig:   ignore compiled objects and backups
+set wildignore+=*.o,*.obj,*.pyc
+set wildignore+=.sass-cache,tmp
+set wildignore+=node_modules
+set wildignore+=log,logs
+set wildignore+=vendor
+set wildmode=longest:full,list:full
+set wildoptions=pum,tagfile
 
 " Lower update time (Default 4000)
 set updatetime=300
@@ -71,11 +79,11 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-exec "set rtp=$VIMHOME," . &rtp 
+exec "set rtp=$VIMHOME," . &rtp
 
 " (Optional) Multi-entry selection UI.
 
-call SourceIfExists(rc_files['pre'])
+call SourceIfExists(g:rc_files['pre'])
 call plug#begin("$VIMHOME/plugged")
   Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-sensible'
@@ -99,17 +107,17 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'rakr/vim-one'
   Plug 'mox-mox/vim-localsearch'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  call SourceIfExists(rc_files['plug'])
+  call SourceIfExists(g:rc_files['plug'])
   if has('nvim')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 call plug#end()
-call SourceIfExists(rc_files['post'])
+call SourceIfExists(g:rc_files['post'])
 
 execute ':silent !mkdir -p ~/.vimbackup'
 
-set backupdir=~/.vimbackup 
+set backupdir=~/.vimbackup
 set directory=~/.vimbackup
 set hlsearch
 
@@ -201,7 +209,7 @@ if has_key(plugs, 'coc.nvim')
     " Use `[g` and `]g` to navigate diagnostics
     nmap <buffer><silent> [g <Plug>(coc-diagnostic-prev)
     nmap <buffer><silent> ]g <Plug>(coc-diagnostic-next)
-    
+
     " Remap for do codeAction of selected region
     function! s:cocActionsOpenFromSelected(type) abort
       execute 'CocCommand actions.open ' . a:type
@@ -217,10 +225,10 @@ endif
 nnoremap <F2> :NERDTreeToggle<CR>
 
 " Workaround for writing readonly files
-cnoremap w!! w !sudo tee % > /dev/null 
+cnoremap w!! w !sudo tee % > /dev/null
 
 " Key Remapping
-nnoremap <Leader>ve :edit $MYVIMRC<cr>
+nnoremap <Leader>ve :call EditVimRcFiles()<cr>
 nnoremap <Leader>vs :source $MYVIMRC<cr>
 nmap <leader>/ <Plug>localsearch_toggle
 
@@ -244,6 +252,6 @@ set secure
 set modeline
 set modelines=7
 
-call SourceIfExists(rc_files['late'])
+call SourceIfExists(g:rc_files['late'])
 
 " vim: ts=8 sw=2 si
