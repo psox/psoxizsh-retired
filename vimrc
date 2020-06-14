@@ -41,6 +41,8 @@ set encoding=utf-8
 set listchars=trail:▂,extends:↲,precedes:↱,nbsp:▭,tab:╙─╖
 set list
 set wildmode=longest,list
+set ignorecase
+set infercase
 filetype plugin indent on
 
 " Set completion messages off
