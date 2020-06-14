@@ -7,7 +7,25 @@ function! SourceIfExists(file)
 endfunction
 " }
 
-call SourceIfExists("~/.config/vim/early.vimrc")
+let rc_files = { 
+  \ 'early': '~/.config/vim/early.vimrc',
+  \ 'pre':   '~/.config/vim/pre-plug.vimrc',
+  \ 'plug':  '~/.config/vim/plug.vimrc',
+  \ 'post':  '~/.config/vim/post-plug.vimrc',
+  \ 'late':  '~/.config/vim/late.vimrc'
+  \ }
+
+" Edit source files
+function! EditVimRcFiles()
+  for rc_file in values(rc_files) $MYVIMRC
+    let ex_file = expand(rc_file)
+    if filereadable(ex_file)
+      exe 'tabedit' ex_file
+    endif
+  endfor
+endfunction
+
+call SourceIfExists(rc_files['early'])
 
 " Default colorscheme
 colorscheme murphy
@@ -52,12 +70,11 @@ endif
 
 exec "set rtp=$VIMHOME," . &rtp 	
 
-
 set encoding=utf-8
 
 " (Optional) Multi-entry selection UI.
 
-call SourceIfExists("~/.config/vim/pre-plug.vimrc")
+call SourceIfExists(rc_files['pre'])
 call plug#begin("$VIMHOME/plugged")
   Plug 'junegunn/vim-easy-align'	
   Plug 'tpope/vim-sensible'
@@ -79,13 +96,13 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'vim-airline/vim-airline-themes'
   Plug 'airblade/vim-gitgutter'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  call SourceIfExists("~/.config/vim/plug.vimrc")
+  call SourceIfExists(rc_files['plug'])
   if has('nvim')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 call plug#end()
-call SourceIfExists("~/.config/vim/post-plug.vimrc")
+call SourceIfExists(rc_files['post'])
 
 execute ':silent !mkdir -p ~/.vimbackup'
 
@@ -213,6 +230,6 @@ set secure
 set modeline
 set modelines=7
 
-call SourceIfExists("~/.config/vim/late.vimrc")
+call SourceIfExists(rc_files['late'])
 
 " vim: ts=8 sw=2 si
