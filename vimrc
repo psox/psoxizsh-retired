@@ -245,6 +245,7 @@ function! ToggleGutter() abort
 endfunction
 
 " Default colorscheme
+let g:one_allow_italics=1
 colorscheme one
 highlight Comment cterm=italic gui=italic
 
