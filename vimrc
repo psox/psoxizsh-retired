@@ -246,6 +246,7 @@ endfunction
 
 " Default colorscheme
 colorscheme one
+highlight Comment cterm=italic gui=italic
 
 set exrc
 set secure
