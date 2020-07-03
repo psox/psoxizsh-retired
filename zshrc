@@ -139,7 +139,7 @@ plugins=(
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/suse-release ]] ) && plugins+=( suse )
 ( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( osx )
-( which vim 2>/dev/null >/dev/null ) && plugins+=( vim-interaction )
+#( which vim 2>/dev/null >/dev/null ) && plugins+=( vim-interaction )
 ( which ssh 2>/dev/null >/dev/null ) && [[ -d ~/.ssh ]] && plugins+=( ssh-agent )
 plugins+=( 
   zsh-completions
@@ -149,7 +149,7 @@ plugins+=(
   $post_plugins
 )
 
-if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "darwin17.0.0" || "$OSTYPE" == "cygwin" ]]
+if [[ "$OSTYPE" =~ "linux*" || "$OSTYPE" =~ "darwin*" || "$OSTYPE" == "cygwin" ]]
 then
   export VIMINIT='source $MYVIMRC'
   export MYVIMRC=$PSOXIZSH/vimrc
@@ -221,6 +221,7 @@ alias zshconfig="vim $PSOXIZSH/zshrc"
 alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
 alias curlj="curl -H 'Content-Type: application/json' "
 which nvim >/dev/null 2>&1 && alias vim="$(which nvim)"
+alias v=vim
 [[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
 
 typeset -A key
