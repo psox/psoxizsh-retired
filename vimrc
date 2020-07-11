@@ -30,7 +30,7 @@ call SourceIfExists(g:rc_files['early'])
 
 " Hide buffers don't close them
 set hidden
-set path+=**
+" set path+=**
 
 " File indent opts
 set shiftwidth=2
@@ -51,15 +51,6 @@ set shortmess+=c
 set completeopt+=preview
 set completeopt+=menuone
 set completeopt+=longest
-set wildmenu                    "wmnu:  enhanced ed command completion
-set wildignore+=*.~             "wig:   ignore compiled objects and backups
-set wildignore+=*.o,*.obj,*.pyc
-set wildignore+=.sass-cache,tmp
-set wildignore+=node_modules
-set wildignore+=log,logs
-set wildignore+=vendor
-set wildmode=longest:full,list:full
-set wildoptions=pum,tagfile
 
 " Lower update time (Default 4000)
 set updatetime=300
@@ -107,12 +98,15 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'rakr/vim-one'
   Plug 'mox-mox/vim-localsearch'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'romainl/vim-cool'
+  Plug 'christoomey/vim-tmux-navigator', { 'on': ['TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious'] }
   call SourceIfExists(g:rc_files['plug'])
   if has('nvim')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 call plug#end()
+
 call SourceIfExists(g:rc_files['post'])
 
 execute ':silent !mkdir -p ~/.vimbackup'
@@ -175,19 +169,33 @@ augroup PsoxFileAutos
   autocmd FileType yaml setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab
   " Tidy nerdtree windiw
   autocmd FileType nerdtree setlocal nocursorcolumn nonumber norelativenumber signcolumn=no
+  autocmd VimEnter *
+        \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+        \| PlugInstall --sync
+        \| q
+        \| colorscheme one
+        \| endif
 augroup END
 
 " Set bindings for coc.nvim
 if has_key(plugs, 'coc.nvim')
-    let g:coc_global_extensions=[ 'coc-yank', 'coc-spell-checker', 'coc-actions', 'coc-yaml', 'coc-vimlsp', 'coc-rust-analyzer', 'coc-json', 'coc-markdownlint', 'coc-prettier' ]
+    let g:coc_global_extensions=[]
+    let g:coc_global_extensions+=[ 'coc-yank' ]
+    let g:coc_global_extensions+=[ 'coc-spell-checker' ]
+    let g:coc_global_extensions+=[ 'coc-actions' ]
+    let g:coc_global_extensions+=[ 'coc-vimlsp' ]
+    let g:coc_global_extensions+=[ 'coc-rust-analyzer' ]
+    let g:coc_global_extensions+=[ 'coc-json' ]
+    let g:coc_global_extensions+=[ 'coc-markdownlint' ]
+    let g:coc_global_extensions+=[ 'coc-yaml' ]
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
     " other plugin before putting this into your config.
-    inoremap <buffer><silent><expr> <TAB>
+    inoremap <silent><expr> <TAB>
           \ pumvisible() ? "\<C-n>" :
           \ <SID>check_back_space() ? "\<TAB>" :
           \ coc#refresh()
-    inoremap <buffer><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
     function! s:check_back_space() abort
       let col = col('.') - 1
@@ -195,34 +203,58 @@ if has_key(plugs, 'coc.nvim')
     endfunction
 
     " Use <c-space> to trigger completion.
-    inoremap <buffer><silent><expr> <c-space> coc#refresh()
+    inoremap <silent><expr> <c-space> coc#refresh()
 
     " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
     " position. Coc only does snippet and additional edit on confirm.
     " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
     if exists('*complete_info')
-      inoremap <buffer><expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+      inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
     else
-      inoremap <buffer><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+      inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
     endif
 
     " Use `[g` and `]g` to navigate diagnostics
-    nmap <buffer><silent> [g <Plug>(coc-diagnostic-prev)
-    nmap <buffer><silent> ]g <Plug>(coc-diagnostic-next)
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+    " Use K to show documentation in preview window.
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction 
 
     " Remap for do codeAction of selected region
     function! s:cocActionsOpenFromSelected(type) abort
       execute 'CocCommand actions.open ' . a:type
     endfunction
-    xmap <buffer><silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-    nmap <buffer><silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
-    nmap <buffer><silent> <leader>. :CocCommand actions.open<CR>
+    xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+    nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+    nmap <silent> <leader>. :CocCommand actions.open<CR>
 
-    nnoremap <buffer><silent> <C-Y> :<C-u>CocList -A --normal yank<CR>
+    nnoremap <silent> <C-Y> :<C-u>CocList -A --normal yank<CR>
+endif
+
+" Vim Tmux unified movement
+if has_key(plugs, 'vim-tmux-navigator')
+  let g:tmux_navigator_no_mappings = 1
+  let g:tmux_navigator_disable_when_zoomed = 1
+
+  nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+  nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+  nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+  nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 endif
 
 " NERDTree Toggle
 nnoremap <F2> :NERDTreeToggle<CR>
+
+" NERDComment settings
+" nnoremap <silent> <C-/> :call NERDComment('n', 'toggle')<CR>
 
 " Workaround for writing readonly files
 cnoremap w!! w !sudo tee % > /dev/null
@@ -255,5 +287,4 @@ set modeline
 set modelines=7
 
 call SourceIfExists(g:rc_files['late'])
-
 " vim: ts=8 sw=2 si

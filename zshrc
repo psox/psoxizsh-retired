@@ -22,7 +22,7 @@ path=( /bin /sbin /usr/bin /usr/sbin $path )
 [[ -f /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
 
 # jaesve support
-( which jaesve 2>/dev/null >/dev/null ) && (
+( which jaesve &>/dev/null ) && (
   [[ -d ~/.local/share/zsh/functions ]] || mkdir -vp ~/.local/share/zsh/functions
   [[ $(which jaesve) -nt ~/.local/share/zsh/functions/_jaesve ]] || (
     jaesve completions -- zsh > ~/.local/share/zsh/functions/_jaesve
@@ -114,38 +114,39 @@ plugins=(
   common-aliases 
   colored-man-pages 
 )
-( which git 2>/dev/null >/dev/null ) && plugins+=( git git-extras git-flow-avh ) && [[ "$ZSH_THEME" == "stemmet" ]] && plugins+=( git-prompt )
-( which perl 2>/dev/null >/dev/null ) && plugins+=( perl )
-( which go 2>/dev/null >/dev/null ) && plugins+=( golang )
-( which oc 2>/dev/null >/dev/null ) && plugins+=( oc )
-( which rsync 2>/dev/null >/dev/null ) && plugins+=( rsync )
-( which aws 2>/dev/null >/dev/null ) && plugins+=( aws )
-( which rust 2>/dev/null >/dev/null ) && plugins+=( rust )
-( which cargo 2>/dev/null >/dev/null ) && plugins+=( cargo )
-( which jq 2>/dev/null >/dev/null ) && plugins+=( jsontools )
-( which encode64 2>/dev/null >/dev/null ) && plugins+=( encode64 )
-( which docker-compose 2>/dev/null >/dev/null ) && plugins+=( docker-compose )
-( which docker 2>/dev/null >/dev/null ) && plugins+=( docker )
-( which mosh 2>/dev/null >/dev/null ) && plugins+=( mosh )
-( which systemd 2>/dev/null >/dev/null ) && plugins+=( systemd )
-( which python 2>/dev/null >/dev/null ) && plugins+=( python )
-( which pip 2>/dev/null >/dev/null ) && plugins+=( pip )
-( which sudo 2>/dev/null >/dev/null ) && plugins+=( sudo )
-( which tmux 2>/dev/null >/dev/null ) && plugins+=( tmux )
-( which yum 2>/dev/null >/dev/null ) && plugins+=( yum )
-( which code 2>/dev/null >/dev/null ) && plugins+=( vscode )
-( which strfile 2>/dev/null >/dev/null ) && plugins+=( chucknorris )
-( which kubectl 2>/dev/null >/dev/null ) && plugins+=( kubectl )
+( which git &>/dev/null ) && plugins+=( git git-extras git-flow-avh ) && [[ "$ZSH_THEME" == "stemmet" ]] && plugins+=( git-prompt )
+( which perl &>/dev/null ) && plugins+=( perl )
+( which go &>/dev/null ) && plugins+=( golang )
+( which oc &>/dev/null ) && plugins+=( oc )
+( which rsync &>/dev/null ) && plugins+=( rsync )
+( which aws &>/dev/null ) && plugins+=( aws )
+( which rust &>/dev/null ) && plugins+=( rust )
+( which cargo &>/dev/null ) && plugins+=( cargo )
+( which jq &>/dev/null ) && plugins+=( jsontools )
+( which encode64 &>/dev/null ) && plugins+=( encode64 )
+( which docker-compose &>/dev/null ) && plugins+=( docker-compose )
+( which docker &>/dev/null ) && plugins+=( docker )
+( which mosh &>/dev/null ) && plugins+=( mosh )
+( which systemd &>/dev/null ) && plugins+=( systemd )
+( which python &>/dev/null ) && plugins+=( python )
+( which pip &>/dev/null ) && plugins+=( pip )
+( which sudo &>/dev/null ) && plugins+=( sudo )
+( which tmux &>/dev/null ) && plugins+=( tmux )
+( which yum &>/dev/null ) && plugins+=( yum )
+( which code &>/dev/null ) && plugins+=( vscode )
+( which strfile &>/dev/null ) && plugins+=( chucknorris )
+( which kubectl &>/dev/null ) && plugins+=( kubectl )
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/suse-release ]] ) && plugins+=( suse )
 ( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( osx )
-#( which vim 2>/dev/null >/dev/null ) && plugins+=( vim-interaction )
-( which ssh 2>/dev/null >/dev/null ) && [[ -d ~/.ssh ]] && plugins+=( ssh-agent )
+#( which vim &>/dev/null ) && plugins+=( vim-interaction )
+( which ssh &>/dev/null ) && [[ -d ~/.ssh ]] && plugins+=( ssh-agent )
 plugins+=( 
   zsh-completions
-  zsh-autosuggestions 
-  zsh-navigation-tools 
-  zsh-syntax-highlighting 
+  zsh-autosuggestions
+  zsh-navigation-tools
+  $( which fzf &>/dev/null && echo 'fzf' )
+  zsh-syntax-highlighting
   $post_plugins
 )
 
@@ -175,11 +176,11 @@ zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 # Dynamic Completion
 foreach cmd in kubectl kubeadm
-  ( which $cmd 2>/dev/null >/dev/null ) && source <($cmd completion zsh)
+  ( which $cmd &>/dev/null ) && source <($cmd completion zsh)
 end
 
 source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
-( which lxc 2>/dev/null >/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
+( which lxc &>/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
 
 # User configuration
 
@@ -188,12 +189,12 @@ source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-( which vi 2>/dev/null >/dev/null ) && export EDITOR='vi'
-( which vim 2>/dev/null >/dev/null ) && export EDITOR='vim'
-( which nvim 2>/dev/null >/dev/null ) && export EDITOR='nvim'
+( which vi &>/dev/null ) && export EDITOR='vi'
+( which vim &>/dev/null ) && export EDITOR='vim'
+( which nvim &>/dev/null ) && export EDITOR='nvim'
 
 # Set zsh tmux config path
-if which tmux 2>/dev/null >/dev/null; then
+if which tmux &>/dev/null; then
   for tmux_config in {~/.config/tmux,~/.tmux,/etc/tmux}; do
     if [ -d "$tmux_config" ]; then
       TMUX_PATH="$tmux_config"
@@ -209,6 +210,12 @@ if which tmux 2>/dev/null >/dev/null; then
   [ -f "$TMUX_PATH/tmux.conf" ] && export ZSH_TMUX_CONFIG="$TMUX_PATH/tmux.conf"
 
   export TMUX_PLUGINS="$TMUX_PATH/plugins"
+fi
+
+if which fzf &>/dev/null; then
+  # Press ? inside a C-r search to get a preview window, useful for long commands
+  export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+  which tmux &> /dev/null && export FZF_TMUX=1
 fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
