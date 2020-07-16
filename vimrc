@@ -93,6 +93,7 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'rust-lang/rust.vim', { 'for': 'rust' }
   Plug 'pearofducks/ansible-vim', { 'for':  ['yaml', 'yml'] }
   Plug 'luochen1990/rainbow'
+  Plug 'kevinoid/vim-jsonc'
   Plug 'jremmen/vim-ripgrep', { 'on': ['Rg', 'RgRoot'] }
   Plug 'junegunn/fzf', { 'on': ['FZF', '<Plug>fzf#run', '<Plug>fzf#wrap'] }
   Plug 'sheerun/vim-polyglot'
