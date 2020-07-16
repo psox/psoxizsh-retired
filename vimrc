@@ -28,6 +28,11 @@ endfunction
 
 call SourceIfExists(g:rc_files['early'])
 
+" set preferred color scheme if not set
+if !exists("g:my_color_scheme")
+  let g:my_color_scheme='one'
+endif
+
 " Hide buffers don't close them
 set hidden
 " set path+=**
@@ -123,7 +128,7 @@ let g:airline#extensions#branch#displayed_head_limit = 16
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
-let g:airline_theme='one'
+let g:airline_theme=g:my_color_scheme
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -173,7 +178,7 @@ augroup PsoxFileAutos
         \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
         \| PlugInstall --sync
         \| q
-        \| colorscheme one
+        \| execute "colorscheme " . g:my_color_scheme
         \| endif
 augroup END
 
@@ -280,8 +285,8 @@ endfunction
 
 " Default colorscheme
 let g:one_allow_italics=1
-colorscheme one
-highlight Comment cterm=italic gui=italic
+execute "colorscheme " . g:my_color_scheme
+highlight Comment term=italic cterm=italic gui=italic
 
 set exrc
 set secure
