@@ -129,7 +129,7 @@ let g:airline#extensions#branch#displayed_head_limit = 16
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
-let g:airline_theme=g:my_color_scheme
+let g:airline_theme='one'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
