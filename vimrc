@@ -179,7 +179,9 @@ augroup END
 
 " Set bindings for coc.nvim
 if has_key(plugs, 'coc.nvim')
-    let g:coc_global_extensions=[]
+    if !exists("g:coc_global_extensions")
+        let g:coc_global_extensions=[]
+    endif
     let g:coc_global_extensions+=[ 'coc-yank' ]
     let g:coc_global_extensions+=[ 'coc-spell-checker' ]
     let g:coc_global_extensions+=[ 'coc-actions' ]
