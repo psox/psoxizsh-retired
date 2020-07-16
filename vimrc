@@ -268,9 +268,9 @@ nnoremap <F2> :NERDTreeToggle<CR>
 cnoremap w!! w !sudo tee % > /dev/null
 
 " Key Remapping
-nnoremap <Leader>ve :call EditVimRcFiles()<cr>
-nnoremap <Leader>vs :source $MYVIMRC<cr>
-nmap <leader>/ <Plug>localsearch_toggle
+nnoremap <leader>ve :call EditVimRcFiles()<cr>
+nnoremap <leader>vs :source $MYVIMRC<cr>
+nnoremap <leader>vl <Plug>localsearch_toggle
 
 " Toggles all gutter items
 nnoremap <silent> <leader>N :call ToggleGutter()<CR>
