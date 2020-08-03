@@ -21,7 +21,7 @@ function! EditVimRcFiles()
   for l:rc_key in keys(g:rc_files)
     let l:ex_file = expand(g:rc_files[l:rc_key])
     if filereadable(l:ex_file)
-      exe 'tabedit' l:ex_file
+      exe 'edit' l:ex_file
     endif
   endfor
 endfunction
@@ -35,7 +35,10 @@ endif
 
 " Hide buffers don't close them
 set hidden
-" set path+=**
+
+" Sane pane opening
+set splitbelow
+set splitright
 
 " File indent opts
 set shiftwidth=2
@@ -96,6 +99,7 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'kevinoid/vim-jsonc'
   Plug 'jremmen/vim-ripgrep', { 'on': ['Rg', 'RgRoot'] }
   Plug 'junegunn/fzf', { 'on': ['FZF', '<Plug>fzf#run', '<Plug>fzf#wrap'] }
+  Plug 'junegunn/fzf.vim'
   Plug 'sheerun/vim-polyglot'
   Plug 'adelarsq/vim-matchit'
   Plug 'vim-airline/vim-airline'
@@ -128,6 +132,7 @@ let g:airline#extensions#branch#format = 2
 let g:airline#extensions#branch#displayed_head_limit = 16
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='one'
 if !exists('g:airline_symbols')
@@ -210,16 +215,16 @@ if has_key(plugs, 'coc.nvim')
       return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
 
-    " Use <c-space> to trigger completion.
-    inoremap <silent><expr> <c-space> coc#refresh()
+    " Use <A-space> to trigger completion.
+    inoremap <silent><expr> <A-space> coc#refresh()
 
-    " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+    " Use <c-space> to confirm completion, `<C-g>u` means break undo chain at current
     " position. Coc only does snippet and additional edit on confirm.
-    " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+    " <c-space> could be remapped by other vim plugin, try `:verbose imap <CR>`.
     if exists('*complete_info')
-      inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+      inoremap <expr> <C-space> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
     else
-      inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+      inoremap <expr> <C-space> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
     endif
 
     " Use `[g` and `]g` to navigate diagnostics
@@ -267,7 +272,7 @@ nnoremap <F2> :NERDTreeToggle<CR>
 " Workaround for writing readonly files
 cnoremap w!! w !sudo tee % > /dev/null
 
-" Key Remapping
+" Vim config(s) editing
 nnoremap <leader>ve :call EditVimRcFiles()<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>
 nnoremap <leader>vl <Plug>localsearch_toggle
@@ -284,7 +289,29 @@ function! ToggleGutter() abort
   endif
 endfunction
 
+" Buffer movement
+nnoremap <silent> <TAB> :call BufferJump("bnext")<CR>
+nnoremap <silent> <S-TAB> :call BufferJump("bprevious")<CR>
+nnoremap <silent> <leader><TAB> :call ListBuffers()<CR>
+
+function BufferJump(command)
+  let start_buffer = bufnr('%')
+  execute a:command
+  while &buftype ==# 'quickfix' && bufnr('%') != start_buffer
+    execute a:command
+  endwhile
+endfunction
+
+function ListBuffers()
+  try
+    Buffers
+  catch
+    buffers<CR>b<space>
+  endtry
+endfunction
+
 " Default colorscheme
+set background=dark
 let g:one_allow_italics=1
 execute "colorscheme " . g:my_color_scheme
 highlight Comment term=italic cterm=italic gui=italic
