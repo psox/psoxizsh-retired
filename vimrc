@@ -46,7 +46,7 @@ set tabstop=8
 set softtabstop=2
 set expandtab
 set encoding=utf-8
-set listchars=trail:▭,extends:↲,precedes:↱,nbsp:▂,tab:╙─╖
+exec "set listchars=trail:\u2241,extends:\u22F1,precedes:\u22F0,nbsp:\u2241,tab:\u227B\u22EF,eol:\u22B2,conceal:\u2219"
 set list
 set ignorecase
 set infercase
