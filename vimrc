@@ -46,7 +46,12 @@ set tabstop=8
 set softtabstop=2
 set expandtab
 set encoding=utf-8
-exec "set listchars=trail:\u2241,extends:\u22F1,precedes:\u22F0,nbsp:\u2241,tab:\u227B\u22EF,eol:\u22B2,conceal:\u2219"
+try
+  " Vim 8.2 only
+  exec "set listchars=trail:\u02FD,extends:\u22B3,precedes:\u22B2,nbsp:\u02EC,conceal:\u2219,tab:\u2559\u254C\u2556"
+catch
+  exec "set listchars=trail:\u02FD,extends:\u22B3,precedes:\u22B2,nbsp:\u02EC,conceal:\u2219,tab:\u2559\u254C"
+endtry
 set list
 set ignorecase
 set infercase
