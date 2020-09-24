@@ -26,6 +26,10 @@ function! EditVimRcFiles()
   endfor
 endfunction
 
+let mapleader = ","
+let g:my_color_scheme = "rainbow-contrast"
+let g:coc_global_extensions=[ 'coc-highlight', 'coc-fzf-preview', 'coc-java', 'coc-sh', 'coc-sql', 'coc-xml' ]
+
 call SourceIfExists(g:rc_files['early'])
 
 " set preferred color scheme if not set
@@ -89,6 +93,9 @@ exec "set rtp=$VIMHOME," . &rtp
 
 call SourceIfExists(g:rc_files['pre'])
 call plug#begin("$VIMHOME/plugged")
+  Plug 'rainglow/vim'
+  Plug 'thaerkh/vim-workspace'
+  Plug 'thaerkh/vim-indentguides'
   Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
@@ -321,6 +328,15 @@ let g:one_allow_italics=1
 execute "colorscheme " . g:my_color_scheme
 highlight Comment term=italic cterm=italic gui=italic
 
+let g:airline_theme = 'base16color'
+let g:indentguides_spacechar = "\u250a"
+let g:indentguides_tabchar = "\u2506"
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+set nofoldenable
 set exrc
 set secure
 set modeline
