@@ -85,7 +85,13 @@ endif
 
 exec "set rtp=$VIMHOME," . &rtp
 
-" (Optional) Multi-entry selection UI.
+function! LoadIf(check, ...)
+  let opts = get(a:000, 0, {})
+  " Use opts, or default to not loading plugin
+  return a:check ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+let useNeomake = has('nvim') || v:version > 800
 
 call SourceIfExists(g:rc_files['pre'])
 call plug#begin("$VIMHOME/plugged")
@@ -94,7 +100,6 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
   Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
-  Plug 'scrooloose/syntastic'
   Plug 'scrooloose/nerdcommenter'
   Plug 'scrooloose/vim-statline'
   Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
@@ -104,7 +109,7 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'kevinoid/vim-jsonc'
   Plug 'jremmen/vim-ripgrep', { 'on': ['Rg', 'RgRoot'] }
   Plug 'junegunn/fzf', { 'on': ['FZF', '<Plug>fzf#run', '<Plug>fzf#wrap'] }
-  Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf.vim',
   Plug 'sheerun/vim-polyglot'
   Plug 'adelarsq/vim-matchit'
   Plug 'vim-airline/vim-airline'
@@ -112,16 +117,17 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'airblade/vim-gitgutter'
   Plug 'rakr/vim-one'
   Plug 'mox-mox/vim-localsearch'
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'romainl/vim-cool'
   Plug 'christoomey/vim-tmux-navigator', { 'on': ['TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious'] }
-  call SourceIfExists(g:rc_files['plug'])
-  if has('nvim')
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-call plug#end()
 
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'scrooloose/syntastic', LoadIf(!useNeomake)
+  Plug 'neomake/neomake', LoadIf(useNeomake)
+
+  Plug 'roxma/nvim-yarp', LoadIf(has('nvim'))
+  Plug 'roxma/vim-hug-neovim-rpc', LoadIf(has('nvim'))
+  call SourceIfExists(g:rc_files['plug'])
+call plug#end()
 call SourceIfExists(g:rc_files['post'])
 
 execute ':silent !mkdir -p ~/.vimbackup'
@@ -161,17 +167,34 @@ augroup PsoxNERDTree
   autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 augroup END
 
+if useNeomake
+  let g:neomake_open_list = 2
+  let g:neomake_serialize = 1
+  let g:neomake_serialize_abort_on_error = 1
+  " Run on write (instant) + read (800ms) buffers
+  call neomake#configure#automake('rw', 800)
 
-" Syntastic Settings
-" Note that airline automatically configures these
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" Syntastic enable specific checkers
-let g:syntastic_enable_zsh_checker = 1
-let g:syntastic_enable_bash_checker = 1
+  if has_key(plugs, 'syntastic')
+    " Disable inherited syntastic
+    let g:syntastic_mode_map = {
+      \ "mode": "passive",
+      \ "active_filetypes": [],
+      \ "passive_filetypes": [] }
+  endif
+endif
+
+if !useNeomake
+  " Syntastic Settings
+  " Note that airline automatically configures these
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_enable_signs = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  " Syntastic enable specific checkers
+  let g:syntastic_enable_zsh_checker = 1
+  let g:syntastic_enable_bash_checker = 1
+endif
 
 " ripgrep settings
 let g:rg_highlight = 'true'
@@ -270,9 +293,6 @@ endif
 
 " NERDTree Toggle
 nnoremap <F2> :NERDTreeToggle<CR>
-
-" NERDComment settings
-" nnoremap <silent> <C-/> :call NERDComment('n', 'toggle')<CR>
 
 " Workaround for writing readonly files
 cnoremap w!! w !sudo tee % > /dev/null
