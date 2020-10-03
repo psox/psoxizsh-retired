@@ -114,7 +114,7 @@ plugins=(
   common-aliases 
   colored-man-pages 
 )
-( which git &>/dev/null ) && plugins+=( git git-extras git-flow-avh ) #&& [[ "$ZSH_THEME" == "stemmet" ]] && plugins+=( git-prompt )
+( which git &>/dev/null ) && plugins+=( git git-extras git-flow-avh ) && [[ "$ZSH_THEME" == "stemmet" ]] && [ -z "$STARSHIP_SHELL" ] && plugins+=( git-prompt )
 ( which perl &>/dev/null ) && plugins+=( perl )
 ( which go &>/dev/null ) && plugins+=( golang )
 ( which oc &>/dev/null ) && plugins+=( oc )
