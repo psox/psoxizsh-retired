@@ -113,7 +113,7 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'kevinoid/vim-jsonc'
   Plug 'jremmen/vim-ripgrep', { 'on': ['Rg', 'RgRoot'] }
   Plug 'junegunn/fzf', { 'on': ['FZF', '<Plug>fzf#run', '<Plug>fzf#wrap'] }
-  Plug 'junegunn/fzf.vim',
+  Plug 'junegunn/fzf.vim'
   Plug 'sheerun/vim-polyglot'
   Plug 'adelarsq/vim-matchit'
   Plug 'vim-airline/vim-airline'
