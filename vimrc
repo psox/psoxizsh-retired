@@ -85,16 +85,25 @@ endif
 
 exec "set rtp=$VIMHOME," . &rtp
 
-" (Optional) Multi-entry selection UI.
+" Better if check for loading plugins
+" This one won't cause vim-plug to autodelete 'unloaded' plugins
+function! LoadIf(check, ...)
+  let opts = get(a:000, 0, {})
+  " Use opts, or default to not loading plugin
+  return a:check ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+" Check if we can use async Syntastic
+let useNeomake = has('nvim') || v:version > 800
 
 call SourceIfExists(g:rc_files['pre'])
 call plug#begin("$VIMHOME/plugged")
   Plug 'junegunn/vim-easy-align'
+  Plug 'tmsvg/pear-tree'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
   Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
-  Plug 'scrooloose/syntastic'
   Plug 'scrooloose/nerdcommenter'
   Plug 'scrooloose/vim-statline'
   Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
@@ -112,16 +121,18 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'airblade/vim-gitgutter'
   Plug 'rakr/vim-one'
   Plug 'mox-mox/vim-localsearch'
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'romainl/vim-cool'
   Plug 'christoomey/vim-tmux-navigator', { 'on': ['TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious'] }
-  call SourceIfExists(g:rc_files['plug'])
-  if has('nvim')
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-call plug#end()
 
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'scrooloose/syntastic', LoadIf(!useNeomake)
+  Plug 'neomake/neomake', LoadIf(useNeomake)
+  Plug 'romainl/vim-qf', LoadIf(useNeomake)
+
+  Plug 'roxma/nvim-yarp', LoadIf(has('nvim'))
+  Plug 'roxma/vim-hug-neovim-rpc', LoadIf(has('nvim'))
+  call SourceIfExists(g:rc_files['plug'])
+call plug#end()
 call SourceIfExists(g:rc_files['post'])
 
 execute ':silent !mkdir -p ~/.vimbackup'
@@ -161,21 +172,58 @@ augroup PsoxNERDTree
   autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 augroup END
 
+if useNeomake
+  " Don't move cursor into qf/loc on open
+  let g:neomake_open_list = 2
+  " Allow multiple makers to resolve
+  let g:neomake_serialize = 1
+  let g:neomake_serialize_abort_on_error = 1
+  " Run on write (instant) + read (800ms) buffers
+  call neomake#configure#automake('rw', 800)
 
-" Syntastic Settings
-" Note that airline automatically configures these
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" Syntastic enable specific checkers
-let g:syntastic_enable_zsh_checker = 1
-let g:syntastic_enable_bash_checker = 1
+  " Disable inherited syntastic if it exists
+  if has_key(plugs, 'syntastic')
+    let g:syntastic_mode_map = {
+      \ "mode": "passive",
+      \ "active_filetypes": [],
+      \ "passive_filetypes": [] }
+  endif
+endif
 
+" If we can't use Neomake, fall back to Syntastic
+if !useNeomake
+  " Syntastic Settings
+  " Note that airline automatically configures these
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_enable_signs = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  " Syntastic enable specific checkers
+  let g:syntastic_enable_zsh_checker = 1
+  let g:syntastic_enable_bash_checker = 1
+endif
+
+" vim-qf
+if has_key(plugs, 'vim-qf')
+  " Don't force qf/loc windows to bottom
+  let g:qf_window_bottom = 0
+  let g:qf_loclist_window_bottom = 0
+
+  " Let Neomake control window size
+  if useNeomake
+    let g:qf_auto_resize = 0
+  endif
+endif
+  
 " ripgrep settings
 let g:rg_highlight = 'true'
 let g:rg_derive_root = 'true'
+
+" Balance pairs when on open, close and delete
+let g:pear_tree_smart_openers = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_backspace = 1
 
 " Other
 let g:rainbow_active = 1
@@ -183,8 +231,11 @@ augroup PsoxFileAutos
   autocmd!
   autocmd FileType rust let g:autofmt_autosave = 1
   autocmd FileType yaml setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab
+  autocmd FileType go   setlocal ts=8 sts=4 sw=4 noexpandtab 
+        \| autocmd BufWritePre <buffer> silent %!gofmt
   " Tidy nerdtree windiw
   autocmd FileType nerdtree setlocal nocursorcolumn nonumber norelativenumber signcolumn=no
+  " Autoinstall absent plugins
   autocmd VimEnter *
         \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
         \| PlugInstall --sync
@@ -270,9 +321,6 @@ endif
 
 " NERDTree Toggle
 nnoremap <F2> :NERDTreeToggle<CR>
-
-" NERDComment settings
-" nnoremap <silent> <C-/> :call NERDComment('n', 'toggle')<CR>
 
 " Workaround for writing readonly files
 cnoremap w!! w !sudo tee % > /dev/null
