@@ -231,9 +231,11 @@ augroup PsoxFileAutos
   autocmd!
   autocmd FileType rust let g:autofmt_autosave = 1
   autocmd FileType yaml setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab
-  autocmd FileType go   setlocal ts=8 sts=4 sw=4 noexpandtab
+  autocmd FileType go   setlocal ts=8 sts=4 sw=4 noexpandtab 
+        \| autocmd BufWritePre <buffer> silent %!gofmt
   " Tidy nerdtree windiw
   autocmd FileType nerdtree setlocal nocursorcolumn nonumber norelativenumber signcolumn=no
+  " Autoinstall absent plugins
   autocmd VimEnter *
         \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
         \| PlugInstall --sync
