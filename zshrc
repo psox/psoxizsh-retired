@@ -152,13 +152,13 @@ plugins+=(
 
 if [[ "$OSTYPE" =~ "linux*" || "$OSTYPE" =~ "darwin*" || "$OSTYPE" == "cygwin" ]]
 then
-#   export VIMINIT='source $MYVIMRC'
-  # export MYVIMRC=$PSOXIZSH/vimrc
-  # export VIMHOME=~/.vim
-  # cmp $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim 2>/dev/null || (
-  #   mkdir -vp $VIMHOME/autoload/
-  #   cp -av $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
-#   )
+  export VIMINIT='source $MYVIMRC'
+  export MYVIMRC=$PSOXIZSH/vimrc
+  export VIMHOME=~/.vim
+  cmp $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim 2>/dev/null || (
+    mkdir -vp $VIMHOME/autoload/
+    cp -av $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
+  )
 fi
 
 if [[ -d ~/.ssh ]]
@@ -227,7 +227,8 @@ fi
 alias zshconfig="$EDITOR $PSOXIZSH/zshrc"
 alias ohmyzsh="$EDITOR $PSOXIZSH/oh-my-zsh"
 alias curlj="curl -H 'Content-Type: application/json' "
-which nvim >/dev/null 2>&1 && alias vim="$(which nvim)"
+which nvim &>/dev/null && alias vi="$(which nvim)"
+which nvim &>/dev/null && alias vim="$(which nvim)"
 alias v=vim
 [[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
 
