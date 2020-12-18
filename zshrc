@@ -13,6 +13,7 @@
 # remove duplicates
 typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
+[[ -d ~/.local/bin ]] && path=( ~/.local/bin $path)
 [[ -d ~/bin ]] && path=( ~/bin $path )
 
 # sdkman support
