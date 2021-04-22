@@ -229,10 +229,9 @@ let g:pear_tree_smart_backspace = 1
 let g:rainbow_active = 1
 augroup PsoxFileAutos
   autocmd!
-  autocmd FileType rust let g:autofmt_autosave = 1
   autocmd FileType yaml setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab
   autocmd FileType go   setlocal ts=8 sts=4 sw=4 noexpandtab 
-        \| autocmd BufWritePre <buffer> silent %!gofmt
+        \| autocmd BufWritePre <buffer> silent :call CocAction('format')
   " Tidy nerdtree windiw
   autocmd FileType nerdtree setlocal nocursorcolumn nonumber norelativenumber signcolumn=no
   " Autoinstall absent plugins
@@ -242,6 +241,10 @@ augroup PsoxFileAutos
         \| q
         \| execute "colorscheme " . g:my_color_scheme
         \| endif
+
+  if has_key(plugs, 'coc.nvim')
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+  endif
 augroup END
 
 " Set bindings for coc.nvim
@@ -251,12 +254,15 @@ if has_key(plugs, 'coc.nvim')
     endif
     let g:coc_global_extensions+=[ 'coc-yank' ]
     let g:coc_global_extensions+=[ 'coc-spell-checker' ]
-    let g:coc_global_extensions+=[ 'coc-actions' ]
     let g:coc_global_extensions+=[ 'coc-vimlsp' ]
     let g:coc_global_extensions+=[ 'coc-rust-analyzer' ]
     let g:coc_global_extensions+=[ 'coc-json' ]
     let g:coc_global_extensions+=[ 'coc-markdownlint' ]
     let g:coc_global_extensions+=[ 'coc-yaml' ]
+
+    " Do action on current object
+    nmap <silent> <leader>. :CocAction<CR>
+
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
     " other plugin before putting this into your config.
@@ -271,9 +277,6 @@ if has_key(plugs, 'coc.nvim')
       return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
 
-    " Use <A-space> to trigger completion.
-    inoremap <silent><expr> <A-space> coc#refresh()
-
     " Use <c-space> to confirm completion, `<C-g>u` means break undo chain at current
     " position. Coc only does snippet and additional edit on confirm.
     " <c-space> could be remapped by other vim plugin, try `:verbose imap <CR>`.
@@ -287,24 +290,26 @@ if has_key(plugs, 'coc.nvim')
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
+    " Remap PageUp and PageDown for scroll float windows/popups.
+    if has('nvim-0.4.0') || has('patch-8.2.0750')
+      " Normal
+      nnoremap <silent><nowait><expr> <PageDown> coc#float#has_scroll() ? coc#float#scroll(1) : "\<PageDown>"
+      nnoremap <silent><nowait><expr> <PageUp> coc#float#has_scroll() ? coc#float#scroll(0) : "\<PageUp>"
+    endif
+
     " Use K to show documentation in preview window.
     nnoremap <silent> K :call <SID>show_documentation()<CR>
     function! s:show_documentation()
       if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
+      elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
       else
-        call CocAction('doHover')
+        execute '!' . &keywordprg . " " . expand('<cword>')
       endif
-    endfunction 
-
-    " Remap for do codeAction of selected region
-    function! s:cocActionsOpenFromSelected(type) abort
-      execute 'CocCommand actions.open ' . a:type
     endfunction
-    xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-    nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
-    nmap <silent> <leader>. :CocCommand actions.open<CR>
 
+    " Open yank list
     nnoremap <silent> <C-Y> :<C-u>CocList -A --normal yank<CR>
 endif
 
