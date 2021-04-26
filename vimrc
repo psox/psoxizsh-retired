@@ -260,8 +260,12 @@ if has_key(plugs, 'coc.nvim')
     let g:coc_global_extensions+=[ 'coc-markdownlint' ]
     let g:coc_global_extensions+=[ 'coc-yaml' ]
 
-    " Do action on current object
-    nmap <silent> <leader>. :CocAction<CR>
+    " Do action on current word
+    nmap <silent> <leader>. <Plug>(coc-codeaction-selected)w
+
+    " Do action on a selection
+    nmap <silent> <leader>/ <Plug>(coc-codeaction-selected)
+    xmap <silent> <leader>/ <Plug>(coc-codeaction-selected)
 
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
