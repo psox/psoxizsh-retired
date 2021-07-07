@@ -283,7 +283,7 @@ precmd() {
 
 # Remove unwanted aliases
 
-( where fd | grep -E '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
+( where fd | grep -qE '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
 
 # Clean up global aliases
 source <(alias -g | awk -F= '/^[A-Za-z]+/{print $1}' | xargs -I{} -n1 echo unalias "'{}'")
