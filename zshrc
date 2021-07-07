@@ -13,7 +13,6 @@
 # remove duplicates
 typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
-[[ -d ~/.local/bin ]] && path=( ~/.local/bin $path)
 [[ -d ~/bin ]] && path=( ~/bin $path )
 
 # sdkman support
@@ -225,11 +224,10 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="$EDITOR $PSOXIZSH/zshrc"
-alias ohmyzsh="$EDITOR $PSOXIZSH/oh-my-zsh"
+alias zshconfig="vim $PSOXIZSH/zshrc"
+alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
 alias curlj="curl -H 'Content-Type: application/json' "
-which nvim &>/dev/null && alias vi="$(which nvim)"
-which nvim &>/dev/null && alias vim="$(which nvim)"
+which nvim >/dev/null 2>&1 && alias vim="$(which nvim)"
 alias v=vim
 [[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
 
@@ -285,7 +283,7 @@ precmd() {
 
 # Remove unwanted aliases
 
-( where fd | grep -q -E '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
+( where fd | grep -E '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
 
 # Clean up global aliases
 source <(alias -g | awk -F= '/^[A-Za-z]+/{print $1}' | xargs -I{} -n1 echo unalias "'{}'")
