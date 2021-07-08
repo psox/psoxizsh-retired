@@ -266,7 +266,7 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 [[ -d /cygdrive/c/qemu/ ]] && path+=( /cygdrive/c/qemu/ )
-[[ ! -z "$DISPLAY" ]] && xhost +LOCAL:
+( which xhost &>/dev/null ) && [[ -n "$DISPLAY" ]] && xhost +LOCAL:
 
 # Set Time Variables
 precmd() {
@@ -283,7 +283,7 @@ precmd() {
 
 # Remove unwanted aliases
 
-( where fd | grep -E '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
+( where fd | grep -qE '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
 
 # Clean up global aliases
 source <(alias -g | awk -F= '/^[A-Za-z]+/{print $1}' | xargs -I{} -n1 echo unalias "'{}'")
