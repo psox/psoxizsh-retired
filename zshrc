@@ -266,7 +266,7 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 [[ -d /cygdrive/c/qemu/ ]] && path+=( /cygdrive/c/qemu/ )
-[[ ! -z "$DISPLAY" ]] && xhost +LOCAL:
+( which xhost &>/dev/null ) && [[ -n "$DISPLAY" ]] && xhost +LOCAL:
 
 # Set Time Variables
 precmd() {
