@@ -1,0 +1,81 @@
+
+format = """
+\\[$username@$hostname\\] $directory \
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$kubernetes\
+$docker_context\
+$aws\
+$terraform\
+$package\
+$cmake\
+$golang\
+$helm\
+$java\
+$nodejs\
+$perl\
+$php\
+$python\
+$rust\
+$nix_shell\
+$memory_usage\
+$env_var\
+$cmd_duration\
+$custom\
+$jobs\
+$status
+$time $character\
+"""
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+format = " [ ⏱  $duration](bold blue)"
+
+[time]
+disabled = false
+time_format = "%FT%T"
+format = "[$time]($style)"
+
+[git_status]
+disabled = false
+
+[git_state]
+disabled = false
+
+[directory]
+truncation_length = 0
+truncate_to_repo = false
+read_only = " 🔒"
+format = "\\[[$path]($style)\\][$read_only](bold yellow)"
+
+[hostname]
+disabled = false
+ssh_only = false
+format = "[$hostname]($style)"
+
+[username]
+disabled = false
+show_always = true
+format = "[$user]($style)"
+
+[status]
+format = '[ \[$symbol $status\]]($style) '
+map_symbol = true
+disabled = false
+
+[docker_context]
+only_with_files = false
+disabled = false
+
+[aws]
+disabled = false
+
+[kubernetes]
+disabled = false
+
+[terraform]
+disabled = false
+

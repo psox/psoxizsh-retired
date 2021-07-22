@@ -15,10 +15,7 @@ typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
 [[ -d ~/bin ]] && path=( ~/bin $path )
 
-# sdkman support
 [[ -f ~/.sdkman/bin/sdkman-init.sh ]] && source ~/.sdkman/bin/sdkman-init.sh
-
-# nvm
 [[ -f /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
 
 # jaesve support
@@ -54,59 +51,24 @@ fi
 
 path+=( $GOPATH/bin ${GOROOT+${GOROOT}/bin} )
 
+# check for starship
+if which starship &>/dev/null && [[ ! -e ~/.no-starship ]]
+then
+  export _STARSHIP_Y_="yes"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$PSOXIZSH/oh-my-zsh
 export ZSH_CACHE_DIR=~/.cache/zsh
 [[ ! -d $ZSH_CACHE_DIR ]] && mkdir -p $ZSH_CACHE_DIR
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="rkj-repos"
-[[ -z $ZSH_THEME ]] && export ZSH_THEME="stemmet"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
+[[ -z "$ZSH_THEME" ]] && [[ -z "$_STARSHIP_Y_" ]] && export ZSH_THEME="stemmet"
 DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=3
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="yyyy-mm-dd"
-
-# Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$(dirname $ZSH)/zsh-custom
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=( 
   $pre_plugins 
   zsh_reload
@@ -114,7 +76,7 @@ plugins=(
   common-aliases 
   colored-man-pages 
 )
-( which git &>/dev/null ) && plugins+=( git git-extras git-flow-avh ) && [[ "$ZSH_THEME" == "stemmet" ]] && [ -z "$STARSHIP_SHELL" ] && plugins+=( git-prompt )
+( which git &>/dev/null ) && plugins+=( git git-extras git-flow-avh ) && [[ "$ZSH_THEME" == "stemmet" ]] && [ -z "$_STARSHIP_Y_" ] && plugins+=( git-prompt )
 ( which perl &>/dev/null ) && plugins+=( perl )
 ( which go &>/dev/null ) && plugins+=( golang )
 ( which oc &>/dev/null ) && plugins+=( oc )
@@ -182,13 +144,6 @@ end
 source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 ( which lxc &>/dev/null ) && source $PSOXIZSH/zsh-custom/lxd-completion-zsh/_lxc
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
 ( which vi &>/dev/null ) && export EDITOR='vi'
 ( which vim &>/dev/null ) && export EDITOR='vim'
 ( which nvim &>/dev/null ) && export EDITOR='nvim'
@@ -218,12 +173,6 @@ if which fzf &>/dev/null; then
   which tmux &> /dev/null && export FZF_TMUX=1
 fi
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
 alias zshconfig="vim $PSOXIZSH/zshrc"
 alias ohmyzsh="vim $PSOXIZSH/oh-my-zsh"
 alias curlj="curl -H 'Content-Type: application/json' "
@@ -273,7 +222,7 @@ precmd() {
   export _DATE_=$(date -u +%Y%m%d)
   export _TIME_=$(date -u +%H%M%S)
   export _DTTS_="${_DATE_}T${_TIME_}Z"
-  if [[ ! -z $KUBECONFIG ]]
+  if [[ -n "$KUBECONFIG" && -z "$_STARSHIP_Y_" ]]
   then
     export KUBE_VARS=$(basename $KUBECONFIG)/$(kubectl config current-context)
   else
@@ -281,8 +230,13 @@ precmd() {
   fi
 }
 
-# Remove unwanted aliases
+if [[ -n "$_STARSHIP_Y_" ]]
+then
+  [[ ! -e ~/.config/starship.toml ]] && install -v -D $PSOXIZSH/starship.toml ~/.config/starship.toml
+  source <(starship init zsh --print-full-init)
+fi
 
+# Remove unwanted aliases
 ( where fd | grep -qE '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
 
 # Clean up global aliases
