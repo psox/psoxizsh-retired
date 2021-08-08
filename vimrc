@@ -106,12 +106,12 @@ call plug#begin("$VIMHOME/plugged")
   Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
   Plug 'scrooloose/nerdcommenter'
   Plug 'scrooloose/vim-statline'
+  Plug 'qpkorr/vim-bufkill'
   Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
   Plug 'rust-lang/rust.vim', { 'for': 'rust' }
   Plug 'pearofducks/ansible-vim', { 'for':  ['yaml', 'yml'] }
   Plug 'luochen1990/rainbow'
   Plug 'kevinoid/vim-jsonc'
-  Plug 'jremmen/vim-ripgrep', { 'on': ['Rg', 'RgRoot'] }
   Plug 'junegunn/fzf', { 'on': ['FZF', '<Plug>fzf#run', '<Plug>fzf#wrap'] }
   Plug 'junegunn/fzf.vim'
   Plug 'sheerun/vim-polyglot'
@@ -333,6 +333,36 @@ if has_key(plugs, 'coc.nvim')
 
     " Open yank list
     nnoremap <silent> <C-Y> :<C-u>CocList -A --normal yank<CR>
+endif
+
+" FZF overides
+if has_key(plugs, 'fzf.vim')
+  if executable('rg')
+    " Only search file contents, not file name
+    " We can use the stock :Files for that
+    command! -bang -nargs=* Rg call
+          \ fzf#vim#grep(
+            \ "rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
+            \ 1,
+            \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
+            \ <bang>0
+          \ )
+
+    " Override the default grep implementation in vim
+    set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
+    " If the user hasn't set a default FZF command, and has ripgrep installed,
+    " use it over find, otherwise defer to the user's preferred command
+    if empty($FZF_DEFAULT_COMMAND)
+      command! -bang -nargs=? -complete=dir Files call
+            \ fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': 'rg --files --hidden --glob "!**/.git/**" ' }), <bang>0)
+    endif
+
+    nnoremap <silent> <A-g> :Rg<CR>
+  endif
+
+  nnoremap <silent> <A-f> :Files<CR>
+  nnoremap <silent> <A-b> :Buffers<CR>
 endif
 
 " Vim Tmux unified movement
