@@ -68,16 +68,16 @@ set completeopt+=longest
 " Lower update time (Default 4000)
 set updatetime=300
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
+set number
+set relativenumber
 try
-  " Vim 8.2 only
-  set signcolumn=number
+  set signcolumn=auto
 catch
   set signcolumn=yes:1
 endtry
-set number
-set relativenumber
+
+" Use existing buffers
+set switchbuf="useopen,usetab"
 
 if exists('+termguicolors')
   set termguicolors
@@ -245,7 +245,25 @@ augroup PsoxFileAutos
   if has_key(plugs, 'coc.nvim')
     autocmd CursorHold * silent call CocActionAsync('highlight')
   endif
+
+  " Force non file buffers to not pollute the buffer list
+  autocmd FileType quickfix,netrw setlocal nobuflisted
+
+  " Actually kill netrw when trying to quit it
+  autocmd FileType netrw nnoremap <buffer><silent> <Esc> :call <SID>CloseNetrw()<CR>
 augroup END
+
+function! s:CloseNetrw() abort
+  for bufn in range(1, bufnr('$'))
+    if bufexists(bufn) && getbufvar(bufn, '&filetype') ==# 'netrw'
+      silent! execute 'bwipeout ' . bufn
+      if getline(2) =~# '^" Netrw '
+        silent! bwipeout
+      endif
+      return
+    endif
+  endfor
+endfunction
 
 " Set bindings for coc.nvim
 if has_key(plugs, 'coc.nvim')
@@ -347,7 +365,7 @@ function! ToggleGutter() abort
     exec "set nonumber norelativenumber signcolumn=no"
   else
     exec "set number relativenumber"
-    try | set signcolumn=number | catch | set signcolumn=yes:1 | endtry
+    try | set signcolumn=auto | catch | set signcolumn=yes:1 | endtry
   endif
 endfunction
 
