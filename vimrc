@@ -243,7 +243,10 @@ augroup PsoxFileAutos
         \| endif
 
   if has_key(plugs, 'coc.nvim')
+    " Highlight the symbol and its references when hovering
     autocmd CursorHold * silent call CocActionAsync('highlight')
+    " Update signature help on jump placeholder
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   endif
 
   " Force non file buffers to not pollute the buffer list
@@ -266,7 +269,7 @@ function! s:CloseNetrw() abort
 endfunction
 
 " Set bindings for coc.nvim
-if has_key(plugs, 'coc.nvim')
+if has_key(plugs, 'coc.nvim') && executable("node")
     if !exists("g:coc_global_extensions")
         let g:coc_global_extensions=[]
     endif
@@ -284,6 +287,12 @@ if has_key(plugs, 'coc.nvim')
     " Do action on a selection
     nmap <silent> <leader>/ <Plug>(coc-codeaction-selected)
     xmap <silent> <leader>/ <Plug>(coc-codeaction-selected)
+
+    " rename symbol
+    nnoremap <silent> <leader>rn <Plug>(coc-rename)
+    " goto definition / references
+    nnoremap <silent> <leader>gd <Plug>(coc-definition)
+    nnoremap <silent> <leader>gr <Plug>(coc-references)
 
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
