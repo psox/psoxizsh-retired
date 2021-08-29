@@ -195,21 +195,19 @@ source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 
 # Set zsh tmux config path
 if which tmux &>/dev/null; then
-  for tmux_config in {~/.config/tmux,~/.tmux,/etc/tmux}; do
-    if [ -d "$tmux_config" ]; then
-      TMUX_PATH="$tmux_config"
-      break
-    fi
-  done
-
   [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
-  export TMUX_PATH=$TMUX_PATH
 
-  [ -d "$TMUX_PATH" ] && [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp $TMUX_PATH && cp -r $PSOXIZSH/tmux/. $TMUX_PATH }
-  # If a .conf is detected override the default zsh tmux path
-  [ -f "$TMUX_PATH/tmux.conf" ] && export ZSH_TMUX_CONFIG="$TMUX_PATH/tmux.conf"
+  # Bootstrap the user's plugin directory, if required
+  [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp "$TMUX_PATH/plugins" && cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH/plugins" }
 
-  export TMUX_PLUGINS="$TMUX_PATH/plugins"
+  # Both tmux and TPM are very opininated about where configs must live,
+  # and TPM will only expand one layer of source-file directives, so we
+  # symlink the base config to the user local config file, if it doesn't
+  # exist.
+  [ ! -f ~/.tmux.conf ] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
+  [ ! -f "$TMUX_PATH/plugins.conf" ] && ln -s "$PSOXIZSH/tmux/fragment/plugins.conf" "$TMUX_PATH/plugins.conf"
+
+  export TMUX_PATH=$TMUX_PATH TMUX_PLUGINS="$TMUX_PATH/plugins" TMUX_CONFIG=~/.tmux.conf
 fi
 
 if which fzf &>/dev/null; then
