@@ -69,12 +69,11 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="yyyy-mm-dd"
 ZSH_CUSTOM=$(dirname $ZSH)/zsh-custom
 
-plugins=( 
-  $pre_plugins 
-  zsh_reload
-  gnu-utils 
-  common-aliases 
-  colored-man-pages 
+plugins=(
+  $pre_plugins
+  gnu-utils
+  common-aliases
+  colored-man-pages
 )
 ( which git &>/dev/null ) && plugins+=( git git-extras git-flow-avh ) && [[ "$ZSH_THEME" == "stemmet" ]] && [ -z "$_STARSHIP_Y_" ] && plugins+=( git-prompt )
 ( which perl &>/dev/null ) && plugins+=( perl )
@@ -236,6 +235,9 @@ then
   [[ ! -e ~/.config/starship.toml ]] && install -v -D $PSOXIZSH/starship.toml ~/.config/starship.toml
   source <(starship init zsh --print-full-init)
 fi
+
+# alias reload
+alias src='omz reload'
 
 # Remove unwanted aliases
 ( where fd | grep -qE '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
