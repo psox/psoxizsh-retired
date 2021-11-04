@@ -157,14 +157,18 @@ then
   [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
 
   # Bootstrap the user's plugin directory, if required
-  [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp "$TMUX_PATH/plugins" && cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH/plugins" }
+  [ -d "$TMUX_PATH/plugins" ] || {
+    cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH"
+  }
 
   # Both tmux and TPM are very opininated about where configs must live,
   # and TPM will only expand one layer of source-file directives, so we
   # symlink the base config to the user local config file, if it doesn't
   # exist.
-  [ ! -f ~/.tmux.conf ] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
-  [ ! -f "$TMUX_PATH/plugins.conf" ] && ln -s "$PSOXIZSH/tmux/fragment/plugins.conf" "$TMUX_PATH/plugins.conf"
+  [[ ! -f $TMUX_PATH/tmux.conf ]] && cp -r "$PSOXIZSH/tmux/tmux.conf" "$TMUX_PATH/tmux.conf"
+  [[ ! -f ~/.tmux.conf ]] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
+  [[ ! -f "$TMUX_PATH/plugins.conf" ]] && ln -vs "$PSOXIZSH/tmux/fragment/plugins.conf" "$TMUX_PATH/plugins.conf"
+  [[ "$USER" == "astemmet" ]] && [[ ! -f $TMUX_PATH/early.conf ]] && ln -vs "$PSOXIZSH/tmux/fragment/ctrl-alt-movement.conf" "$TMUX_PATH/early.conf"
 
   export TMUX_PATH=$TMUX_PATH TMUX_PLUGINS="$TMUX_PATH/plugins" TMUX_CONFIG=~/.tmux.conf
 fi
