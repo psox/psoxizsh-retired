@@ -289,10 +289,10 @@ if has_key(plugs, 'coc.nvim') && executable("node")
     xmap <silent> <leader>/ <Plug>(coc-codeaction-selected)
 
     " rename symbol
-    nnoremap <silent> <leader>rn <Plug>(coc-rename)
+    nmap <silent> <leader>rn <Plug>(coc-rename)
     " goto definition / references
-    nnoremap <silent> <leader>gd <Plug>(coc-definition)
-    nnoremap <silent> <leader>gr <Plug>(coc-references)
+    nmap <silent> <leader>gd <Plug>(coc-definition)
+    nmap <silent> <leader>gr <Plug>(coc-references)
 
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -367,11 +367,21 @@ if has_key(plugs, 'fzf.vim')
             \ fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': 'rg --files --hidden --glob "!**/.git/**" ' }), <bang>0)
     endif
 
-    nnoremap <silent> <A-g> :Rg<CR>
+    nnoremap <A-g> :Rg
+    nnoremap <leader><A-g> :Rg!
+    nnoremap <silent> <A-S-g> :Rg<CR>
+    nnoremap <silent> <leader><A-S-g> :Rg!<CR>
   endif
 
-  nnoremap <silent> <A-f> :Files<CR>
-  nnoremap <silent> <A-b> :Buffers<CR>
+  nnoremap <A-f> :Files
+  nnoremap <leader><A-f> :Files!
+  nnoremap <silent> <A-S-f> :Files<CR>
+  nnoremap <silent> <leader><A-S-f> :Files!<CR>
+
+  nnoremap <A-b> :Buffers 
+  nnoremap <leader><A-b> :Buffers!
+  nnoremap <silent> <A-S-b> :Buffers<CR>
+  nnoremap <silent> <leader><A-S-b> :Buffers!<CR>
 endif
 
 " Vim Tmux unified movement

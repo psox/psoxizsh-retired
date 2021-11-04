@@ -15,7 +15,10 @@ typeset -U PATH path fpath
 path=( /bin /sbin /usr/bin /usr/sbin $path )
 [[ -d ~/bin ]] && path=( ~/bin $path )
 
+# sdkman support
 [[ -f ~/.sdkman/bin/sdkman-init.sh ]] && source ~/.sdkman/bin/sdkman-init.sh
+
+# nvm
 [[ -f /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
 
 # jaesve support
@@ -148,25 +151,26 @@ source $PSOXIZSH/zsh-custom/zshnip/zshnip.zsh
 ( which nvim &>/dev/null ) && export EDITOR='nvim'
 
 # Set zsh tmux config path
-if which tmux &>/dev/null; then
-  for tmux_config in {~/.config/tmux,~/.tmux,/etc/tmux}; do
-    if [ -d "$tmux_config" ]; then
-      TMUX_PATH="$tmux_config"
-      break
-    fi
-  done
+if which tmux &>/dev/null
+then
 
   [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
-  export TMUX_PATH=$TMUX_PATH
 
-  [ -d "$TMUX_PATH" ] && [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp $TMUX_PATH && cp -r $PSOXIZSH/tmux/. $TMUX_PATH }
-  # If a .conf is detected override the default zsh tmux path
-  [ -f "$TMUX_PATH/tmux.conf" ] && export ZSH_TMUX_CONFIG="$TMUX_PATH/tmux.conf"
+  # Bootstrap the user's plugin directory, if required
+  [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp "$TMUX_PATH/plugins" && cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH/plugins" }
 
-  export TMUX_PLUGINS="$TMUX_PATH/plugins"
+  # Both tmux and TPM are very opininated about where configs must live,
+  # and TPM will only expand one layer of source-file directives, so we
+  # symlink the base config to the user local config file, if it doesn't
+  # exist.
+  [ ! -f ~/.tmux.conf ] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
+  [ ! -f "$TMUX_PATH/plugins.conf" ] && ln -s "$PSOXIZSH/tmux/fragment/plugins.conf" "$TMUX_PATH/plugins.conf"
+
+  export TMUX_PATH=$TMUX_PATH TMUX_PLUGINS="$TMUX_PATH/plugins" TMUX_CONFIG=~/.tmux.conf
 fi
 
-if which fzf &>/dev/null; then
+if which fzf &>/dev/null
+then
   # Press ? inside a C-r search to get a preview window, useful for long commands
   export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
   which tmux &> /dev/null && export FZF_TMUX=1
@@ -203,7 +207,8 @@ setopt no_bang_hist cdable_vars auto_name_dirs
 
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
-if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} ))
+then
     function zle-line-init () {
         echoti smkx
     }
