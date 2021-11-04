@@ -367,19 +367,19 @@ if has_key(plugs, 'fzf.vim')
             \ fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': 'rg --files --hidden --glob "!**/.git/**" ' }), <bang>0)
     endif
 
-    nnoremap <A-g> :Rg 
-    nnoremap <leader><A-g> :Rg! 
+    nnoremap <A-g> :Rg
+    nnoremap <leader><A-g> :Rg!
     nnoremap <silent> <A-S-g> :Rg<CR>
     nnoremap <silent> <leader><A-S-g> :Rg!<CR>
   endif
 
-  nnoremap <A-f> :Files 
-  nnoremap <leader><A-f> :Files! 
+  nnoremap <A-f> :Files
+  nnoremap <leader><A-f> :Files!
   nnoremap <silent> <A-S-f> :Files<CR>
   nnoremap <silent> <leader><A-S-f> :Files!<CR>
 
   nnoremap <A-b> :Buffers 
-  nnoremap <leader><A-b> :Buffers! 
+  nnoremap <leader><A-b> :Buffers!
   nnoremap <silent> <A-S-b> :Buffers<CR>
   nnoremap <silent> <leader><A-S-b> :Buffers!<CR>
 endif
