@@ -168,7 +168,9 @@ then
   [[ ! -f $TMUX_PATH/tmux.conf ]] && cp -r "$PSOXIZSH/tmux/tmux.conf" "$TMUX_PATH/tmux.conf"
   [[ ! -f ~/.tmux.conf ]] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
   [[ ! -f "$TMUX_PATH/plugins.conf" ]] && ln -vs "$PSOXIZSH/tmux/fragment/plugins.conf" "$TMUX_PATH/plugins.conf"
-  [[ "$USER" == "astemmet" ]] && [[ ! -f $TMUX_PATH/early.conf ]] && ln -vs "$PSOXIZSH/tmux/fragment/ctrl-alt-movement.conf" "$TMUX_PATH/early.conf"
+  [[ "$USER" == "astemmet" ]] && [[ ! -f $TMUX_PATH/keys.conf ]] && {
+    cp -v "$PSOXIZSH/tmux/fragment/ctrl-alt-movement.conf" "$TMUX_PATH/keys.conf"
+  }
 
   export TMUX_PATH=$TMUX_PATH TMUX_PLUGINS="$TMUX_PATH/plugins" TMUX_CONFIG=~/.tmux.conf
 fi
