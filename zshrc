@@ -188,7 +188,7 @@ alias curlj="curl -H 'Content-Type: application/json' "
 which nvim >/dev/null 2>&1 && alias vim="$(which nvim)"
 alias v=vim
 [[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
-[[ -x /usr/bin/paru ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/paru'
+[[ -x /usr/bin/paru ]] && [[ "$(whoami)" != "pacman" ]] && alias paru='sudo -iupacman /usr/bin/paru'
 
 typeset -A key
 
