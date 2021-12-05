@@ -7,6 +7,7 @@ finally made this repository so people can pull the latest.  if you already have
 directory and make sure you have not make any changes.  If you have stash them and then run the following commands.
 
 ```bash
+
 (
     git pull --recurse-submodules=yes
     git submodule foreach git fetch --all --prune
@@ -25,7 +26,7 @@ src
 
 ```bash
 
-git clone --recurse-submodules --recursive --config http.sslVerify=false https://github.com/psox/psoxizsh.git ~/.psoxizsh
+git clone --recurse-submodules --recursive https://github.com/psox/psoxizsh.git ~/.psoxizsh
 
 ~/.psoxizsh/fresh-system
 
@@ -36,7 +37,7 @@ git clone --recurse-submodules --recursive --config http.sslVerify=false https:/
 ```bash
 
 # Make sure you are root
-git clone --recurse-submodules --recursive --config http.sslVerify=false https://github.com/psox/psoxizsh.git /etc/psoxizsh
+git clone --recurse-submodules --recursive https://github.com/psox/psoxizsh.git /etc/psoxizsh
 
 # for each user that wants to use this
 /etc/psoxizsh/fresh-system
@@ -67,13 +68,11 @@ export VIMHOME=$HOME/.psoxizsh/vim
 
 Once these values are set in your environment you can start vim and type.
 
-```viml
+```vim
 :PlugInstall
 ```
 
-Exit vim and start again, if you get an error with the YouCompleteMe plugin, go to the
-[You Complete Me](https://github.com/Valloric/YouCompleteMe#full-installation-guide)
-page and see if you can fix it.  Normally install a more complete version of vim will
-solve the problem.
+Exit vim and start again.
 
 Enjoy
+
