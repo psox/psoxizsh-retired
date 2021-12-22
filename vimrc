@@ -215,7 +215,7 @@ if has_key(plugs, 'vim-qf')
     let g:qf_auto_resize = 0
   endif
 endif
-  
+
 " ripgrep settings
 let g:rg_highlight = 'true'
 let g:rg_derive_root = 'true'
@@ -230,7 +230,7 @@ let g:rainbow_active = 1
 augroup PsoxFileAutos
   autocmd!
   autocmd FileType yaml setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab
-  autocmd FileType go   setlocal ts=8 sts=4 sw=4 noexpandtab 
+  autocmd FileType go   setlocal ts=8 sts=4 sw=4 noexpandtab
         \| autocmd BufWritePre <buffer> silent :call CocAction('format')
   " Tidy nerdtree windiw
   autocmd FileType nerdtree setlocal nocursorcolumn nonumber norelativenumber signcolumn=no
@@ -378,7 +378,7 @@ if has_key(plugs, 'fzf.vim')
   nnoremap <silent> <A-S-f> :Files<CR>
   nnoremap <silent> <leader><A-S-f> :Files!<CR>
 
-  nnoremap <A-b> :Buffers 
+  nnoremap <A-b> :Buffers
   nnoremap <leader><A-b> :Buffers!
   nnoremap <silent> <A-S-b> :Buffers<CR>
   nnoremap <silent> <leader><A-S-b> :Buffers!<CR>

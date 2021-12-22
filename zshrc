@@ -31,7 +31,7 @@ path=( /bin /sbin /usr/bin /usr/sbin $path )
 
 # Set funtion paths
 foreach local p in ~/.local/share/zsh/functions ~/.config/zsh/functions $extra_fpath
-  [[ -d "$p" ]] && fpath=( "$p" $fpath ) 
+  [[ -d "$p" ]] && fpath=( "$p" $fpath )
 end
 
 [[ "$OS" != "Windows_NT" ]] && [[ -f /etc/profile ]] && source /etc/profile
@@ -105,7 +105,7 @@ plugins=(
 ( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( osx )
 #( which vim &>/dev/null ) && plugins+=( vim-interaction )
 ( which ssh &>/dev/null ) && [[ -d ~/.ssh ]] && plugins+=( ssh-agent )
-plugins+=( 
+plugins+=(
   zsh-completions
   zsh-autosuggestions
   zsh-navigation-tools
@@ -128,7 +128,7 @@ fi
 if [[ -d ~/.ssh ]]
 then
   zstyle :omz:plugins:ssh-agent lifetime 36h
-  if [[ -e ~/.ssh/autoload ]] 
+  if [[ -e ~/.ssh/autoload ]]
   then
       zstyle :omz:plugins:ssh-agent identities $( cat ~/.ssh/autoload )
   fi
@@ -189,6 +189,7 @@ which nvim >/dev/null 2>&1 && alias vim="$(which nvim)"
 alias v=vim
 [[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
 [[ -x /usr/bin/paru ]] && [[ "$(whoami)" != "pacman" ]] && alias paru='sudo -iupacman /usr/bin/paru'
+[[ -x /usr/bin/bat ]] && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 typeset -A key
 
