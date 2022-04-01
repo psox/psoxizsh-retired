@@ -102,7 +102,7 @@ plugins=(
 ( which kubectl &>/dev/null ) && plugins+=( kubectl )
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/suse-release ]] ) && plugins+=( suse )
-( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( osx )
+( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( macos )
 #( which vim &>/dev/null ) && plugins+=( vim-interaction )
 ( which ssh &>/dev/null ) && [[ -d ~/.ssh ]] && plugins+=( ssh-agent )
 plugins+=( 
