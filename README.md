@@ -3,8 +3,22 @@
 ## About this
 
 Over the years I have collect various bits from various locations.  I often share what I have done with work colleagues and
-finally made this repository so people can pull the latest.  if you already have an installation cd to the `~/.psoxizsh`
+finally made this repository so people can pull the latest.  if you already have an installation cd to the `~/.psoxizsh` or `/etc/psoxizsh` as root
 directory and make sure you have not make any changes.  If you have stash them and then run the following commands.
+
+This is optomized by default for dark terminals, and contains configurations for use with
+
+* zsh >= v5.8
+* neovim >= v0.6
+* tmux >= 3.2
+
+All of these have standard setting but can be cusntomized by using optional include files.  Please read the following configs
+
+* `vimrc`
+* `zshrc`
+* `tmux/tmux.conf`
+
+and look at the include files to check for overides
 
 ```bash
 
@@ -28,6 +42,7 @@ src
 
 git clone --recurse-submodules --recursive https://github.com/psox/psoxizsh.git ~/.psoxizsh
 
+# This should work on linux.  It is not tested on MacOS or Windows
 ~/.psoxizsh/fresh-system
 
 ```
@@ -39,40 +54,23 @@ git clone --recurse-submodules --recursive https://github.com/psox/psoxizsh.git 
 # Make sure you are root
 git clone --recurse-submodules --recursive https://github.com/psox/psoxizsh.git /etc/psoxizsh
 
-# for each user that wants to use this
+# This should work on linux.  It is not tested on MacOS or Windows
+# for each user that wants to use this as the user run this command
 /etc/psoxizsh/fresh-system
 
 ```
 
-## Configure Vim or NeoVim
+## Configure NeoVim
 
-Make sure you have vim 8 installed and after starting zsh check that the following variable are set by typing
+Make sure you have neovim (tested on v0.6.1) installed and after starting zsh check that the following variable are set by typing
+
+You will need to install `neovim`, `nodejs` and `npm` to get the full use of vim
 
 ```bash
 echo $VIMINIT
 echo $MYVIMRC
 echo $VIMHOME
 ```
-
-Also check your `/etc/vimrc` or `/etc/vim/vimrc` to see if they do something funny.  A good example of a
-`vimrc` that can be appended to the end of the `vimrc` file off the `/etc` directory
-can be found in `~/.psoxizsh/etc/`.
-
-If these are not set try adding the following to the beginning of your `~/.zshrc` file.
-
-```bash
-export VIMINIT='source $MYVIMRC'
-export MYVIMRC=$HOME/.psoxizsh/vimrc
-export VIMHOME=$HOME/.psoxizsh/vim
-```
-
-Once these values are set in your environment you can start vim and type.
-
-```vim
-:PlugInstall
-```
-
-Exit vim and start again.
 
 Enjoy
 
