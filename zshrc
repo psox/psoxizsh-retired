@@ -102,6 +102,7 @@ plugins=(
 ( which kubectx &>/dev/null ) && plugins+=( kubectx )
 ( which chroma &>/dev/null ) && plugins+=( colorize )
 ( which kate &>/dev/null ) && plugins+=( kate )
+( which zoxide &>/dev/null ) && plugins+=( zoxide )
 ( [[ -e /etc/arch-release ]] ) && plugins+=( archlinux )
 ( [[ -e /etc/ubuntu-release ]] ) && plugins+=( ubuntu )
 ( [[ -e /etc/debian-release ]] ) && plugins+=( debian )
