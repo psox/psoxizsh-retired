@@ -230,7 +230,7 @@ let g:rainbow_active = 1
 augroup PsoxFileAutos
   autocmd!
   autocmd FileType yaml setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab
-  autocmd FileType go   setlocal ts=8 sts=4 sw=4 noexpandtab
+  autocmd FileType go   setlocal ts=4 sts=4 sw=4 noexpandtab
         \| autocmd BufWritePre <buffer> silent :call CocAction('format')
   " Tidy nerdtree windiw
   autocmd FileType nerdtree setlocal nocursorcolumn nonumber norelativenumber signcolumn=no
