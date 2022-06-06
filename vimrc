@@ -411,9 +411,9 @@ nnoremap <silent> <leader>N :call ToggleGutter()<CR>
 
 function! ToggleGutter() abort
   if &number
-    exec "set nonumber norelativenumber signcolumn=no"
+    exec "set nonumber norelativenumber signcolumn=no nolist"
   else
-    exec "set number relativenumber"
+    exec "set number relativenumber list"
     try | set signcolumn=auto | catch | set signcolumn=yes:1 | endtry
   endif
 endfunction
