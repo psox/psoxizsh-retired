@@ -1,5 +1,11 @@
 
 local plugins = {
+  -- Allow packer to manage itself
+  { 'wbthomason/packer.nvim',
+      opt = true,
+      cmd = 'Packer*',
+      module_pattern = { 'packer', 'packer%..*' }
+  },
 }
 
 local function concatArray(a, b)
