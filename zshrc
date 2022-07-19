@@ -117,12 +117,20 @@ plugins+=(
 if [[ "$OSTYPE" =~ "linux*" || "$OSTYPE" =~ "darwin*" || "$OSTYPE" == "cygwin" ]]
 then
   export VIMINIT='source $MYVIMRC'
-  export MYVIMRC=$PSOXIZSH/vimrc
   export VIMHOME=~/.vim
-  cmp $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim 2>/dev/null || (
-    mkdir -vp $VIMHOME/autoload/
-    cp -av $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
-  )
+
+  # Feature flag lua based Neovim config, until this is tested
+  # (and we figure out how to detect if we're running nvim or vim)
+  if [[ -n ${PSOXIZSH_EXPERIMENTAL_NEOVIM_LUA} ]]
+  then
+    export MYVIMRC=$PSOXIZSH/init.lua
+  else
+    export MYVIMRC=$PSOXIZSH/vimrc
+    cmp $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim 2>/dev/null || (
+      mkdir -vp $VIMHOME/autoload/
+      cp -av $PSOXIZSH/vim/autoload/plug.vim $VIMHOME/autoload/plug.vim
+    )
+  fi
 fi
 
 if [[ -d ~/.ssh ]]
