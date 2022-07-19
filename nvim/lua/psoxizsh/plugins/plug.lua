@@ -6,6 +6,11 @@ local plugins = {
       cmd = 'Packer*',
       module_pattern = { 'packer', 'packer%..*' }
   },
+
+  -- Used for autocmds if we're not using a late enough version of neovim
+  { 'jakelinnzy/autocmd-lua',
+      disable = vim.fn.has('nvim-0.7') == 1
+  },
 }
 
 local function concatArray(a, b)
