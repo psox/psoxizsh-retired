@@ -48,6 +48,11 @@ local plugins = {
   { 'scrooloose/nerdcommenter' },
 
   -- Stat line integrations
+  { 'lewis6991/gitsigns.nvim',
+      tag = 'release',
+      requires = { 'nvim-lua/plenary.nvim' },
+      config = require 'psoxizsh.plugins.config.gitsigns'
+  },
 
   -- Buffer mangement
   { 'qpkorr/vim-bufkill' },
