@@ -75,6 +75,11 @@ local plugins = {
   },
 
   -- IDE stuff + language highlighting
+  { 'neoclide/coc.nvim',
+      branch = 'release',
+      after = 'vimp',
+      config = require 'psoxizsh.plugins.config.coc'
+  },
   { 'neomake/neomake',
       config = require 'psoxizsh.plugins.config.neomake'
   },
