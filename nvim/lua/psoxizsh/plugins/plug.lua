@@ -109,6 +109,13 @@ local plugins = {
   },
   { 'romainl/vim-cool' },
 
+  -- Tmux integration for pane movement
+  { 'christoomey/vim-tmux-navigator',
+      keys = { '<C-h>', '<C-j>', '<C-k>', '<C-l>' },
+      cmd = { 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious' },
+      config = require 'psoxizsh.plugins.config.vim-tmux-navigator'
+  },
+
   -- Other
   { 'roxma/nvim-yarp' },
   { 'roxma/vim-hug-neovim-rpc' },
