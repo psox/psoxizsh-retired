@@ -48,6 +48,13 @@ local plugins = {
   { 'scrooloose/nerdcommenter' },
 
   -- Stat line integrations
+  { 'akinsho/bufferline.nvim',
+      as = "bufferline",
+      tag = "v1.*",
+      requires = { 'kyazdani42/nvim-web-devicons' },
+      after = 'vimp',
+      config = require 'psoxizsh.plugins.config.bufferline'
+  },
   { 'lewis6991/gitsigns.nvim',
       tag = 'release',
       requires = { 'nvim-lua/plenary.nvim' },
