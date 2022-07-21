@@ -7,6 +7,11 @@ local plugins = {
       module_pattern = { 'packer', 'packer%..*' }
   },
 
+  -- Utils for wrapping vimscript in lua easier
+  { 'svermeulen/vimpeccable',
+      as = 'vimp'
+  },
+
   -- Used for autocmds if we're not using a late enough version of neovim
   { 'jakelinnzy/autocmd-lua',
       disable = vim.fn.has('nvim-0.7') == 1
