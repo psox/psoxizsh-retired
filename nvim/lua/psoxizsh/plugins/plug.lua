@@ -29,6 +29,21 @@ local plugins = {
   -- Git integration
   { 'tpope/vim-fugitive' },
 
+  -- File browser
+  { 'nvim-neo-tree/neo-tree.nvim',
+      as = 'neo-tree',
+      branch = 'v2.x',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'kyazdani42/nvim-web-devicons',
+        'MunifTanjim/nui.nvim',
+      },
+      after = 'vimp',
+      cmd = { 'Neotree', 'NeoTree*' },
+      keys = { '<F2>', '<leader>gs', '<leader><S-TAB>' },
+      config = require 'psoxizsh.plugins.config.neotree'
+  },
+
   -- Comment helpers
   { 'scrooloose/nerdcommenter' },
 
