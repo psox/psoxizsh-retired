@@ -65,6 +65,9 @@ local function psoxizsh_early_config()
   -- Use existing buffers
   o.switchbuf = { "useopen", "usetab" }
 
+  -- Set global statusline (0.7+ only)
+  if fn.has('nvim-0.7') == 1 then o.laststatus = 3 end
+
   -- Local pre plugin configuration
   util.try_mreload('pre')
 end
