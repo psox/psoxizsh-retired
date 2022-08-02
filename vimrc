@@ -378,11 +378,7 @@ if has_key(plugs, 'fzf.vim')
   nnoremap <silent> <A-S-f> :Files<CR>
   nnoremap <silent> <leader><A-S-f> :Files!<CR>
 
-<<<<<<< HEAD
-  nnoremap <A-b> :Buffers
-=======
   nnoremap <A-b> :Buffers 
->>>>>>> origin/develop
   nnoremap <leader><A-b> :Buffers!
   nnoremap <silent> <A-S-b> :Buffers<CR>
   nnoremap <silent> <leader><A-S-b> :Buffers!<CR>

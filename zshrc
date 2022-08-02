@@ -108,11 +108,7 @@ plugins=(
 ( [[ -e /etc/debian-release ]] ) && plugins+=( debian )
 ( [[ -e /etc/suse-release ]] ) && plugins+=( suse )
 ( [[ "$(uname)" == "Darwin" ]] ) && plugins+=( macos )
-<<<<<<< HEAD
 ( which vim &>/dev/null ) && plugins+=( vim-interaction )
-=======
-#( which vim &>/dev/null ) && plugins+=( vim-interaction )
->>>>>>> origin/develop
 ( which ssh &>/dev/null ) && [[ -d ~/.ssh ]] && plugins+=( ssh-agent )
 plugins+=(
   zsh-completions
@@ -174,29 +170,18 @@ then
   [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
 
   # Bootstrap the user's plugin directory, if required
-<<<<<<< HEAD
-  [ -d "$TMUX_PATH/plugins" ] || {
-    cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH"
-  }
-=======
   [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp "$TMUX_PATH/plugins" && cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH/plugins" }
->>>>>>> origin/develop
 
   # Both tmux and TPM are very opininated about where configs must live,
   # and TPM will only expand one layer of source-file directives, so we
   # symlink the base config to the user local config file, if it doesn't
   # exist.
-<<<<<<< HEAD
   [[ ! -f $TMUX_PATH/tmux.conf ]] && cp -r "$PSOXIZSH/tmux/tmux.conf" "$TMUX_PATH/tmux.conf"
   [[ ! -f ~/.tmux.conf ]] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
   [[ ! -f "$TMUX_PATH/plugins.conf" ]] && ln -vs "$PSOXIZSH/tmux/fragment/plugins.conf" "$TMUX_PATH/plugins.conf"
   [[ "$USER" == "astemmet" ]] && [[ ! -f $TMUX_PATH/keys.conf ]] && {
     cp -v "$PSOXIZSH/tmux/fragment/ctrl-alt-movement.conf" "$TMUX_PATH/keys.conf"
   }
-=======
-  [ ! -f ~/.tmux.conf ] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
-  [ ! -f "$TMUX_PATH/plugins.conf" ] && ln -s "$PSOXIZSH/tmux/fragment/plugins.conf" "$TMUX_PATH/plugins.conf"
->>>>>>> origin/develop
 
   export TMUX_PATH=$TMUX_PATH TMUX_PLUGINS="$TMUX_PATH/plugins" TMUX_CONFIG=~/.tmux.conf
 fi
@@ -214,12 +199,9 @@ alias curlj="curl -H 'Content-Type: application/json' "
 which nvim >/dev/null 2>&1 && alias vim="$(which nvim)"
 alias v=vim
 [[ -x /usr/bin/yay ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/yay'
-<<<<<<< HEAD
+[[ -x /usr/bin/paru ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/paru'
 [[ -x /usr/bin/paru ]] && [[ "$(whoami)" != "pacman" ]] && alias paru='sudo -iupacman /usr/bin/paru'
 [[ -x /usr/bin/bat ]] && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-=======
-[[ -x /usr/bin/paru ]] && [[ "$(whoami)" != "pacman" ]] && alias yay='sudo -iupacman /usr/bin/paru'
->>>>>>> origin/develop
 
 typeset -A key
 
