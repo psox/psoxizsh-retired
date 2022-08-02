@@ -2,7 +2,7 @@
 (
   cd ~
   [[ ! -e ~/.zshrc ]] && touch ~/.zshrc
-  install -v --mode=700 -d ~/.ssh
+  install -v -m 0700 -d ~/.ssh
   grep -E '^source (/etc/psoxizsh|~/.psoxizsh)/zshrc' ~/.zshrc 2>/dev/null >/dev/null 
   if [[ $? -ne 0 ]]
   then

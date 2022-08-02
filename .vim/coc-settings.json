@@ -1,7 +1,12 @@
 {
   "cSpell.words": [
+    "Alacritty",
     "Coms",
+    "Iosevka",
+    "MYVIMRC",
     "Psox",
+    "VIMHOME",
+    "VIMINIT",
     "Xuyuanp",
     "adelarsq",
     "ansible",
@@ -10,7 +15,10 @@
     "junegunn",
     "luochen",
     "neoclide",
+    "neovim",
+    "nvim",
     "pearofducks",
+    "psoxizsh",
     "rakr",
     "romainl",
     "roxma",
@@ -18,6 +26,7 @@
     "sheerun",
     "syntastic",
     "tpope",
+    "vimrc",
     "yarp"
   ]
 }
