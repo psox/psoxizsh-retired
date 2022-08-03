@@ -2,6 +2,26 @@ local cmd, bootstrap, util = vim.cmd, require 'psoxizsh.plugins.bootstrap', requ
 local cb_table = {}
 local packer = nil
 
+local EARLY, LATE = { early = 1, pre = 1 }, { post = 1, late = 1 }
+
+-- Wrap the provided function in async context that will wait until all plugins have been initialized
+local function defer_wrap(fn)
+  if bootstrap() then return fn end
+
+  return function(plugs)
+    local a = require 'plenary.async'
+
+    a.run(function()
+      -- Yield until packer's global plugin list is available
+      while _G.packer_plugins == nil do
+        a.util.sleep(100)
+      end
+    end, function()
+      fn(plugs)
+    end)
+  end
+end
+
 -- Plugins provides a hook based wrapper around packer.nvim, allowing
 -- callers to register hooks at specific lifecycle events such as pre
 -- and post plugin load.
@@ -151,9 +171,9 @@ end
 --
 -- @name { 'early' | 'pre' | 'post' | 'late' }
 function Plugins.do_hook(self, name)
-  if name and name == 'post' or 'late' then
+  if LATE[name] then
     self:_post_hook(self._hooks[name])
-  else
+  elseif EARLY[name] then
     self:_pre_hook(self._hooks[name])
   end
 end
@@ -172,7 +192,7 @@ function Plugins.register_callbacks(self, callbacks)
     cmd [[autocmd!]]
     for n, fn in pairs(callbacks) do
       local id = self._hooks[n]
-      cb_table[id] = fn
+      cb_table[id] = self:_make_callback(n, fn)
       cmd(string.format('autocmd User %s call v:lua._psoxizsh_plugins_cb("%s")', id, id))
     end
     cmd [[augroup END]]
@@ -200,6 +220,14 @@ end
 
 function Plugins._dispatch_autocmd(_, hook)
   if hook then cmd('doautocmd User ' .. hook) end
+end
+
+function Plugins._make_callback(_, name, fn)
+  if LATE[name] then
+    return defer_wrap(fn)
+  else
+    return fn
+  end
 end
 
 -- Setup a convenience method for setting up + initializing a Plugins object
