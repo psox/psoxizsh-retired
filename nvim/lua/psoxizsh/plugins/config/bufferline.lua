@@ -15,7 +15,7 @@ return function()
     sort_by = 'relative_directory',
   }
 
-  bl.setup { options = util.mconfig('config.bufferline', defaults) }
+  bl.setup (util.mconfig('config.bufferline', { options = defaults }))
 
   vimp.nnoremap({'silent'}, '<TAB>',          ':BufferLineCycleNext<CR>')
   vimp.nnoremap({'silent'}, '<S-TAB>',        ':BufferLineCyclePrev<CR>')
