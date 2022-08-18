@@ -281,6 +281,9 @@ if has_key(plugs, 'coc.nvim') && executable("node")
     let g:coc_global_extensions+=[ 'coc-markdownlint' ]
     let g:coc_global_extensions+=[ 'coc-yaml' ]
 
+    " Required on Vim <= v8.2 installations to shut up annoying startup message
+    let g:coc_disable_startup_warning = 1
+
     " Do action on current word
     nmap <silent> <leader>. <Plug>(coc-codeaction-selected)w
 
