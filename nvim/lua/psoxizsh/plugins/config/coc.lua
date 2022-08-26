@@ -2,8 +2,6 @@ return function()
   local fn, o, g = vim.fn, vim.opt, vim.g
   local vimp, au = require 'vimp', require 'psoxizsh.autocmd'
 
-  if fn.executable('node') == 0 then return end
-
   local t = function(s)
     return vim.api.nvim_replace_termcodes(s, true, true, true)
   end
