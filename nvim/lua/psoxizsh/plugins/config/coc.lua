@@ -2,8 +2,6 @@ return function()
   local fn, o, g = vim.fn, vim.opt, vim.g
   local vimp, au = require 'vimp', require 'psoxizsh.autocmd'
 
-  if fn.executable('node') == 0 then return end
-
   local t = function(s)
     return vim.api.nvim_replace_termcodes(s, true, true, true)
   end
@@ -46,7 +44,7 @@ return function()
 
   -- Make <CR> to accept selected completion item or notify coc.nvim to format
   -- <C-g>u breaks current undo, please make your own choice.
-  vimp.inoremap({'silent', 'expr'}, '<CR>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]])
+  vimp.inoremap({'silent', 'expr'}, '<CR>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"]])
 
   -- Use <c-space> to confirm completion
   -- <c-space> could be remapped by other vim plugin, try `:verbose imap <CR>`.
@@ -64,7 +62,9 @@ return function()
 
   -- Use K to show documentation in preview window.
   local show_documentation = function()
-    return coc.action('hasProvider', 'hover') and coc.action('doHover') or fn.feedkeys('K', 'in')
+    return fn.CocAction('hasProvider', 'hover')
+      and fn.CocActionAsync('doHover')
+      or fn.feedkeys('K', 'in')
   end
   vimp.nnoremap({'silent'}, 'K', show_documentation)
 

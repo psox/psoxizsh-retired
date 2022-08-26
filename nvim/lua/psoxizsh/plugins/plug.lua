@@ -79,6 +79,7 @@ local plugins = {
 
   -- IDE stuff + language highlighting
   { 'neoclide/coc.nvim',
+      disable = vim.fn.executable('node') ~= 1,
       branch = 'release',
       after = 'vimp',
       config = require 'psoxizsh.plugins.config.coc'
