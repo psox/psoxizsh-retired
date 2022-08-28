@@ -77,13 +77,16 @@ local plugins = {
   },
 
   -- IDE stuff + language highlighting
-  { 'neoclide/coc.nvim',
-      disable = vim.fn.executable('node') ~= 1,
-      branch = 'release',
-      config = require 'psoxizsh.plugins.config.coc'
+  { 'williamboman/mason.nvim',
+      as = 'mason',
+      branch = 'main',
+      config = require 'psoxizsh.plugins.config.mason'
   },
-  { 'neomake/neomake',
-      config = require 'psoxizsh.plugins.config.neomake'
+  { 'williamboman/mason-lspconfig.nvim',
+      as = 'mason-lspconfig',
+      branch = 'main',
+      after = 'mason',
+      config = require 'psoxizsh.plugins.config.mason-lsp'
   },
   { 'vim-perl/vim-perl',
       ft = 'perl',
