@@ -1,8 +1,8 @@
 
-local Util = {}
+local M = {}
 
 -- Reload a given module, returning the result of loading it.
-function Util.mreload(module)
+function M.mreload(module)
   if package.loaded[module] then
     package.loaded[module] = nil
   end
@@ -11,8 +11,8 @@ function Util.mreload(module)
 end
 
 -- Try reloading the given module, returning ok, module
-function Util.try_mreload(module)
-  return pcall(Util.mreload, module)
+function M.try_mreload(module)
+  return pcall(M.mreload, module)
 end
 
 -- Try reloading the given config module, returning either
@@ -26,7 +26,7 @@ end
 --
 -- It the latter cases, *configuration will not be reloaded*, this is
 -- primaraily meant for inline, static configuration
-function Util.try_mconfig(module)
+function M.try_mconfig(module)
   if type(module) ~= "string" then
     module = type(module) == "function" and module() or module
     module = type(module) == "table" and module or {}
@@ -34,7 +34,7 @@ function Util.try_mconfig(module)
     return module
   end
 
-  local ok, config = Util.try_mreload(module)
+  local ok, config = M.try_mreload(module)
   config = type(config) == "function" and config() or config
 
   return (ok and type(config) == "table") and config or {}
@@ -50,13 +50,13 @@ end
 -- 4. fn() --> table
 --
 -- It the latter cases, *configuration will not be reloaded*, this is
--- primaraily meant for inline, static configuration
+-- primarily meant for inline, static configuration
 --
 -- Note: the config returned from the given module may optionally
 -- set 'no_defaults = true' to opt out of the merging
-function Util.mconfig(module, defaults)
-  module = Util.try_mconfig(module)
-  defaults = Util.try_mconfig(defaults)
+function M.mconfig(module, defaults)
+  module = M.try_mconfig(module)
+  defaults = M.try_mconfig(defaults)
 
   if module.no_defaults then
     return module
@@ -65,4 +65,4 @@ function Util.mconfig(module, defaults)
   end
 end
 
-return Util
+return M
