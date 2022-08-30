@@ -44,11 +44,7 @@ return function()
 
   -- Make <CR> to accept selected completion item or notify coc.nvim to format
   -- <C-g>u breaks current undo, please make your own choice.
-  vimp.inoremap({'silent', 'expr'}, '<CR>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"]])
-
-  -- Use <c-space> to confirm completion
-  -- <c-space> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-  vimp.inoremap({'silent', 'expr'}, '<C-Space>', [[coc#refresh()]])
+  vimp.inoremap({'silent', 'expr'}, '<C-Space>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"]])
 
   -- Use `[g` and `]g` to navigate diagnostics
   vimp.nmap({'silent'}, '[g', '<Plug>(coc-diagnostic-prev)')
