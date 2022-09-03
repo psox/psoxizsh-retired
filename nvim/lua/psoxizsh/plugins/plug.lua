@@ -120,6 +120,12 @@ local plugins = {
   { 'luochen1990/rainbow' },
   { 'sheerun/vim-polyglot' },
 
+  -- Tree sitter
+  { 'nvim-treesitter/nvim-treesitter',
+      requires = { 'p00f/nvim-ts-rainbow' },
+      run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+      config = require 'psoxizsh.plugins.config.nvim-treesitter'
+  },
   -- Fuzzy search helpers
   { 'junegunn/fzf',
       cmd = 'FZF',
