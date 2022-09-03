@@ -74,4 +74,35 @@ M.Buffer.N {
   CloseNetrw = B { 'Force close netrw windows', key = '<ESC>' }
 }
 
+-- ###################################
+-- ## NORMAL LSP on_attach bindings ##
+-- ###################################
+M.Buffer.Lsp.N {
+  { mode = 'n' },
+
+  -- #####################
+  -- ## Leader Mappings ##
+  -- #####################
+  --
+  Leader = G {
+    { prefix = '<Leader>' },
+
+    -- ##################
+    -- ## LSP Mappings ##
+    -- ##################
+    --
+    RenameSymbol   = B { 'Rename <cword> symbol'                             , key = 'rn' , action = vim.lsp.buf.rename         , } ,
+    FormatDocument = B { 'Format current document'                           , key = 'F'  , action = vim.lsp.buf.formatting     , } ,
+    ShowSignature  = B { 'Display function signature help of <cword> symbol' , key = 'K'  , action = vim.lsp.buf.signature_help , } ,
+
+  },
+
+  -- ##################
+  -- ## LSP Mappings ##
+  -- ##################
+  --
+  GotoDefinition    = B { 'Jump to definition of <cword> symbol'              , key = 'gd'    , action = vim.lsp.buf.definition     , } ,
+  ShowDocumentation = B { 'Display documentation of <cword> symbol'           , key = 'K'     , action = vim.lsp.buf.hover          , } ,
+}
+
 return M

@@ -88,6 +88,11 @@ local plugins = {
       after = 'mason',
       config = require 'psoxizsh.plugins.config.mason-lsp'
   },
+  { 'neovim/nvim-lspconfig',
+      as = 'lspconfig',
+      after = { 'mason-lspconfig', 'cmp-nvim-lsp' },
+      config = require 'psoxizsh.plugins.config.lspconfig'
+  },
   { 'vim-perl/vim-perl',
       ft = 'perl',
       run = 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny'
