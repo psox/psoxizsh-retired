@@ -93,6 +93,11 @@ local plugins = {
       after = { 'mason-lspconfig', 'cmp-nvim-lsp' },
       config = require 'psoxizsh.plugins.config.lspconfig'
   },
+  { 'tamago324/nlsp-settings.nvim',
+      branch = 'main',
+      after = 'lspconfig',
+      config = require 'psoxizsh.plugins.config.nlsp-settings'
+  },
   { 'vim-perl/vim-perl',
       ft = 'perl',
       run = 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny'
