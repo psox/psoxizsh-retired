@@ -64,6 +64,21 @@ M.Global.C {
 -- ############################
 M.Global.I {
   { mode = 'i' },
+
+  -- #####################
+  -- ## Auto completion ##
+  -- #####################
+  --
+  Completion = G {
+    { skip = true },
+
+    Confirm    = B { 'Select the active completion entry and insert it'          , key = '<C-Space>'  , } ,
+    Next       = B { 'Cycle selected completion item in completion menu'         , key = '<Tab>'      , } ,
+    Prev       = B { 'Reverse cycle selected completion item in completion menu' , key = '<S-Tab>'    , } ,
+    ScrollUp   = B { 'Scroll up completion item documentation'                   , key = '<PageUp>'   , } ,
+    ScrollDown = B { 'Scroll down completion item documentation'                 , key = '<PageDown>' , } ,
+
+  },
 }
 
 -- ############################
@@ -71,6 +86,8 @@ M.Global.I {
 -- ############################
 M.Global.V {
   { mode = 'v' },
+
+  Completion = M.Global.I.Completion:new({ mode = 'v' })
 }
 
 M.Buffer.N {

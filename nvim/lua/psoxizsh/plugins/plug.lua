@@ -120,12 +120,32 @@ local plugins = {
   { 'luochen1990/rainbow' },
   { 'sheerun/vim-polyglot' },
 
+  -- Autocompletion + snippets + vim.diagnostic sources
+  -- Completion framework
+  { 'hrsh7th/nvim-cmp',
+      requires = { 'onsails/lspkind.nvim' },
+      config = require 'psoxizsh.plugins.config.nvim-cmp'
+  },
+
+  -- Snippets
+  { 'hrsh7th/vim-vsnip' },
+
+  -- LSP sources
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+
+  -- Other sources:
+  { 'hrsh7th/cmp-vsnip' },
+  { 'hrsh7th/cmp-path' },
+  { 'hrsh7th/cmp-buffer' },
+
   -- Tree sitter
   { 'nvim-treesitter/nvim-treesitter',
       requires = { 'p00f/nvim-ts-rainbow' },
       run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
       config = require 'psoxizsh.plugins.config.nvim-treesitter'
   },
+
   -- Fuzzy search helpers
   { 'junegunn/fzf',
       cmd = 'FZF',

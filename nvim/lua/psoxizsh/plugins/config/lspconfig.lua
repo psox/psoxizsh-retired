@@ -1,5 +1,5 @@
 return function()
-  local lspconfig, util = require 'lspconfig', require 'psoxizsh.util'
+  local lspconfig, cmp, util = require 'lspconfig', require 'cmp_nvim_lsp', require 'psoxizsh.util'
   local keys, servers = require 'psoxizsh.key', require 'psoxizsh.lsp.servers'
 
   local defaults = {}
@@ -8,6 +8,11 @@ return function()
   defaults.on_attach = function(_, bnum)
     keys.Buffer.Lsp:register({ buffer = bnum })
   end
+
+  -- Update LSP capabilities we send to servers to include the features supported by nvim-cmp
+  defaults.capabilities = cmp.update_capabilities(lspconfig.util.default_config.capabilities)
+  -- Dependent on a snippet manager in nvim-cmp (currently using vsnip)
+  defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
   -- Ideally, this would be registered on some Psoxizsh.Plug.Post autocmd
   -- but I don't feel like refactoring psoxizsh.plugin now.
