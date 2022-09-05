@@ -18,6 +18,11 @@ local plugins = {
       as = 'vimp'
   },
 
+  -- Color themes
+  { 'olimorris/onedarkpro.nvim',
+      config = require 'psoxizsh.plugins.config.onedark'
+  },
+
   -- Text alignment
   { 'junegunn/vim-easy-align' },
   { 'tmsvg/pear-tree',
@@ -104,14 +109,9 @@ local plugins = {
   { 'junegunn/fzf.vim',
       config = require 'psoxizsh.plugins.config.fzf'
   },
+  { 'romainl/vim-cool' },
   { 'adelarsq/vim-matchit' },
   { 'mox-mox/vim-localsearch' },
-
-  -- Color themes
-  { 'rakr/vim-one',
-      config = function() vim.cmd(string.format('colorscheme %s', vim.g.my_color_scheme or 'one')) end
-  },
-  { 'romainl/vim-cool' },
 
   -- Tmux integration for pane movement
   { 'christoomey/vim-tmux-navigator',
