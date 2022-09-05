@@ -117,10 +117,6 @@ local plugins = {
       cmd = { 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious' },
       config = require 'psoxizsh.plugins.config.vim-tmux-navigator'
   },
-
-  -- Other
-  { 'roxma/nvim-yarp' },
-  { 'roxma/vim-hug-neovim-rpc' },
 }
 
 local function concatArray(a, b)
