@@ -1,5 +1,6 @@
 local o, g, fn, cmd = vim.opt, vim.g, vim.fn, vim.cmd
 local au, util = require 'psoxizsh.autocmd', require 'psoxizsh.util'
+local diagnostic = require 'psoxizsh.diagnostic'
 local keys = require 'psoxizsh.key.map'
 
 local function psoxizsh_early_config()
@@ -72,6 +73,9 @@ local function psoxizsh_early_config()
 
   -- Set global statusline (0.7+ only)
   if fn.has('nvim-0.7') == 1 then o.laststatus = 3 end
+
+  -- Setup vim.diagnostic APIs
+  diagnostic.setup {}
 
   -- Local pre plugin configuration
   util.try_mreload('pre')

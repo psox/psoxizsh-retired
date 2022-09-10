@@ -40,6 +40,11 @@ M.Global.N {
   --
   BufferNext = B { 'Next buffer or tab'     , key = '<Tab>'   , action = '<cmd>BufferLineCycleNext<CR>' , } ,
   BufferPrev = B { 'Previous buffer or tab' , key = '<S-Tab>' , action = '<cmd>BufferLineCyclePrev<CR>' , } ,
+  --
+  -- Diagnostics
+  --
+  DiagnosticNext = B { 'Next buffer diagnostic'     , key = ']g' , } ,
+  DiagnosticPrev = B { 'Previous buffer diagnostic' , key = '[g' , } ,
 }
 
 -- #############################
