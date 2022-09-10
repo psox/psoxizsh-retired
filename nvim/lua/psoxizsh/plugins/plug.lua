@@ -175,6 +175,12 @@ local plugins = {
       cmd = { 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious' },
       config = require 'psoxizsh.plugins.config.vim-tmux-navigator'
   },
+
+  -- Terminal
+  { 'akinsho/toggleterm.nvim',
+      tag = 'v2.*',
+      config = require 'psoxizsh.plugins.config.toggleterm'
+  },
 }
 
 local function concatArray(a, b)
