@@ -120,6 +120,12 @@ local plugins = {
   { 'luochen1990/rainbow' },
   { 'sheerun/vim-polyglot' },
 
+  -- Maker / diagnostics listing
+  { 'folke/trouble.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons' },
+      config = require 'psoxizsh.plugins.config.trouble'
+  },
+
   -- Autocompletion + snippets + vim.diagnostic sources
   -- Completion framework
   { 'hrsh7th/nvim-cmp',
