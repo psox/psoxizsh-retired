@@ -151,12 +151,13 @@ local plugins = {
   },
 
   -- Fuzzy search helpers
-  { 'junegunn/fzf',
-      cmd = 'FZF',
-      fn = { 'fzf#run', 'fzf#wrap' }
+  { 'nvim-telescope/telescope.nvim',
+      branch = '0.1.x',
+      requires = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzf-native.nvim' },
+      config = require 'psoxizsh.plugins.config.telescope'
   },
-  { 'junegunn/fzf.vim',
-      config = require 'psoxizsh.plugins.config.fzf'
+  { 'nvim-telescope/telescope-fzf-native.nvim',
+      run = 'make'
   },
   { 'romainl/vim-cool' },
   { 'adelarsq/vim-matchit' },
