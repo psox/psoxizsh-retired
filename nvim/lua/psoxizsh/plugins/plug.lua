@@ -102,6 +102,10 @@ local plugins = {
       after = 'lspconfig',
       config = require 'psoxizsh.plugins.config.nlsp-settings'
   },
+  { 'simrat39/rust-tools.nvim' },
+  { 'folke/lua-dev.nvim',
+      as = 'lua-dev',
+  },
   { 'vim-perl/vim-perl',
       ft = 'perl',
       run = 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny'
