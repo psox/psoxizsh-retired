@@ -162,7 +162,27 @@ local function psoxizsh_post_config(plugs)
   keys.Global.N.Leader.ReloadConfig { action = function() plugs:reload() end }
 
   g.one_allow_italics = 1
-  cmd('highlight Comment term=italic cterm=italic gui=italic')
+
+  local color_highlights_override = function()
+    local hl = require 'psoxizsh.util.highlight'
+
+    -- For nvim-cmp, for whatever reason these are overwritten if set in the
+    -- config function
+    hl.CmpItemAbbrDeprecated { strikethrough = true }
+    hl.CmpItemAbbrMatch { bold = true }
+    hl.CmpItemAbbrMatchFuzzy { bold = true }
+    hl.CmpItemMenu { italic = true }
+
+    -- Disable stupid spelling highlights (the 90s were a weird time)
+    hl.SpellCap:clear()
+    hl.SpellLocal:clear()
+    hl.SpellRare:clear()
+  end
+
+  color_highlights_override()
+  au.PsoxColorSchemeOverrides {
+    { 'ColorScheme', '*', color_highlights_override }
+  }
 end
 
 local function psoxizsh_late_config(_)
