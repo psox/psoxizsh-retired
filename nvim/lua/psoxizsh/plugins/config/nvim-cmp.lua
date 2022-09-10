@@ -64,6 +64,7 @@ return function()
     },
     {
       { name = 'buffer',                      keyword_length = 2  },
+      { name = 'spell', max_item_count = 3,   keyword_length = 3  },
     }
   )
 

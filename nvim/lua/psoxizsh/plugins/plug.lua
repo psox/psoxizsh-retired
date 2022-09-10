@@ -138,6 +138,10 @@ local plugins = {
   { 'hrsh7th/cmp-vsnip' },
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-buffer' },
+  { 'f3fora/cmp-spell',
+      after = { 'lspconfig' },
+      config = require 'psoxizsh.plugins.config.cmp-spell'
+  },
 
   -- Tree sitter
   { 'nvim-treesitter/nvim-treesitter',

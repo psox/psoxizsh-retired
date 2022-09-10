@@ -20,6 +20,11 @@ M.Global.N {
     ReloadConfig = B { 'Reload Neovim configuration'          , key = 'vs' , } ,
     ToggleGutter = B { 'Toggle Neovim gutter'                 , key = 'N'  , } ,
 
+    SpellWhiteList     = B { 'Whitelist <cword> to [count] spellfile'      , key = 'ss'  , action = 'zg'  , } ,
+    SpellBlackList     = B { 'Blacklist <cword> to [count] spellfile'      , key = 'sw'  , action = 'zw'  , } ,
+    SpellWhiteListUndo = B { 'Undo whitelist <cword> in [count] spellfile' , key = 'sus' , action = 'zug' , } ,
+    SpellBlackListUndo = B { 'Undo blacklist <cword> to [count] spellfile' , key = 'suw' , action = 'zuw' , } ,
+
     ToggleBuffers   = B { 'Open buffer list'      , key = '<Tab>' , action = '<cmd>Neotree toggle reveal float source=buffers<CR>' , } ,
     ToggleGitStatus = B { 'Open Git status float' , key = 'gs'    , action = '<cmd>Neotree float git_status<CR>'                   , } ,
 
