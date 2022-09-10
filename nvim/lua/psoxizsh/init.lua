@@ -79,6 +79,8 @@ local function psoxizsh_post_config(plugs)
   -- Local post plugin configuration
   util.try_mreload('post')
 
+  cmd('colorscheme ' .. vim.g.my_color_scheme)
+
   -- Setup file backups
   cmd ':silent !mkdir -p ~/.vimbackup'
   o.backupdir = fn.expand('~') .. '/.vimbackup'
