@@ -23,7 +23,7 @@ return function()
     symbols = { modified = '|', readonly = '|', unnamed = '〜' },
     color = file_color,
   }
-  local branch = { 'branch', icon = '', color = { gui = 'bold,italic' } }
+  local branch = { 'b:gitsigns_head', icon = '', color = { gui = 'bold' } }
   local diagnostics = { 'diagnostics', sources = { 'coc' }, update_in_insert = true }
   local diff = { 'diff', source = diff_source }
 
@@ -58,7 +58,7 @@ return function()
       lualine_y = {},
       lualine_z = {}
     },
-    extensions = { 'fugitive', 'quickfix', 'man', 'fzf', 'neo-tree' }
+    extensions = { 'fugitive', 'quickfix', 'man', 'fzf', 'neo-tree', 'toggleterm' }
   }
 
   ll.setup(util.mconfig('config.lualine', defaults))
