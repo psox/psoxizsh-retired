@@ -69,6 +69,10 @@ local plugins = {
       requires = { 'nvim-lua/plenary.nvim' },
       config = require 'psoxizsh.plugins.config.gitsigns'
   },
+  -- LSP / Neovim '$/progress' handler
+  { 'j-hui/fidget.nvim',
+      config = require 'psoxizsh.plugins.config.fidget'
+  },
 
   -- Buffer management
   { 'qpkorr/vim-bufkill' },
