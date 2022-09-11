@@ -23,6 +23,12 @@ local plugins = {
       config = require 'psoxizsh.plugins.config.onedark'
   },
 
+  -- Pretty vim.notify
+  { 'rcarriga/nvim-notify',
+      tag = 'v3.*',
+      config = require 'psoxizsh.plugins.config.notify'
+  },
+
   -- Text alignment
   { 'junegunn/vim-easy-align' },
   { 'tmsvg/pear-tree',
