@@ -43,7 +43,7 @@ local plugins = {
         'MunifTanjim/nui.nvim',
       },
       cmd = { 'Neotree', 'NeoTree*' },
-      keys = { '<F2>', '<leader>gs', '<leader><S-TAB>' },
+      keys = { '<C-Left>', '<leader>gs', '<leader><S-TAB>' },
       config = require 'psoxizsh.plugins.config.neotree'
   },
 
