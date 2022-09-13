@@ -10,6 +10,9 @@ local plugins = {
   -- Community patch for Vim
   { 'tpope/vim-sensible' },
 
+  -- Used in psoxizsh.* modules
+  { 'nvim-lua/plenary.nvim' },
+
   -- Utils for wrapping vimscript in lua easier
   { 'svermeulen/vimpeccable',
       as = 'vimp'
@@ -76,6 +79,7 @@ local plugins = {
 
   -- IDE stuff + language highlighting
   { 'neoclide/coc.nvim',
+      disable = vim.fn.executable('node') ~= 1,
       branch = 'release',
       after = 'vimp',
       config = require 'psoxizsh.plugins.config.coc'

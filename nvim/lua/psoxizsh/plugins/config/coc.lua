@@ -2,13 +2,8 @@ return function()
   local fn, o, g = vim.fn, vim.opt, vim.g
   local vimp, au = require 'vimp', require 'psoxizsh.autocmd'
 
-  if fn.executable('node') == 0 then return end
-
   local t = function(s)
     return vim.api.nvim_replace_termcodes(s, true, true, true)
-  end
-  local pumvisible = function()
-    return fn.pumvisible() == 1
   end
 
   g['coc_global_extensions'] = {
@@ -34,42 +29,22 @@ return function()
   vimp.nmap({'silent'}, '<leader>gd', '<Plug>(coc-definition)')
   vimp.nmap({'silent'}, '<leader>gr', '<Plug>(coc-references)')
 
-  -- Basically, we're checking to see if the column behind the current
-  -- either doesn't exist or is whitespace
-  local ck_backspace = function()
-    local col = fn.col('.') - 1
+  -- Use tab for trigger completion with characters ahead and navigate.
+  -- NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+  -- other plugin before putting this into your config.
+  vimp.inoremap({'silent', 'expr'}, '<TAB>', [[coc#pum#visible() ? coc#pum#next(1) : CheckBackspace() ? "\<Tab>" : coc#refresh()]])
+  vimp.inoremap({'expr'}, '<S-TAB>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]])
 
-    return
-      col == 0
-        and true
-      or fn.getline('.'):sub(col, col):match('%s')
-        and true
-      or false
-  end
+  vim.cmd [[
+    function! CheckBackspace() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+  ]]
 
-  vimp.inoremap({'silent', 'expr'}, '<TAB>', function()
-    return
-      pumvisible()
-        and t'<C-n>'
-      or ck_backspace()
-        and t'<TAB>'
-      or fn['coc#refresh']()
-  end)
-  vimp.inoremap({'expr'}, '<S-TAB>', function()
-    return pumvisible() and t'<C-p>' or t'<C-h>'
-  end)
-
-  -- Use <c-space> to confirm completion, `<C-g>u` means break undo chain at current
-  -- position. Coc only does snippet and additional edit on confirm.
-  -- <c-space> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-  vimp.inoremap({'expr'}, '<C-Space>', function()
-    local info =
-      fn.exists('*complete_info') == 1
-        and fn.complete_info().selected ~= -1
-      or pumvisible()
-
-    return info and t'<C-y>' or t'<C-g>u<CR>'
-  end)
+  -- Make <CR> to accept selected completion item or notify coc.nvim to format
+  -- <C-g>u breaks current undo, please make your own choice.
+  vimp.inoremap({'silent', 'expr'}, '<C-Space>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"]])
 
   -- Use `[g` and `]g` to navigate diagnostics
   vimp.nmap({'silent'}, '[g', '<Plug>(coc-diagnostic-prev)')
@@ -83,13 +58,9 @@ return function()
 
   -- Use K to show documentation in preview window.
   local show_documentation = function()
-    if vim.tbl_contains({'vim', 'help'}, o.filetype:get()) then
-      vim.cmd('help ' .. fn.expand(t'<cword>'))
-    elseif vim.fn['coc#rpc#ready']() == 1 then
-      vim.fn.CocActionAsync('doHover')
-    else
-      vim.cmd('!' .. o.keywordprg:get() .. ' ' .. fn.expand(t'<cword>'))
-    end
+    return fn.CocAction('hasProvider', 'hover')
+      and fn.CocActionAsync('doHover')
+      or fn.feedkeys('K', 'in')
   end
   vimp.nnoremap({'silent'}, 'K', show_documentation)
 

@@ -141,15 +141,18 @@ fi
 if [[ -d ~/.ssh ]]
 then
   zstyle :omz:plugins:ssh-agent lifetime 36h
+<<<<<<< HEAD
   if [[ -e ~/.ssh/autoload ]]
+=======
+  zstyle :omz:plugins:ssh-agent agent-forwarding on
+  if [[ -e ~/.ssh/autoload ]] 
+>>>>>>> develop
   then
       zstyle :omz:plugins:ssh-agent identities $( cat ~/.ssh/autoload )
   fi
 fi
 
 [[ -d $ZSH ]] && source $ZSH/oh-my-zsh.sh
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 # Dynamic Completion
 foreach cmd in kubectl kubeadm
