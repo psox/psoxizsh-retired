@@ -141,12 +141,8 @@ fi
 if [[ -d ~/.ssh ]]
 then
   zstyle :omz:plugins:ssh-agent lifetime 36h
-<<<<<<< HEAD
-  if [[ -e ~/.ssh/autoload ]]
-=======
   zstyle :omz:plugins:ssh-agent agent-forwarding on
-  if [[ -e ~/.ssh/autoload ]] 
->>>>>>> develop
+  if [[ -e ~/.ssh/autoload ]]
   then
       zstyle :omz:plugins:ssh-agent identities $( cat ~/.ssh/autoload )
   fi
