@@ -78,7 +78,12 @@ plugins=(
   common-aliases
   colored-man-pages
 )
-( which git &>/dev/null ) && plugins+=( git git-extras git-flow-avh ) && [[ "$ZSH_THEME" == "stemmet" ]] && [ -z "$_STARSHIP_Y_" ] && plugins+=( git-prompt )
+
+( which git &>/dev/null ) &&
+  plugins+=( git git-extras git-flow-avh ) &&
+  [[ "$ZSH_THEME" == "stemmet" ]] &&
+  [ -z "$_STARSHIP_Y_" ] &&
+  plugins+=( git-prompt )
 ( which perl &>/dev/null ) && plugins+=( perl )
 ( which go &>/dev/null ) && plugins+=( golang )
 ( which oc &>/dev/null ) && plugins+=( oc )
@@ -169,7 +174,10 @@ then
   [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
 
   # Bootstrap the users plugin directory, if required
-  [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp "$TMUX_PATH/plugins" && cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH/plugins" }
+  [ -d "$TMUX_PATH/plugins" ] || {
+    mkdir -vp "$TMUX_PATH/plugins" &&
+    cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH/plugins"
+  }
 
   # Both tmux and TPM are very opininated about where configs must live,
   # and TPM will only expand one layer of source-file directives, so we
