@@ -125,7 +125,7 @@ then
   export VIMHOME=~/.vim
 
   # Feature flag lua based Neovim config, until this is tested
-  # (and we figure out how to detect if we're running nvim or vim)
+  # (and we figure out how to detect if we are running nvim or vim)
   if [[ -n ${PSOXIZSH_EXPERIMENTAL_NEOVIM_LUA} ]]
   then
     export MYVIMRC=$PSOXIZSH/init.lua
@@ -168,12 +168,12 @@ then
 
   [ -z "$TMUX_PATH" ] && TMUX_PATH=~/.config/tmux
 
-  # Bootstrap the user's plugin directory, if required
+  # Bootstrap the users plugin directory, if required
   [ -d "$TMUX_PATH/plugins" ] || { mkdir -vp "$TMUX_PATH/plugins" && cp -r "$PSOXIZSH/tmux/plugins" "$TMUX_PATH/plugins" }
 
   # Both tmux and TPM are very opininated about where configs must live,
   # and TPM will only expand one layer of source-file directives, so we
-  # symlink the base config to the user local config file, if it doesn't
+  # symlink the base config to the user local config file, if it does not
   # exist.
   [[ ! -f $TMUX_PATH/tmux.conf ]] && cp -r "$PSOXIZSH/tmux/tmux.conf" "$TMUX_PATH/tmux.conf"
   [[ ! -f ~/.tmux.conf ]] && ln -s $PSOXIZSH/tmux/tmux.conf ~/.tmux.conf
@@ -263,7 +263,7 @@ fi
 alias src='omz reload'
 
 # Remove unwanted aliases
-( where fd | grep -qE '\/s?bin\/fd' ) && alias fd &>/dev/null && unalias fd
+( where fd | grep -qE '/s?bin/fd' ) && alias fd &>/dev/null && unalias fd
 
 # Clean up global aliases
 source <(alias -g | awk -F= '/^[A-Za-z]+/{print $1}' | xargs -I{} -n1 echo unalias "'{}'")
