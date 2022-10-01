@@ -18,11 +18,6 @@ local plugins = {
       as = 'vimp'
   },
 
-  -- Used for autocmds if we're not using a late enough version of neovim
-  { 'jakelinnzy/autocmd-lua',
-      disable = vim.fn.has('nvim-0.7') == 1
-  },
-
   -- Text alignment
   { 'junegunn/vim-easy-align' },
   { 'tmsvg/pear-tree',
