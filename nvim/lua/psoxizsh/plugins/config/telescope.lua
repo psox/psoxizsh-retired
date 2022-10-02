@@ -1,7 +1,13 @@
 return function()
   local ts, util = require 'telescope', require 'psoxizsh.util'
+  local keys = require 'psoxizsh.key.map'
+  local FuzzySearch = keys.Global.N.Super.FuzzySearch
 
-  local defaults = {}
+  local defaults = {
+    mappings = { i = {
+      [FuzzySearch.key] = 'close',
+    }}
+  }
 
   ts.setup(util.mconfig('config.telescope', { defaults = defaults }))
 

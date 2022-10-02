@@ -1,6 +1,8 @@
 return function()
   local g = vim.g
   local neotree, util = require 'neo-tree', require 'psoxizsh.util'
+  local keys = require 'psoxizsh.key.map'
+  local Super = keys.Global.N.Super.FileBrowser
 
   local defaults = {
     close_if_last_window = true,
@@ -67,6 +69,7 @@ return function()
       mappings = {
         ["?"]       = "show_help",
         ["q"]       = "close_window",
+        [Super.key] = "close_window",
         ["R"]       = "refresh",
         ["<space>"] = {  "toggle_node", nowait = false },
         ["<cr>"]    = "open",
