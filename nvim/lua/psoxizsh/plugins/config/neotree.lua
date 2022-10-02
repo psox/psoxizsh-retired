@@ -149,10 +149,6 @@ return function()
   }
 
   g['neo_tree_remove_legacy_commands'] = 1
-  fn.sign_define("DiagnosticSignError", {text = " ", texthl = "DiagnosticSignError"})
-  fn.sign_define("DiagnosticSignWarn", {text = " ", texthl = "DiagnosticSignWarn"})
-  fn.sign_define("DiagnosticSignInfo", {text = " ", texthl = "DiagnosticSignInfo"})
-  fn.sign_define("DiagnosticSignHint", {text = "", texthl = "DiagnosticSignHint"})
 
   vimp.nnoremap({'silent'}, '<F2>', ':Neotree toggle reveal position=left<CR>')
   vimp.nnoremap({'silent'}, '<leader>gs', ':Neotree float git_status<CR>')
