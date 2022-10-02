@@ -4,15 +4,13 @@ local Groups = {}
 local Group = { mt = {} }
 local AutoCmd = { mt = {} }
 
-local __builtin_support = vim.fn.has('nvim-0.7') == 1
-
 -- Use the recent builtin APIs provided by neovim itself
 local function builtin(group, autos)
-  vim.api.nvim_create_augroup(group, {})
+  local gid = vim.api.nvim_create_augroup(group, { clear = true })
 
   for _, auto in ipairs(autos) do
     local opts = auto.opts or {}
-    opts.group = group
+    opts.group = gid
     opts.pattern = auto.pattern
 
     if type(auto.command) == "string" then
@@ -25,31 +23,7 @@ local function builtin(group, autos)
   end
 end
 
--- Use an old library to make the autos
--- Note that relies on the local package manager to ensure this plugin is available
-local function polyfill(group, autos)
-  local poly = require 'autocmd-lua'
-  local autocmds = {}
-
-  for _, auto in ipairs(autos) do
-    local events = auto.event
-
-    if type(auto.event) == "string" then
-      events = { auto.event }
-    end
-
-    for _, e in ipairs(events) do
-      table.insert(autocmds, { event = e, pattern = auto.pattern, cmd = auto.command })
-    end
-  end
-
-  poly.augroup {
-    group = group,
-    autocmds = autocmds,
-  }
-end
-
-local autocmd = __builtin_support and builtin or polyfill
+local autocmd = builtin
 
 function M.new()
   local m = {}

@@ -18,11 +18,6 @@ local plugins = {
       as = 'vimp'
   },
 
-  -- Used for autocmds if we're not using a late enough version of neovim
-  { 'jakelinnzy/autocmd-lua',
-      disable = vim.fn.has('nvim-0.7') == 1
-  },
-
   -- Text alignment
   { 'junegunn/vim-easy-align' },
   { 'tmsvg/pear-tree',
@@ -59,8 +54,8 @@ local plugins = {
       config = require 'psoxizsh.plugins.config.lualine'
   },
   { 'akinsho/bufferline.nvim',
-      as = "bufferline",
-      tag = "v1.*",
+      as = 'bufferline',
+      tag = 'v1.*',
       requires = { 'kyazdani42/nvim-web-devicons' },
       after = 'vimp',
       config = require 'psoxizsh.plugins.config.bufferline'
@@ -71,7 +66,7 @@ local plugins = {
       config = require 'psoxizsh.plugins.config.gitsigns'
   },
 
-  -- Buffer mangement
+  -- Buffer management
   { 'qpkorr/vim-bufkill' },
   { 'romainl/vim-qf',
       config = require 'psoxizsh.plugins.config.vim-qf'

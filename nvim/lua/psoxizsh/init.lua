@@ -10,6 +10,10 @@ local function psoxizsh_early_config()
     g.my_color_scheme = 'one'
   end
 
+  -- Color settings
+  o.background = 'dark'
+  o.termguicolors = true
+
   -- Hide buffers don't close them
   o.hidden = true
 
@@ -78,6 +82,8 @@ local function psoxizsh_post_config(plugs)
   local vimp = require 'vimp'
   -- Local post plugin configuration
   util.try_mreload('post')
+
+  cmd('colorscheme ' .. vim.g.my_color_scheme)
 
   -- Setup file backups
   cmd ':silent !mkdir -p ~/.vimbackup'
@@ -170,8 +176,6 @@ local function psoxizsh_post_config(plugs)
   -- Reload configuration
   vimp.nnoremap('<leader>vs', function() vimp.unmap_all() plugs:reload() end)
 
-  o.background = 'dark'
-  o.termguicolors = true
   g.one_allow_italics = 1
   cmd('highlight Comment term=italic cterm=italic gui=italic')
 end
