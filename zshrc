@@ -90,7 +90,6 @@ plugins=(
 ( which rsync &>/dev/null ) && plugins+=( rsync )
 ( which aws &>/dev/null ) && plugins+=( aws )
 ( which rust &>/dev/null ) && plugins+=( rust )
-( which cargo &>/dev/null ) && plugins+=( cargo )
 ( which jq &>/dev/null ) && plugins+=( jsontools )
 ( which encode64 &>/dev/null ) && plugins+=( encode64 )
 ( which docker-compose &>/dev/null ) && plugins+=( docker-compose )
