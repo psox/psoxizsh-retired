@@ -1,5 +1,5 @@
 return function()
-  local bl, vimp, util = require 'bufferline', require 'vimp', require 'psoxizsh.util'
+  local bl, key, util = require 'bufferline', require 'psoxizsh.key.map', require 'psoxizsh.util'
 
   local defaults = {
     always_show_bufferline = true,
@@ -15,9 +15,5 @@ return function()
     sort_by = 'relative_directory',
   }
 
-  bl.setup (util.mconfig('config.bufferline', { options = defaults }))
-
-  vimp.nnoremap({'silent'}, '<TAB>',          ':BufferLineCycleNext<CR>')
-  vimp.nnoremap({'silent'}, '<S-TAB>',        ':BufferLineCyclePrev<CR>')
-  vimp.nnoremap({'silent'}, '<leader><TAB>',  ':BufferLinePick<CR>')
+  bl.setup(util.mconfig('config.bufferline', { options = defaults }))
 end

@@ -16,6 +16,10 @@ M.Global.N {
   Leader = G {
     { prefix = '<Leader>' },
 
+    OpenConfig   = B { 'Open user Neovim configuration files' , key = 've' , } ,
+    ReloadConfig = B { 'Reload Neovim configuration'          , key = 'vs' , } ,
+    ToggleGutter = B { 'Toggle Neovim gutter'                 , key = 'N'  , } ,
+
     ToggleBuffers   = B { 'Open buffer list'      , key = '<Tab>' , action = '<cmd>Neotree toggle reveal float source=buffers<CR>' , } ,
     ToggleGitStatus = B { 'Open Git status float' , key = 'gs'    , action = '<cmd>Neotree float git_status<CR>'                   , } ,
 
@@ -43,6 +47,11 @@ M.Global.N {
 -- #############################
 M.Global.C {
   {  mode = 'c' },
+  -- ####################
+  -- ## File utilities ##
+  -- ####################
+  --
+  SudoWrite = B { 'Sudo write the current file' , key = 'w!!', action = 'w !sudo tee % >/dev/null', } ,
 }
 
 -- ############################
@@ -57,6 +66,12 @@ M.Global.I {
 -- ############################
 M.Global.V {
   { mode = 'v' },
+}
+
+M.Buffer.N {
+  { mode = 'n' },
+
+  CloseNetrw = B { 'Force close netrw windows', key = '<ESC>' }
 }
 
 return M

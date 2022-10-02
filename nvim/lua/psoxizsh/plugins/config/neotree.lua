@@ -1,6 +1,6 @@
 return function()
-  local g, fn = vim.g, vim.fn
-  local neotree, util, vimp = require 'neo-tree', require 'psoxizsh.util', require 'vimp'
+  local g = vim.g
+  local neotree, util = require 'neo-tree', require 'psoxizsh.util'
 
   local defaults = {
     close_if_last_window = true,
@@ -149,10 +149,6 @@ return function()
   }
 
   g['neo_tree_remove_legacy_commands'] = 1
-
-  vimp.nnoremap({'silent'}, '<F2>', ':Neotree toggle reveal position=left<CR>')
-  vimp.nnoremap({'silent'}, '<leader>gs', ':Neotree float git_status<CR>')
-  vimp.nnoremap({'silent'}, '<leader><S-TAB>', ':Neotree toggle reveal float source=buffers<CR>')
 
   neotree.setup(util.mconfig('config.neotree', defaults))
 end
