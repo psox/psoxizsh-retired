@@ -7,7 +7,7 @@ local function psoxizsh_early_config()
 
   -- Set global color scheme var
   if not g.my_color_scheme then
-    g.my_color_scheme = 'one'
+    g.my_color_scheme = 'onedarkpro'
   end
 
   -- Color settings

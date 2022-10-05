@@ -18,6 +18,17 @@ local plugins = {
       as = 'vimp'
   },
 
+  -- Color themes
+  { 'olimorris/onedarkpro.nvim',
+      config = require 'psoxizsh.plugins.config.onedark'
+  },
+
+  -- Pretty vim.notify
+  { 'rcarriga/nvim-notify',
+      tag = 'v3.*',
+      config = require 'psoxizsh.plugins.config.notify'
+  },
+
   -- Text alignment
   { 'junegunn/vim-easy-align' },
   { 'tmsvg/pear-tree',
@@ -55,7 +66,7 @@ local plugins = {
   },
   { 'akinsho/bufferline.nvim',
       as = 'bufferline',
-      tag = 'v1.*',
+      tag = 'v2.*',
       requires = { 'kyazdani42/nvim-web-devicons' },
       after = 'vimp',
       config = require 'psoxizsh.plugins.config.bufferline'
@@ -104,14 +115,9 @@ local plugins = {
   { 'junegunn/fzf.vim',
       config = require 'psoxizsh.plugins.config.fzf'
   },
+  { 'romainl/vim-cool' },
   { 'adelarsq/vim-matchit' },
   { 'mox-mox/vim-localsearch' },
-
-  -- Color themes
-  { 'rakr/vim-one',
-      config = function() vim.cmd(string.format('colorscheme %s', vim.g.my_color_scheme or 'one')) end
-  },
-  { 'romainl/vim-cool' },
 
   -- Tmux integration for pane movement
   { 'christoomey/vim-tmux-navigator',
