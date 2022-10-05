@@ -55,7 +55,7 @@ local plugins = {
   },
   { 'akinsho/bufferline.nvim',
       as = 'bufferline',
-      tag = 'v1.*',
+      tag = 'v2.*',
       requires = { 'kyazdani42/nvim-web-devicons' },
       after = 'vimp',
       config = require 'psoxizsh.plugins.config.bufferline'
