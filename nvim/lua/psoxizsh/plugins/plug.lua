@@ -13,11 +13,6 @@ local plugins = {
   -- Used in psoxizsh.* modules
   { 'nvim-lua/plenary.nvim' },
 
-  -- Utils for wrapping vimscript in lua easier
-  { 'svermeulen/vimpeccable',
-      as = 'vimp'
-  },
-
   -- Color themes
   { 'olimorris/onedarkpro.nvim',
       config = require 'psoxizsh.plugins.config.onedark'
@@ -47,7 +42,6 @@ local plugins = {
         'kyazdani42/nvim-web-devicons',
         'MunifTanjim/nui.nvim',
       },
-      after = 'vimp',
       cmd = { 'Neotree', 'NeoTree*' },
       keys = { '<F2>', '<leader>gs', '<leader><S-TAB>' },
       config = require 'psoxizsh.plugins.config.neotree'
@@ -68,7 +62,6 @@ local plugins = {
       as = 'bufferline',
       tag = 'v2.*',
       requires = { 'kyazdani42/nvim-web-devicons' },
-      after = 'vimp',
       config = require 'psoxizsh.plugins.config.bufferline'
   },
   { 'lewis6991/gitsigns.nvim',
@@ -87,7 +80,6 @@ local plugins = {
   { 'neoclide/coc.nvim',
       disable = vim.fn.executable('node') ~= 1,
       branch = 'release',
-      after = 'vimp',
       config = require 'psoxizsh.plugins.config.coc'
   },
   { 'neomake/neomake',

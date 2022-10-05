@@ -1,5 +1,6 @@
 local o, g, fn, cmd = vim.opt, vim.g, vim.fn, vim.cmd
 local au, util = require 'psoxizsh.autocmd', require 'psoxizsh.util'
+local keys = require 'psoxizsh.key.map'
 
 local function psoxizsh_early_config()
   -- Local early configuration
@@ -79,7 +80,6 @@ end
 -- Load plugins
 
 local function psoxizsh_post_config(plugs)
-  local vimp = require 'vimp'
   -- Local post plugin configuration
   util.try_mreload('post')
 
@@ -99,13 +99,7 @@ local function psoxizsh_post_config(plugs)
   -- Other
   g.rainbow_active = 1
 
-  au.PsoxFileAutos {
-    { 'FileType', 'yaml', 'setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab' },
-    { 'FileType', 'go',   'setlocal ts=8 sts=4 sw=4 noexpandtab' },
-    { 'FileType', 'quickfix,netrw', 'setlocal nobuflisted' },
-    { 'FileType', 'netrw', function() require('vimp').nmap({'buffer', 'silent'}, '<ESC>', ':call CloseNetrw()<CR>') end },
-  }
-
+  local CloseNetrw = keys.Buffer.N.CloseNetrw
   cmd([[
   function! CloseNetrw() abort
     for bufn in range(1, bufnr('$'))
@@ -119,31 +113,17 @@ local function psoxizsh_post_config(plugs)
     endfor
   endfunction
   ]])
+  CloseNetrw { action = fn.CloseNetrw }
 
-  if plugs:has('fzf') then
-    if fn.executable('rg') == 1 then
-      vimp.nnoremap('<A-g>', ':Rg ')
-      vimp.nnoremap('<leader><A-g>', ':Rg! ')
-      vimp.nnoremap({'silent'}, '<A-S-g>', ':Rg<CR>')
-      vimp.nnoremap({'silent'}, '<leader><A-S-g>', ':Rg!<CR>')
-    end
-
-    vimp.nnoremap('<A-f>', ':Files ')
-    vimp.nnoremap('<leader><A-f>', ':Files! ')
-    vimp.nnoremap({'silent'}, '<A-S-f>', ':Files<CR>')
-    vimp.nnoremap({'silent'}, '<leader><A-S-f>', ':Files!<CR>')
-
-    vimp.nnoremap('<A-b>', ':Buffers ')
-    vimp.nnoremap('<leader><A-b>', ':Buffers! ')
-    vimp.nnoremap({'silent'}, '<A-S-b>', ':Buffers<CR>')
-    vimp.nnoremap({'silent'}, '<leader><A-S-b>', ':Buffers!<CR>')
-  end
-
-  -- Workaround for writing readonly files
-  vimp.cnoremap({'silent'}, 'w!!', 'w !sudo tee % >/dev/null')
+  au.PsoxFileAutos {
+    { 'FileType', 'yaml', 'setlocal indentkeys-=<:> ts=8 sts=2 sw=2 expandtab' },
+    { 'FileType', 'go',   'setlocal ts=8 sts=4 sw=4 noexpandtab' },
+    { 'FileType', 'quickfix,netrw', 'setlocal nobuflisted' },
+    { 'FileType', 'netrw', function() CloseNetrw:register { buffer = true } end },
+  }
 
   -- Open any known user configuration paths for editing
-  vimp.nnoremap({'silent'}, '<leader>ve', function()
+  local OpenConfig = function()
     local rtp = vim.fn.join(o.runtimepath:get(), ',')
     local files = {
       early = vim.fn.globpath(rtp, '/lua/early.lua', 0, 1)[1] or nil,
@@ -158,10 +138,10 @@ local function psoxizsh_post_config(plugs)
         cmd('edit ' .. file)
       end
     end
-  end)
+  end
+  keys.Global.N.Leader.OpenConfig { action = OpenConfig }
 
-  -- Toggles all gutter items
-  vimp.nnoremap({'silent'}, '<leader>N', function()
+  local ToggleGutter = function()
     if o.number:get() then
       o.number = false
       o.relativenumber = false
@@ -171,10 +151,11 @@ local function psoxizsh_post_config(plugs)
       o.relativenumber = true
       o.signcolumn = 'yes:1'
     end
-  end)
+  end
+  keys.Global.N.Leader.ToggleGutter { action = ToggleGutter }
 
   -- Reload configuration
-  vimp.nnoremap('<leader>vs', function() vimp.unmap_all() plugs:reload() end)
+  keys.Global.N.Leader.ReloadConfig { action = function() plugs:reload() end }
 
   g.one_allow_italics = 1
   cmd('highlight Comment term=italic cterm=italic gui=italic')
@@ -183,6 +164,9 @@ end
 local function psoxizsh_late_config(_)
   -- Local late configuration
   util.try_mreload('late')
+
+  -- Register our key maps
+  keys.Global:register()
 
   -- Rest of config below is specifically not user override-able
   o.exrc = true
