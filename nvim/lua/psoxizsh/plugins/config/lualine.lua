@@ -24,7 +24,7 @@ return function()
     color = file_color,
   }
   local branch = { 'b:gitsigns_head', icon = '', color = { gui = 'bold' } }
-  local diagnostics = { 'diagnostics', sources = { 'coc' }, update_in_insert = true }
+  local diagnostics = { 'diagnostics', sources = { 'nvim_diagnostic' }, update_in_insert = true }
   local diff = { 'diff', source = diff_source }
 
   local defaults = {

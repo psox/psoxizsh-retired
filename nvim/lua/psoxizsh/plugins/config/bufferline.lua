@@ -4,7 +4,7 @@ return function()
   local defaults = {
     always_show_bufferline = true,
     numbers = "none",
-    diagnostics = 'coc',
+    diagnostics = false,
     offsets = {{
       filetype = 'neo-tree',
       text = 'File Explorer',

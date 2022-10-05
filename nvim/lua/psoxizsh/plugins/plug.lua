@@ -69,6 +69,10 @@ local plugins = {
       requires = { 'nvim-lua/plenary.nvim' },
       config = require 'psoxizsh.plugins.config.gitsigns'
   },
+  -- LSP / Neovim '$/progress' handler
+  { 'j-hui/fidget.nvim',
+      config = require 'psoxizsh.plugins.config.fidget'
+  },
 
   -- Buffer management
   { 'qpkorr/vim-bufkill' },
@@ -77,13 +81,30 @@ local plugins = {
   },
 
   -- IDE stuff + language highlighting
-  { 'neoclide/coc.nvim',
-      disable = vim.fn.executable('node') ~= 1,
-      branch = 'release',
-      config = require 'psoxizsh.plugins.config.coc'
+  { 'williamboman/mason.nvim',
+      as = 'mason',
+      branch = 'main',
+      config = require 'psoxizsh.plugins.config.mason'
   },
-  { 'neomake/neomake',
-      config = require 'psoxizsh.plugins.config.neomake'
+  { 'williamboman/mason-lspconfig.nvim',
+      as = 'mason-lspconfig',
+      branch = 'main',
+      after = 'mason',
+      config = require 'psoxizsh.plugins.config.mason-lsp'
+  },
+  { 'neovim/nvim-lspconfig',
+      as = 'lspconfig',
+      after = { 'mason-lspconfig', 'cmp-nvim-lsp' },
+      config = require 'psoxizsh.plugins.config.lspconfig'
+  },
+  { 'tamago324/nlsp-settings.nvim',
+      branch = 'main',
+      after = 'lspconfig',
+      config = require 'psoxizsh.plugins.config.nlsp-settings'
+  },
+  { 'simrat39/rust-tools.nvim' },
+  { 'folke/lua-dev.nvim',
+      as = 'lua-dev',
   },
   { 'vim-perl/vim-perl',
       ft = 'perl',
@@ -99,6 +120,12 @@ local plugins = {
   { 'luochen1990/rainbow' },
   { 'sheerun/vim-polyglot' },
 
+  -- Tree sitter
+  { 'nvim-treesitter/nvim-treesitter',
+      requires = { 'p00f/nvim-ts-rainbow' },
+      run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+      config = require 'psoxizsh.plugins.config.nvim-treesitter'
+  },
   -- Fuzzy search helpers
   { 'junegunn/fzf',
       cmd = 'FZF',
@@ -117,10 +144,6 @@ local plugins = {
       cmd = { 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious' },
       config = require 'psoxizsh.plugins.config.vim-tmux-navigator'
   },
-
-  -- Other
-  { 'roxma/nvim-yarp' },
-  { 'roxma/vim-hug-neovim-rpc' },
 }
 
 local function concatArray(a, b)
