@@ -1,5 +1,6 @@
 local o, g, fn, cmd = vim.opt, vim.g, vim.fn, vim.cmd
 local au, util = require 'psoxizsh.autocmd', require 'psoxizsh.util'
+local diagnostic = require 'psoxizsh.diagnostic'
 local keys = require 'psoxizsh.key.map'
 
 local function psoxizsh_early_config()
@@ -72,6 +73,9 @@ local function psoxizsh_early_config()
 
   -- Set global statusline (0.7+ only)
   if fn.has('nvim-0.7') == 1 then o.laststatus = 3 end
+
+  -- Setup vim.diagnostic APIs
+  diagnostic.setup {}
 
   -- Local pre plugin configuration
   util.try_mreload('pre')
@@ -158,7 +162,27 @@ local function psoxizsh_post_config(plugs)
   keys.Global.N.Leader.ReloadConfig { action = function() plugs:reload() end }
 
   g.one_allow_italics = 1
-  cmd('highlight Comment term=italic cterm=italic gui=italic')
+
+  local color_highlights_override = function()
+    local hl = require 'psoxizsh.util.highlight'
+
+    -- For nvim-cmp, for whatever reason these are overwritten if set in the
+    -- config function
+    hl.CmpItemAbbrDeprecated { strikethrough = true }
+    hl.CmpItemAbbrMatch { bold = true }
+    hl.CmpItemAbbrMatchFuzzy { bold = true }
+    hl.CmpItemMenu { italic = true }
+
+    -- Disable stupid spelling highlights (the 90s were a weird time)
+    hl.SpellCap:clear()
+    hl.SpellLocal:clear()
+    hl.SpellRare:clear()
+  end
+
+  color_highlights_override()
+  au.PsoxColorSchemeOverrides {
+    { 'ColorScheme', '*', color_highlights_override }
+  }
 end
 
 local function psoxizsh_late_config(_)

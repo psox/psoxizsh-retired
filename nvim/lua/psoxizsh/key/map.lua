@@ -20,6 +20,11 @@ M.Global.N {
     ReloadConfig = B { 'Reload Neovim configuration'          , key = 'vs' , } ,
     ToggleGutter = B { 'Toggle Neovim gutter'                 , key = 'N'  , } ,
 
+    SpellWhiteList     = B { 'Whitelist <cword> to [count] spellfile'      , key = 'ss'  , action = 'zg'  , } ,
+    SpellBlackList     = B { 'Blacklist <cword> to [count] spellfile'      , key = 'sw'  , action = 'zw'  , } ,
+    SpellWhiteListUndo = B { 'Undo whitelist <cword> in [count] spellfile' , key = 'sus' , action = 'zug' , } ,
+    SpellBlackListUndo = B { 'Undo blacklist <cword> to [count] spellfile' , key = 'suw' , action = 'zuw' , } ,
+
     ToggleBuffers   = B { 'Open buffer list'      , key = '<Tab>' , action = '<cmd>Neotree toggle reveal float source=buffers<CR>' , } ,
     ToggleGitStatus = B { 'Open Git status float' , key = 'gs'    , action = '<cmd>Neotree float git_status<CR>'                   , } ,
 
@@ -40,6 +45,11 @@ M.Global.N {
   --
   BufferNext = B { 'Next buffer or tab'     , key = '<Tab>'   , action = '<cmd>BufferLineCycleNext<CR>' , } ,
   BufferPrev = B { 'Previous buffer or tab' , key = '<S-Tab>' , action = '<cmd>BufferLineCyclePrev<CR>' , } ,
+  --
+  -- Diagnostics
+  --
+  DiagnosticNext = B { 'Next buffer diagnostic'     , key = ']g' , } ,
+  DiagnosticPrev = B { 'Previous buffer diagnostic' , key = '[g' , } ,
 }
 
 -- #############################
@@ -59,6 +69,21 @@ M.Global.C {
 -- ############################
 M.Global.I {
   { mode = 'i' },
+
+  -- #####################
+  -- ## Auto completion ##
+  -- #####################
+  --
+  Completion = G {
+    { skip = true },
+
+    Confirm    = B { 'Select the active completion entry and insert it'          , key = '<C-Space>'  , } ,
+    Next       = B { 'Cycle selected completion item in completion menu'         , key = '<Tab>'      , } ,
+    Prev       = B { 'Reverse cycle selected completion item in completion menu' , key = '<S-Tab>'    , } ,
+    ScrollUp   = B { 'Scroll up completion item documentation'                   , key = '<PageUp>'   , } ,
+    ScrollDown = B { 'Scroll down completion item documentation'                 , key = '<PageDown>' , } ,
+
+  },
 }
 
 -- ############################
@@ -66,6 +91,8 @@ M.Global.I {
 -- ############################
 M.Global.V {
   { mode = 'v' },
+
+  Completion = M.Global.I.Completion:new({ mode = 'v' })
 }
 
 M.Buffer.N {
