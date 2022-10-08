@@ -35,12 +35,7 @@ return function()
     -- 3. $PSOXIZSH/nvim/spellfile
     if repo_root then table.insert(checked, repo_root .. '/.vim') end
     vim.list_extend(checked, { '~/.config/nvim', vim.env.PSOXIZSH .. '/nvim/spellfile' })
-
-    for i, path in ipairs(checked) do
-      if path and fn.exists(fn.expand(path)) then
-        checked[i] = path .. '/' .. cfg.spell_fname
-      end
-    end
+    checked = vim.tbl_map(function(p) return fn.expand(p) .. '/' .. cfg.spell_fname end, checked)
 
     l.spell         = true
     l.spelllang     = merged.languages
