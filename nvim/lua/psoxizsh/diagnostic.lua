@@ -11,6 +11,19 @@ local sign = function(o)
   })
 end
 
+local DiagnosticFloat = function()
+  -- current, last diagnostic cursor position
+  local current = vim.api.nvim_win_get_cursor(0)
+  local last = vim.w.diagnostics_last_cursor or { nil, nil }
+
+  -- Show the popup diagnostics window,
+  -- but only once for the current cursor location (unless moved afterwards).
+  if not (current[1] == last[1] and current[2] == last[2]) then
+    vim.w.diagnostics_last_cursor = current
+    D.open_float({ focusable = false, scope = 'cursor' })
+  end
+end
+
 function M.config()
   -- Setup signs
   sign({ name = 'DiagnosticSignError', text = '' })
@@ -44,7 +57,7 @@ end
 
 function M.autocmds()
   au.PsoxDiagnosticHover {
-    { 'CursorHold', '*', function() D.open_float({ focusable = false, scope = 'cursor' }) end }
+    { 'CursorHold', '*', DiagnosticFloat }
   }
 end
 
