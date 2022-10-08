@@ -65,7 +65,7 @@ local plugins = {
       config = require 'psoxizsh.plugins.config.bufferline'
   },
   { 'lewis6991/gitsigns.nvim',
-      tag = 'release',
+      branch = 'main',
       requires = { 'nvim-lua/plenary.nvim' },
       config = require 'psoxizsh.plugins.config.gitsigns'
   },
