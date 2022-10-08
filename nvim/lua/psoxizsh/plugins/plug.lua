@@ -43,7 +43,7 @@ local plugins = {
         'MunifTanjim/nui.nvim',
       },
       cmd = { 'Neotree', 'NeoTree*' },
-      keys = { '<F2>', '<leader>gs', '<leader><S-TAB>' },
+      keys = { '<C-Left>', '<leader>gs', '<leader><S-TAB>' },
       config = require 'psoxizsh.plugins.config.neotree'
   },
 
@@ -120,6 +120,12 @@ local plugins = {
   { 'luochen1990/rainbow' },
   { 'sheerun/vim-polyglot' },
 
+  -- Maker / diagnostics listing
+  { 'folke/trouble.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons' },
+      config = require 'psoxizsh.plugins.config.trouble'
+  },
+
   -- Autocompletion + snippets + vim.diagnostic sources
   -- Completion framework
   { 'hrsh7th/nvim-cmp',
@@ -151,12 +157,13 @@ local plugins = {
   },
 
   -- Fuzzy search helpers
-  { 'junegunn/fzf',
-      cmd = 'FZF',
-      fn = { 'fzf#run', 'fzf#wrap' }
+  { 'nvim-telescope/telescope.nvim',
+      branch = '0.1.x',
+      requires = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzf-native.nvim' },
+      config = require 'psoxizsh.plugins.config.telescope'
   },
-  { 'junegunn/fzf.vim',
-      config = require 'psoxizsh.plugins.config.fzf'
+  { 'nvim-telescope/telescope-fzf-native.nvim',
+      run = 'make'
   },
   { 'romainl/vim-cool' },
   { 'adelarsq/vim-matchit' },
@@ -167,6 +174,12 @@ local plugins = {
       keys = { '<C-h>', '<C-j>', '<C-k>', '<C-l>' },
       cmd = { 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious' },
       config = require 'psoxizsh.plugins.config.vim-tmux-navigator'
+  },
+
+  -- Terminal
+  { 'akinsho/toggleterm.nvim',
+      tag = 'v2.*',
+      config = require 'psoxizsh.plugins.config.toggleterm'
   },
 }
 

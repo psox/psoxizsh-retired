@@ -30,6 +30,19 @@ M.Global.N {
 
   },
 
+  -- ############
+  -- ## Supers ##
+  -- ############
+  --
+  Super = G {
+
+    FileBrowser = B { 'Toggle File Browser'             , key = '<C-Left>'  , action  = '<cmd>Neotree toggle reveal position=left<CR>' , } ,
+    FuzzySearch = B { 'Activate Telescope fuzzy finder' , key = '<C-Right>' , action  = '<cmd>Telescope builtin<CR>'                   , } ,
+    Terminal    = B { 'Open terminal in a float'        , key = '<C-Up>'    , action  = '<cmd>ToggleTerm<CR>'                          , } ,
+    Diagnostics = B { 'Open workspace diagnostics'      , key = '<C-Down>'  , action  = '<cmd>TroubleToggle<CR>'                       , } ,
+
+  },
+
   -- ################
   -- ## Navigation ##
   -- ################
