@@ -1,5 +1,5 @@
-# !! This repo has moved !!
+## !! This repo has moved !!
 
-## you can find the new one at
+### you can find the new one at
 
-## [git.st8l.com/dolysis/psoxizsh](https://git.st8l.com/dolysis/psoxizsh)
+### [git.st8l.com/dolysis/psoxizsh](https://git.st8l.com/dolysis/psoxizsh)
